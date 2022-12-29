@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.Data;
 
-@Entity @Data
+@Entity
 public class Filiere {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -29,4 +29,36 @@ public class Filiere {
 	private List<Personnal> personnals = new ArrayList<Personnal>();
 	@ManyToOne
 	private Departement departement;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitre() {
+		return titre;
+	}
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+	public List<Classe> getClasses() {
+		return classes;
+	}
+	public void setClasses(List<Classe> classes) {
+		this.classes = classes;
+	}
+	public List<Personnal> getPersonnals() {
+		return personnals;
+	}
+	public void setPersonnals(List<Personnal> personnals) {
+		this.personnals = personnals;
+	}
+	public Departement getDepartement() {
+		return departement;
+	}
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+	}
+	
+	
 }

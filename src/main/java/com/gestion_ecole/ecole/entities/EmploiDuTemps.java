@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.Data;
 
-@Entity @Data
+@Entity 
 public class EmploiDuTemps {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,4 +26,30 @@ public class EmploiDuTemps {
 	private List<Sceance> sceances = new ArrayList<Sceance>(); 
 	@ManyToOne
     private Classe classe;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getTitre() {
+		return titre;
+	}
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
+	public List<Sceance> getSceances() {
+		return sceances;
+	}
+	public void setSceances(List<Sceance> sceances) {
+		this.sceances = sceances;
+	}
+	public Classe getClasse() {
+		return classe;
+	}
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
+	
+	
 }

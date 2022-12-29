@@ -7,11 +7,37 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-@Entity @Data
+@Entity 
 public class SupportPysique {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     private String name;
 	private String url;
 	private long dateCreation;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public long getDateCreation() {
+		return dateCreation;
+	}
+	public void setDateCreation(long dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+	
+	
 }
