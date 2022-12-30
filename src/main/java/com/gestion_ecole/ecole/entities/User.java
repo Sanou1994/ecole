@@ -16,7 +16,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import lombok.Data;
 @Entity  
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class User  {
