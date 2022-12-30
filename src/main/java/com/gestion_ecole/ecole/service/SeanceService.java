@@ -1,12 +1,16 @@
 package com.gestion_ecole.ecole.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
+import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
+import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.entities.Seance;
@@ -43,6 +47,27 @@ public class SeanceService {
 		
 	  }
 
+	public Reponse findAllSeances()
+	{
+		Reponse reponse = new Reponse();	
+
+		try
+		{   List<SeanceDtoResponse> seances= seanceRepository.findAll()
+		                                                      .stream()
+		                                                      .map(Utility :: toSeanceDtoResponse)
+		                                                      .collect(Collectors.toList());
+			reponse.setCode(200);
+	    	reponse.setMessage(" La liste des  filières a été obtenue avec succès");
+	    	reponse.setResult(seances);
+	    	return reponse ;
+		}
+		catch (Exception e) 
+		{
+			reponse.setCode(500);
+	    	reponse.setMessage(" Une erreur interne est survenue");
+			return reponse ;
+		}
+	}
 
 	public Reponse findById(Long id) 
 	{

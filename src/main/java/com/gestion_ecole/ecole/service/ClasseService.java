@@ -1,12 +1,15 @@
 package com.gestion_ecole.ecole.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
+import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Reponse;
@@ -49,6 +52,29 @@ public class ClasseService {
 		}
 		
 	  }
+	
+	
+    public Reponse findAllClasses()
+    {
+    	Reponse reponse = new Reponse();	
+
+		try
+		{   List<ClasseDtoResponse> classes= classeRepository.findAll()
+		                                                      .stream()
+		                                                      .map(Utility :: toClasseDtoResponse)
+		                                                      .collect(Collectors.toList());
+			reponse.setCode(200);
+	    	reponse.setMessage(" La liste des  classes a été obtenu avec succès");
+	    	reponse.setResult(classes);
+	    	return reponse ;
+		}
+		catch (Exception e) 
+		{
+			reponse.setCode(500);
+	    	reponse.setMessage(" Une erreur interne est survenue");
+			return reponse ;
+		}
+    }
 
 
 	public Reponse findById(Long id) 

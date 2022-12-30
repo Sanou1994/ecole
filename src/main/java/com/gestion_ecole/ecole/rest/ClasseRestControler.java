@@ -35,6 +35,12 @@ public class ClasseRestControler {
 		Reponse	classeUpdate =classeService.findById(classeId);		
 		return classeUpdate ;
     }
+	@GetMapping(Utility.GET_ALL_CLASSE)
+    public Reponse getAllClasses() 
+    {
+    	Reponse list = classeService.findAllClasses();       
+        return list;
+    }
 	@GetMapping(Utility.DELETE_CLASSE_BY_ID)
 	public Reponse deleteClasse(@PathVariable(value = "id") Long classeId){
 				Reponse   resultat = classeService.delete(classeId);		

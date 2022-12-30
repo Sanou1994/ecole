@@ -35,6 +35,12 @@ public class SeanceRestControler {
 		Reponse	seanceUpdate =seanceService.findById(seanceId);		
 		return seanceUpdate ;
     }
+	@GetMapping(Utility.GET_ALL_SEANCE)
+    public Reponse getAllSeances() 
+    {
+    	Reponse list = seanceService.findAllSeances();       
+        return list;
+    }
 	@GetMapping(Utility.DELETE_SEANCE_BY_ID)
 	public Reponse deleteFiliere(@PathVariable(value = "id") Long seanceId){
 				Reponse   resultat = seanceService.delete(seanceId);		

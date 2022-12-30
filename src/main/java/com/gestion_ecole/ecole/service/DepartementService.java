@@ -1,12 +1,16 @@
 package com.gestion_ecole.ecole.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
+import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
+import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
 import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.DepartementRepository;
@@ -60,6 +64,29 @@ public Reponse createDepartement(DepartementDtoRequest departement)
 	}
 	
   }
+
+public Reponse findAllDepartements()
+{
+	Reponse reponse = new Reponse();	
+
+	try
+	{   List<DepartementDtoResponse> departements= departementRepository.findAll()
+	                                                      .stream()
+	                                                      .map(Utility :: toDtoDepartementDtoResponse)
+	                                                      .collect(Collectors.toList());
+		reponse.setCode(200);
+    	reponse.setMessage(" La liste des  départements a été obtenue avec succès");
+    	reponse.setResult(departements);
+    	return reponse ;
+	}
+	catch (Exception e) 
+	{
+		reponse.setCode(500);
+    	reponse.setMessage(" Une erreur interne est survenue");
+		return reponse ;
+	}
+}
+
 
 
 public Reponse findById(Long id) 

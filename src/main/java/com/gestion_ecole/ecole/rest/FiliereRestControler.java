@@ -35,6 +35,12 @@ public class FiliereRestControler {
 		Reponse	filiereUpdate =filiereService.findById(filiereId);		
 		return filiereUpdate ;
     }
+	@GetMapping(Utility.GET_ALL_FILIERE)
+    public Reponse getAllFilieres() 
+    {
+    	Reponse list = filiereService.findAllFilieres();       
+        return list;
+    }
 	@GetMapping(Utility.DELETE_FILIERE_BY_ID)
 	public Reponse deleteFiliere(@PathVariable(value = "id") Long filiereId){
 				Reponse   resultat = filiereService.delete(filiereId);		

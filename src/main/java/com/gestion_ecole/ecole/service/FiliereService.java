@@ -1,12 +1,17 @@
 package com.gestion_ecole.ecole.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
+import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
+import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
+import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
@@ -42,6 +47,28 @@ public Reponse createFiliere(FiliereDtoRequest filiere)
 	}
 	
   }
+
+public Reponse findAllFilieres()
+{
+	Reponse reponse = new Reponse();	
+
+	try
+	{   List<FiliereDtoResponse> filieres= filiereRepository.findAll()
+	                                                      .stream()
+	                                                      .map(Utility :: toFiliereDtoResponse)
+	                                                      .collect(Collectors.toList());
+		reponse.setCode(200);
+    	reponse.setMessage(" La liste des  filières a été obtenue avec succès");
+    	reponse.setResult(filieres);
+    	return reponse ;
+	}
+	catch (Exception e) 
+	{
+		reponse.setCode(500);
+    	reponse.setMessage(" Une erreur interne est survenue");
+		return reponse ;
+	}
+}
 
 
 public Reponse findById(Long id) 

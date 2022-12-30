@@ -36,6 +36,12 @@ public class DepartementRestControler {
 		Reponse	userUpdate =departementService.findById(departementId);		
 		return userUpdate ;
     }
+	@GetMapping(Utility.GET_ALL_DEPARTEMENT)
+    public Reponse getAllDepartements() 
+    {
+    	Reponse list = departementService.findAllDepartements();       
+        return list;
+    }
 	@GetMapping(Utility.DELETE_DEPARTEMENT_BY_ID)
 	public Reponse getDeleteDepartement(@PathVariable(value = "id") Long departementId){
 				Reponse   resultat = departementService.delete(departementId);		
