@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Note;
-import com.gestion_ecole.ecole.entities.Sceance;
+import com.gestion_ecole.ecole.entities.Seance;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class PersonnalDtoRequest  extends UserDtoRequest{
 		    private Filiere filiere;
 			private List<Note> notes = new ArrayList<Note>();
-			private List<Sceance> sceances = new ArrayList<Sceance>();
+			private List<Seance> seances = new ArrayList<Seance>();
 			public Filiere getFiliere() {
 				return filiere;
 			}
@@ -26,11 +26,11 @@ public class PersonnalDtoRequest  extends UserDtoRequest{
 			public void setNotes(List<Note> notes) {
 				this.notes = notes;
 			}
-			public List<Sceance> getSceances() {
-				return sceances;
+			public List<Seance> getSceances() {
+				return seances;
 			}
-			public void setSceances(List<Sceance> sceances) {
-				this.sceances = sceances;
+			public void setSceances(List<Seance> seances) {
+				this.seances = seances;
 			}	
 			
 }

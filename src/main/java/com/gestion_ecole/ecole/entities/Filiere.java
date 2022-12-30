@@ -29,6 +29,8 @@ public class Filiere {
 	private List<Personnal> personnals = new ArrayList<Personnal>();
 	@ManyToOne
 	private Departement departement;
+	
+	
 	public Long getId() {
 		return id;
 	}

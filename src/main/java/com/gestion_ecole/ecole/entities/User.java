@@ -50,9 +50,9 @@ public abstract class User  {
 	@OneToMany(orphanRemoval = true,targetEntity=Paiement.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Paiement> paiements = new ArrayList<Paiement>();
-	@OneToMany(orphanRemoval = true,targetEntity=Sceance.class,cascade = CascadeType.REMOVE, mappedBy="user")
+	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Sceance> sceances = new ArrayList<Sceance>();
+	private List<Seance> seances = new ArrayList<Seance>();
 	public Long getId() {
 		return id;
 	}
@@ -179,11 +179,11 @@ public abstract class User  {
 	public void setPaiements(List<Paiement> paiements) {
 		this.paiements = paiements;
 	}
-	public List<Sceance> getSceances() {
-		return sceances;
+	public List<Seance> getSceances() {
+		return seances;
 	}
-	public void setSceances(List<Sceance> sceances) {
-		this.sceances = sceances;
+	public void setSceances(List<Seance> seances) {
+		this.seances = seances;
 	}	
 	
 	

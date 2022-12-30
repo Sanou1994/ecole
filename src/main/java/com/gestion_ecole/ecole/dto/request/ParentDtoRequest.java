@@ -2,11 +2,13 @@ package com.gestion_ecole.ecole.dto.request;
 
 import java.util.List;
 
+import com.gestion_ecole.ecole.entities.Abscence;
+import com.gestion_ecole.ecole.entities.Paiement;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
+import com.gestion_ecole.ecole.entities.SupportPysique;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-@AllArgsConstructor @NoArgsConstructor
+
 public class ParentDtoRequest extends UserDtoRequest {
 	private List<Student> students ;
 
@@ -17,6 +19,28 @@ public class ParentDtoRequest extends UserDtoRequest {
 	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
+
+	public ParentDtoRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ParentDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
+			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
+			String telephone, String monToken, String login, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Abscence> abscences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances) {
+		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
+				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
+				paiements, seances);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ParentDtoRequest(List<Student> students) {
+		super();
+		this.students = students;
+	}
 	   
+	
     
 }

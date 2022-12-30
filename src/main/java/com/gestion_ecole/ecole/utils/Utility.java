@@ -6,18 +6,30 @@ import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 
+import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
+import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
+import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ParentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
+import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
+import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
+import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
+import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ParentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.PersonnalDtoResponse;
+import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.dto.response.StudentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.TeacherDtoResponse;
 import com.gestion_ecole.ecole.dto.response.UserDtoResponse;
+import com.gestion_ecole.ecole.entities.Classe;
+import com.gestion_ecole.ecole.entities.Departement;
+import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.Teacher;
 import com.gestion_ecole.ecole.entities.User;
@@ -192,6 +204,31 @@ public final class Utility {
 	public static final String DO_FORGOT_PASSWORD = "/user/forgot";
 	public static final String DO_UPDATE_PASSWORD = "/user/updatePassword";
 	public static final String DO_UPDATE_PASSWORD_USER = "/user/updatePassword/user";
+	
+	public static final String ADD_DEPARTEMENT = "/departement/add";
+	public static final String UPDATE_DEPARTEMENT = "/departement/update";
+	public static final String GET_DEPARTEMENT_BY_ID = "/acceuil/departement/departements/{id}";
+	public static final String DELETE_DEPARTEMENT_BY_ID = "/departement/departements/delete/{id}";
+	public static final String GET_ALL_DEPARTEMENT = "/acceuil/departement/departements";
+	
+	public static final String ADD_CLASSE = "/classe/add";
+	public static final String UPDATE_CLASSE = "/classe/update";
+	public static final String GET_CLASSE_BY_ID = "/acceuil/classe/classes/{id}";
+	public static final String DELETE_CLASSE_BY_ID = "/classe/classes/delete/{id}";
+	public static final String GET_ALL_CLASSE = "/acceuil/classe/classes";
+	
+	public static final String ADD_FILIERE = "/filiere/add";
+	public static final String UPDATE_FILIERE = "/filiere/update";
+	public static final String GET_FILIERE_BY_ID = "/acceuil/filiere/filieres/{id}";
+	public static final String DELETE_FILIERE_BY_ID = "/filiere/filieres/delete/{id}";
+	public static final String GET_ALL_FILIERE = "/acceuil/filiere/filieres";
+	
+	public static final String ADD_SEANCE = "/seance/add";
+	public static final String UPDATE_SEANCE = "/seance/update";
+	public static final String GET_SEANCE_BY_ID = "/acceuil/seance/seances/{id}";
+	public static final String DELETE_SEANCE_BY_ID = "/seance/seances/delete/{id}";
+	public static final String GET_ALL_SEANCE = "/acceuil/seance/seances";
+	
 	//GENERATE CALENDAR
 	public static int getMonthNumber(Date date) {
 		Calendar calendar = Calendar.getInstance();
@@ -337,5 +374,60 @@ public final class Utility {
 			
 		}
 		
+		//LES MAPPERS Departement
+		static 	ModelMapper modelMapper = new ModelMapper();
+		
+	    public static  DepartementDtoRequest toDtoDepartementDtoRequest(Departement departement) 
+	    {
+	    	
+		return modelMapper.map(departement, DepartementDtoRequest.class);
+	    }
+	    
+	    public static  DepartementDtoResponse toDtoDepartementDtoResponse(Departement departement) 
+	    {
+	    	
+		return modelMapper.map(departement, DepartementDtoResponse.class);
+	    }
+	    
+		public static  Departement toEntityDepartementFromRequest(DepartementDtoRequest departementDtoRequest) 
+		{
+		return modelMapper.map(departementDtoRequest, Departement.class);
+			
+		}	
+		
+		public static  Departement toEntityDepartementFromResponse(DepartementDtoRequest departementDtoRequest) 
+		{
+		return modelMapper.map(departementDtoRequest, Departement.class);
+			
+		}	
+		
+		//LES MAPPERS classe
+				
+			    public static  ClasseDtoResponse toClasseDtoResponse(Classe classe) 
+			    {
+			    	
+				return modelMapper.map(classe, ClasseDtoResponse.class);
+			    }
+			    
+			    public static Classe toClasse(ClasseDtoRequest classeDto) {
+			    	return modelMapper.map(classeDto, Classe.class);
+					
+				}
+			    
+		//Les mappers Filiere
+			    public static Filiere toFiliere(FiliereDtoRequest filiereDtoRequest) {
+			    	return modelMapper.map(filiereDtoRequest, Filiere.class);
+			    }
+			    public static FiliereDtoResponse toFiliereDtoResponse (Filiere filiere) {
+			    	return modelMapper.map(filiere, FiliereDtoResponse.class);
+			    }
+		
+		// Les mappers Seance
+			    public static Seance toSeance(SeanceDtoRequest seanceDtoRequest) {
+			    	return modelMapper.map(seanceDtoRequest, Seance.class);
+			    }
+			    public static SeanceDtoResponse toSeanceDtoResponse(Seance seance) {
+			    	return modelMapper.map(seance, SeanceDtoResponse.class);
+			    }
 		
 }

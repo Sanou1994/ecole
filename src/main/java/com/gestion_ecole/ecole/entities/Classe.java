@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.Data;
 
-@Entity @Data
+@Entity 
 public class Classe
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +44,66 @@ public class Classe
     private Teacher teacher;
 	@ManyToOne
     private Filiere filiere;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public List<Module> getModules() {
+		return modules;
+	}
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
+	public List<Student> getStudents() {
+		return students;
+	}
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	public List<EmploiDuTemps> getEmploiDuTemps() {
+		return emploiDuTemps;
+	}
+	public void setEmploiDuTemps(List<EmploiDuTemps> emploiDuTemps) {
+		this.emploiDuTemps = emploiDuTemps;
+	}
+	public List<Teacher> getProfesseurs() {
+		return professeurs;
+	}
+	public void setProfesseurs(List<Teacher> professeurs) {
+		this.professeurs = professeurs;
+	}
+	public List<Abscence> getAbscences() {
+		return abscences;
+	}
+	public void setAbscences(List<Abscence> abscences) {
+		this.abscences = abscences;
+	}
+	public List<CahierDeTexte> getCahierDeTextes() {
+		return cahierDeTextes;
+	}
+	public void setCahierDeTextes(List<CahierDeTexte> cahierDeTextes) {
+		this.cahierDeTextes = cahierDeTextes;
+	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	public Filiere getFiliere() {
+		return filiere;
+	}
+	public void setFiliere(Filiere filiere) {
+		this.filiere = filiere;
+	}
+	
+	
 }

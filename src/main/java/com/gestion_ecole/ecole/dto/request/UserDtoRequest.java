@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Abscence;
 import com.gestion_ecole.ecole.entities.Paiement;
-import com.gestion_ecole.ecole.entities.Sceance;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.SupportPysique;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class UserDtoRequest{
 	private List<Abscence> abscences = new ArrayList<Abscence>();
 	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
 	private List<Paiement> paiements = new ArrayList<Paiement>();
-	private List<Sceance> sceances = new ArrayList<Sceance>();
+	private List<Seance> seances = new ArrayList<Seance>();
 	
 	
 	public UserDtoRequest() {
@@ -45,7 +45,7 @@ public class UserDtoRequest{
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
 			String telephone, String monToken, String login, String password, String compteBancaire,
 			String resetPasswordToken, String role, List<Abscence> abscences, List<SupportPysique> supportPysiques,
-			List<Paiement> paiements, List<Sceance> sceances) {
+			List<Paiement> paiements, List<Seance> seances) {
 		super();
 		this.id = id;
 		this.prenom = prenom;
@@ -68,7 +68,7 @@ public class UserDtoRequest{
 		this.abscences = abscences;
 		this.supportPysiques = supportPysiques;
 		this.paiements = paiements;
-		this.sceances = sceances;
+		this.seances = seances;
 	}
 
 	public Long getId() {
@@ -239,12 +239,12 @@ public class UserDtoRequest{
 		this.paiements = paiements;
 	}
 
-	public List<Sceance> getSceances() {
-		return sceances;
+	public List<Seance> getSceances() {
+		return seances;
 	}
 
-	public void setSceances(List<Sceance> sceances) {
-		this.sceances = sceances;
+	public void setSceances(List<Seance> seances) {
+		this.seances = seances;
 	}
 	
 	

@@ -9,8 +9,8 @@ import javax.persistence.Table;
 
 
 @Entity 
-@Table(name="Sceance")
-public class Sceance
+@Table(name="Seance")
+public class Seance
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

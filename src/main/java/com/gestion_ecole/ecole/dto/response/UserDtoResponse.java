@@ -1,8 +1,6 @@
 package com.gestion_ecole.ecole.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 public class UserDtoResponse {
 	private Long id;
