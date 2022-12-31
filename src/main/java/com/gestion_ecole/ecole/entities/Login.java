@@ -11,6 +11,11 @@ public class Login {
 		this.password = password;
 		this.email = email;
 	}
+	
+	public Login() {
+		super();
+	}
+
 	public String getLogin() {
 		return login;
 	}

@@ -15,4 +15,14 @@ public class Note {
     private Student student;
 	@ManyToOne
     private Personnal personnal;
+	public Note(Long id, Student student, Personnal personnal) {
+		super();
+		this.id = id;
+		this.student = student;
+		this.personnal = personnal;
+	}
+	public Note() {
+		super();
+	}
+	
 }

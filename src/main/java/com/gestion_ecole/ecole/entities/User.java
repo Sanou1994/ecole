@@ -49,13 +49,46 @@ public abstract class User  {
 	@OneToMany(orphanRemoval = true,targetEntity=Paiement.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Paiement> paiements = new ArrayList<Paiement>();
-	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
+	@OneToMany(orphanRemoval = true,targetEntity=Sceance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 
 	private List<Sceance> sceances = new ArrayList<Sceance>();
 	
 
 
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public User(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
+			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
+			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
+			String role, List<Abscence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
+			List<Sceance> sceances) {
+		super();
+		this.id = id;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.adresse = adresse;
+		this.numeroMatriciule = numeroMatriciule;
+		this.typeDeRecrutement = typeDeRecrutement;
+		this.type = type;
+		this.naissance = naissance;
+		this.dateCreation = dateCreation;
+		this.status = status;
+		this.email = email;
+		this.telephone = telephone;
+		this.monToken = monToken;
+		this.login = login;
+		this.password = password;
+		this.compteBancaire = compteBancaire;
+		this.resetPasswordToken = resetPasswordToken;
+		this.role = role;
+		this.abscences = abscences;
+		this.supportPysiques = supportPysiques;
+		this.paiements = paiements;
+		this.sceances = sceances;
+	}
 	public Long getId() {
 		return id;
 	}

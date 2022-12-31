@@ -19,4 +19,25 @@ public class Personnal extends User {
 	@OneToMany(orphanRemoval = true,targetEntity=Note.class,cascade = CascadeType.REMOVE, mappedBy="personnal")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Note> notes = new ArrayList<Note>();
+	public Personnal(Filiere filiere, List<Note> notes) {
+		super();
+		this.filiere = filiere;
+		this.notes = notes;
+	}
+	public Personnal() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Personnal(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
+			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
+			String telephone, String monToken, String login, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Abscence> abscences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Sceance> sceances) {
+		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
+				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
+				paiements, sceances);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 		}

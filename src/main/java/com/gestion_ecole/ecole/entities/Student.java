@@ -35,4 +35,32 @@ public class Student extends User{
     private Classe classe;
 	@ManyToOne
 	private Departement departement;
+	public Student(List<Inscription> inscriptions, List<Note> notes, List<Student> parains,
+			List<Teacher> professeurAppuis, Teacher teacher, Parent parent, Classe classe, Departement departement) {
+		super();
+		this.inscriptions = inscriptions;
+		this.notes = notes;
+		this.parains = parains;
+		this.professeurAppuis = professeurAppuis;
+		this.teacher = teacher;
+		this.parent = parent;
+		this.classe = classe;
+		this.departement = departement;
+	}
+	public Student() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Student(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
+			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
+			String telephone, String monToken, String login, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Abscence> abscences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Sceance> sceances) {
+		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
+				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
+				paiements, sceances);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	}

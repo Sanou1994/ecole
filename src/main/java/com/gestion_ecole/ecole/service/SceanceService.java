@@ -10,60 +10,60 @@ import org.springframework.stereotype.Service;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.entities.Reponse;
-import com.gestion_ecole.ecole.entities.Seance;
+import com.gestion_ecole.ecole.entities.Sceance;
 import com.gestion_ecole.ecole.repository.SeanceRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
-public class SeanceService implements ISceanceService {
+public class SceanceService implements ISceanceService {
 	@Autowired
-	SeanceRepository seanceRepository;
+	SeanceRepository SceanceRepository;
 	
 	@Override
-	public Reponse createOrUpdateSceance(SeanceDtoRequest seance) {
+	public Reponse createOrUpdateSceance(SeanceDtoRequest Sceance) {
 		Reponse reponse = new Reponse();	
 
 		try
 		{   
-			Optional<Seance> soft = this.seanceRepository.findByType(seance.getType());
+			Optional<Sceance> soft = this.SceanceRepository.findByType(Sceance.getType());
 			if(!soft.isPresent())
 			{
 				
-				if(seance.getId() != null)
+				if(Sceance.getId() != null)
 				{
-					Optional<Seance> softGot = this.seanceRepository.findById(seance.getId());
+					Optional<Sceance> softGot = this.SceanceRepository.findById(Sceance.getId());
 
 					if(softGot.isPresent())
 					{
-						softGot.get().setType(seance.getType());
-						softGot.get().setCoefficient(seance.getCoefficient());
-						softGot.get().setMontantHoraire(seance.getMontantHoraire());
-						softGot.get().setNombreHeure(seance.getNombreHeure());
-						seanceRepository.save(softGot.get());
-				    	reponse.setMessage(" La seance a été modifiée avec succès !");
+						softGot.get().setType(Sceance.getType());
+						softGot.get().setCoefficient(Sceance.getCoefficient());
+						softGot.get().setMontantHoraire(Sceance.getMontantHoraire());
+						softGot.get().setNombreHeure(Sceance.getNombreHeure());
+						SceanceRepository.save(softGot.get());
+				    	reponse.setMessage(" La Sceance a été modifiée avec succès !");
 				    	reponse.setCode(200);
 
 					}
 					else
 					{
 						reponse.setCode(201);
-				    	reponse.setMessage(" La seance n'existe plus !");
+				    	reponse.setMessage(" La Sceance n'existe plus !");
 					}
 					
 				}
 				else
 				{
-					seanceRepository.save(Utility.toSeance(seance));
+					SceanceRepository.save(Utility.toSceance(Sceance));
 					reponse.setCode(200);
-			    	reponse.setMessage(" La seance a été créée avec succès !");
-			    	reponse.setResult(seance);
+			    	reponse.setMessage(" La Sceance a été créée avec succès !");
+			    	reponse.setResult(Sceance);
 				}
 			}
 			else
 			{
 				reponse.setCode(201);
-		    	reponse.setMessage(" La seance existe déjà!");
-		    	reponse.setResult(seance);
+		    	reponse.setMessage(" La Sceance existe déjà!");
+		    	reponse.setResult(Sceance);
 		    	
 			}
 			
@@ -84,10 +84,10 @@ public class SeanceService implements ISceanceService {
 
 		try
 		{   
-			Optional<Seance> soft = this.seanceRepository.findById(id);
+			Optional<Sceance> soft = this.SceanceRepository.findById(id);
 			reponse.setCode(200);
 	    	reponse.setMessage(" La séance a été obtenue avec succès!");
-	    	reponse.setResult(Utility.toSeanceDtoResponse(soft.orElse(null)));
+	    	reponse.setResult(Utility.toSceanceDtoResponse(soft.orElse(null)));
 		}
 		catch (Exception e) 
 		{
@@ -103,19 +103,19 @@ public class SeanceService implements ISceanceService {
 
 		try
 		{
-			Seance seance = seanceRepository.findById(id).get();
-		    if(seance != null)
+			Sceance sceance = SceanceRepository.findById(id).get();
+		    if(sceance != null)
 		    {
-		    	seance.setStatus(false);
-		    	seanceRepository.save(seance);
+		    	sceance.setStatus(false);
+		    	SceanceRepository.save(sceance);
 		    	reponse.setCode(200);
 		    	reponse.setMessage(" La séance a été supprimée avec succès");
-		    	reponse.setResult(Utility.toSeanceDtoResponse(seance));
+		    	reponse.setResult(Utility.toSceanceDtoResponse(sceance));
 		    }	
 		    else
 		    {
 		    	reponse.setCode(201);
-		    	reponse.setMessage(" Cette seance n'existe pas ");
+		    	reponse.setMessage(" Cette Sceance n'existe pas ");
 		    }
 			return reponse ;
 
@@ -134,13 +134,13 @@ public class SeanceService implements ISceanceService {
 		Reponse reponse = new Reponse();	
 
 		try
-		{   List<SeanceDtoResponse> seances= seanceRepository.findAll()
+		{   List<SeanceDtoResponse> Sceances= SceanceRepository.findAll()
 		                                                      .stream()
-		                                                      .map(Utility :: toSeanceDtoResponse)
+		                                                      .map(Utility :: toSceanceDtoResponse)
 		                                                      .collect(Collectors.toList());
 			reponse.setCode(200);
 	    	reponse.setMessage(" La liste des  scéances a été obtenue avec succès");
-	    	reponse.setResult(seances);
+	    	reponse.setResult(Sceances);
 		}
 		catch (Exception e) 
 		{

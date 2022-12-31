@@ -38,6 +38,16 @@ public class SupportPysique {
 	public void setDateCreation(long dateCreation) {
 		this.dateCreation = dateCreation;
 	}
+	public SupportPysique(Long id, String name, String url, long dateCreation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.url = url;
+		this.dateCreation = dateCreation;
+	}
+	public SupportPysique() {
+		super();
+	}
 	
 	
 }

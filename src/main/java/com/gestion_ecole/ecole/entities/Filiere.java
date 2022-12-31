@@ -30,6 +30,19 @@ public class Filiere {
 	private Departement departement;
 	
 	
+	public Filiere() {
+		super();
+	}
+	public Filiere(Long id, boolean status, String titre, List<Classe> classes, List<Personnal> personnals,
+			Departement departement) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.titre = titre;
+		this.classes = classes;
+		this.personnals = personnals;
+		this.departement = departement;
+	}
 	public boolean isStatus() {
 		return status;
 	}

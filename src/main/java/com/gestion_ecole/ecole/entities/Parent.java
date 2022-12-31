@@ -18,5 +18,27 @@ public class Parent extends User {
 	@OneToMany(orphanRemoval = true,targetEntity=Student.class, cascade = CascadeType.ALL,mappedBy = "parent")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Student> students = new ArrayList<Student>();
+
+	public Parent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Parent(List<Student> students) {
+		super();
+		this.students = students;
+	}
+
+	public Parent(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
+			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
+			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
+			String role, List<Abscence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
+			List<Sceance> sceances) {
+		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
+				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
+				paiements, sceances);
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	}

@@ -44,6 +44,25 @@ public class Classe
 	@ManyToOne
     private Filiere filiere;
 	
+	public Classe() {
+		super();
+	}
+	public Classe(Long id, String nom, boolean status, List<Module> modules, List<Student> students,
+			List<EmploiDuTemps> emploiDuTemps, List<Teacher> professeurs, List<Abscence> abscences,
+			List<CahierDeTexte> cahierDeTextes, Teacher teacher, Filiere filiere) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.status = status;
+		this.modules = modules;
+		this.students = students;
+		this.emploiDuTemps = emploiDuTemps;
+		this.professeurs = professeurs;
+		this.abscences = abscences;
+		this.cahierDeTextes = cahierDeTextes;
+		this.teacher = teacher;
+		this.filiere = filiere;
+	}
 	public boolean isStatus() {
 		return status;
 	}

@@ -12,6 +12,15 @@ public class CahierDeTexte {
 	private Long id;
 	@ManyToOne
     private Classe classe;
+	
+	public CahierDeTexte() {
+		super();
+	}
+	public CahierDeTexte(Long id, Classe classe) {
+		super();
+		this.id = id;
+		this.classe = classe;
+	}
 	public Long getId() {
 		return id;
 	}

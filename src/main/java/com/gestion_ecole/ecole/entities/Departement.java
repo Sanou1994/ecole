@@ -30,6 +30,21 @@ public class Departement {
 	@OneToMany(orphanRemoval = true,targetEntity=Paiement.class, cascade = CascadeType.ALL,mappedBy = "departement")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Paiement>paiements = new ArrayList<Paiement>();
+	
+	public Departement() {
+		super();
+	}
+	public Departement(Long id, boolean status, String nom, List<Filiere> filieres, List<Student> students,
+			List<Teacher> teachers, List<Paiement> paiements) {
+		super();
+		this.id = id;
+		this.status = status;
+		this.nom = nom;
+		this.filieres = filieres;
+		this.students = students;
+		this.teachers = teachers;
+		this.paiements = paiements;
+	}
 	public Long getId() {
 		return id;
 	}

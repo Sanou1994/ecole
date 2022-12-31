@@ -29,6 +29,20 @@ public class Inscription {
 	@OneToMany(orphanRemoval = true,targetEntity=SupportPysique.class, cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
+	
+	
+	public Inscription() {
+		super();
+	}
+	public Inscription(Long id, Teacher teacher, Student student, Personnal personnal,
+			List<SupportPysique> supportPysiques) {
+		super();
+		this.id = id;
+		this.teacher = teacher;
+		this.student = student;
+		this.personnal = personnal;
+		this.supportPysiques = supportPysiques;
+	}
 	public Long getId() {
 		return id;
 	}

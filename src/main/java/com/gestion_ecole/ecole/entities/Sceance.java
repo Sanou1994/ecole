@@ -15,6 +15,7 @@ public class Sceance
 	private Long id;
 	private String type;
 	private float coefficient;
+	private boolean status=true;
 	private int nombreHeure;
 	private double montantHoraire;
 	@ManyToOne
@@ -25,6 +26,24 @@ public class Sceance
     private Module module;
 	@ManyToOne
     private Personnal personnal;
+	
+	public Sceance() {
+		super();
+	}
+	public Sceance(Long id, String type, float coefficient, boolean status, int nombreHeure, double montantHoraire,
+			User user, Teacher teacher, Module module, Personnal personnal) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.coefficient = coefficient;
+		this.status = status;
+		this.nombreHeure = nombreHeure;
+		this.montantHoraire = montantHoraire;
+		this.user = user;
+		this.teacher = teacher;
+		this.module = module;
+		this.personnal = personnal;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -78,6 +97,12 @@ public class Sceance
 	}
 	public void setPersonnal(Personnal personnal) {
 		this.personnal = personnal;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

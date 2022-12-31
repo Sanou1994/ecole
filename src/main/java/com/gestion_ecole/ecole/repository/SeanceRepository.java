@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gestion_ecole.ecole.entities.Seance;
+import com.gestion_ecole.ecole.entities.Sceance;
 
-public interface SeanceRepository extends JpaRepository<Seance, Long> {
-	Optional<Seance> findByType(String type);
+public interface SeanceRepository extends JpaRepository<Sceance, Long> {
+	Optional<Sceance> findByType(String type);
 }

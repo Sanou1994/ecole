@@ -24,4 +24,20 @@ private Classe classe;
 private String raison;
 @ManyToOne
 private User user;
+public Abscence(Long id, long dateDebut, long dateFin, boolean status, long dateAbscenceCreate, Classe classe,
+		String raison, User user) {
+	super();
+	this.id = id;
+	this.dateDebut = dateDebut;
+	this.dateFin = dateFin;
+	this.status = status;
+	this.dateAbscenceCreate = dateAbscenceCreate;
+	this.classe = classe;
+	this.raison = raison;
+	this.user = user;
+}
+public Abscence() {
+	super();
+}
+
 }
