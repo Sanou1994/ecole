@@ -19,8 +19,4 @@ public class Personnal extends User {
 	@OneToMany(orphanRemoval = true,targetEntity=Note.class,cascade = CascadeType.REMOVE, mappedBy="personnal")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Note> notes = new ArrayList<Note>();
-	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="personnal")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Seance> seances = new ArrayList<Seance>();
-
-	}
+		}

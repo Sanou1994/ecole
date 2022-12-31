@@ -8,39 +8,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
-import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
 import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.entities.Classe;
-import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.ClasseRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
-public class ClasseService {
+public class ClasseService implements IClasseService{
 	@Autowired
-	ClasseRepository classeRepository;
+	private ClasseRepository classeRepository;
 	
-	public Reponse createClasse(ClasseDtoRequest classe) 
-	{
-		
+
+
+	@Override
+	public Reponse createOrUpdateClasse(ClasseDtoRequest classe) {
 		Reponse reponse = new Reponse();	
 
 		try
 		{   
 			Optional<Classe> soft = this.classeRepository.findByNom(classe.getNom());
-			if(soft==null) {
-				classeRepository.save(Utility.toClasse(classe));
-				reponse.setCode(200);
-		    	reponse.setMessage(" La classe a été créée avec succès!");
-		    	reponse.setResult(classe);
-		    	return reponse ;
+			if(!soft.isPresent())
+			{
+				
+				if(classe.getId() != null)
+				{
+					Optional<Classe> softGot = this.classeRepository.findById(classe.getId());
+
+					if(softGot.isPresent())
+					{
+						softGot.get().setNom(classe.getNom());
+						classeRepository.save(softGot.get());
+				    	reponse.setMessage(" La classe a été modifiée avec succès !");
+				    	reponse.setCode(200);
+
+					}
+					else
+					{
+						reponse.setCode(201);
+				    	reponse.setMessage(" La classe n'existe plus !");
+					}
+					
+				}
+				else
+				{
+					classeRepository.save(Utility.toClasse(classe));
+					reponse.setCode(200);
+			    	reponse.setMessage(" La classe a été créée avec succès !");
+			    	reponse.setResult(classe);
+				}
 			}
-			else {
+			else
+			{
 				reponse.setCode(201);
 		    	reponse.setMessage(" La classe existe déjà!");
 		    	reponse.setResult(classe);
-		    	return reponse ;
+		    	
 			}
 			
 		}
@@ -48,15 +71,69 @@ public class ClasseService {
 		{
 			reponse.setCode(500);
 	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
+			
 		}
-		
-	  }
-	
-	
-    public Reponse findAllClasses()
-    {
-    	Reponse reponse = new Reponse();	
+		return reponse ;
+	}
+
+
+	@Override
+	public Reponse getClasseById(Long id) {
+		Reponse reponse = new Reponse();	
+
+		try
+		{   
+			Optional<Classe> soft = this.classeRepository.findById(id);
+			reponse.setCode(200);
+	    	reponse.setMessage(" La classe  a été obtenue avec succès!");
+	    	reponse.setResult(Utility.toClasseDtoResponse(soft.orElse(null)));
+	    	
+		}
+		catch (Exception e) 
+		{
+			reponse.setCode(500);
+	    	reponse.setMessage(" Une erreur interne est survenue");
+		}
+		return reponse ;
+	}
+
+
+	@Override
+	public Reponse bloquerClasse(Long id) {
+		Reponse reponse = new Reponse();		
+
+		try
+		{
+			Classe classe = classeRepository.findById(id).get();
+		    if(classe != null)
+		    {
+                 classe.setStatus(false);
+		    Classe cs=	classeRepository.save(classe);
+		    	reponse.setCode(200);
+		    	reponse.setMessage(" La classe a été supprimée avec succès");
+		    	reponse.setResult(Utility.toClasseDtoResponse(cs));
+		    }	
+		    else
+		    {
+		    	reponse.setCode(201);
+		    	reponse.setMessage(" Cette classe n'existe pas ");
+		    }
+
+		}
+		catch (Exception e) 
+		{
+			reponse.setCode(500);
+	    	reponse.setMessage(" Une erreur interne est survenue");
+			
+
+		}  
+		return reponse ;
+	}
+
+
+	@Override
+	public Reponse ListeClasses() {
+		Reponse reponse = new Reponse();	
 
 		try
 		{   List<ClasseDtoResponse> classes= classeRepository.findAll()
@@ -74,61 +151,6 @@ public class ClasseService {
 	    	reponse.setMessage(" Une erreur interne est survenue");
 			return reponse ;
 		}
-    }
-
-
-	public Reponse findById(Long id) 
-	{
-		
-		Reponse reponse = new Reponse();	
-
-		try
-		{   
-			Optional<Classe> soft = this.classeRepository.findById(id);
-			reponse.setCode(200);
-	    	reponse.setMessage(" Le département a été obtenu avec succès!");
-	    	reponse.setResult(Utility.toClasseDtoResponse(soft.orElse(null)));
-	    	return reponse ;
-		}
-		catch (Exception e) 
-		{
-			reponse.setCode(500);
-	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
-		}
-		
-	  }
-
-
-
-	public Reponse delete(Long id) {
-		Reponse reponse = new Reponse();		
-
-		try
-		{
-			Classe classe = classeRepository.findById(id).get();
-		    if(classe != null)
-		    {
-		    	classeRepository.deleteById(id);
-		    	reponse.setCode(200);
-		    	reponse.setMessage(" La classe a été supprimée avec succès");
-		    	reponse.setResult(Utility.toClasseDtoResponse(classe));
-		    }	
-		    else
-		    {
-		    	reponse.setCode(201);
-		    	reponse.setMessage(" Cette classe n'existe pas ");
-		    }
-			return reponse ;
-
-		}
-		catch (Exception e) 
-		{
-			reponse.setCode(500);
-	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
-
-		}  
 	}
 
 

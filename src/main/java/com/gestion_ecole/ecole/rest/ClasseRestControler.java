@@ -9,42 +9,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.entities.Reponse;
-import com.gestion_ecole.ecole.service.ClasseService;
+import com.gestion_ecole.ecole.service.IClasseService;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @RestController
 public class ClasseRestControler {
 	@Autowired
-	ClasseService classeService;
+	private IClasseService classeService;
 	
 	@PostMapping(Utility.ADD_CLASSE)
 	public Reponse addClasse( @RequestBody ClasseDtoRequest classe){
-		Reponse resultatCreation = classeService.createClasse(classe);
+		Reponse resultatCreation = classeService.createOrUpdateClasse(classe);
 		return resultatCreation;
     }
 
-	/*@PostMapping(Utility.UPDATE_USER)
-	public Reponse getUpdateUser( @RequestBody StudentDtoRequest user){		
-		Reponse	 userUpdate = accountService.createOrUpdateUser(user);
-				
-		return userUpdate;
-    } */
 	
 	@GetMapping(Utility.GET_CLASSE_BY_ID)
 	public Reponse getClasseById(@PathVariable(value = "id") Long classeId){		
-		Reponse	classeUpdate =classeService.findById(classeId);		
+		Reponse	classeUpdate =classeService.getClasseById(classeId);		
 		return classeUpdate ;
     }
 	@GetMapping(Utility.GET_ALL_CLASSE)
     public Reponse getAllClasses() 
     {
-    	Reponse list = classeService.findAllClasses();       
+    	Reponse list = classeService.ListeClasses();       
         return list;
     }
 	@GetMapping(Utility.DELETE_CLASSE_BY_ID)
 	public Reponse deleteClasse(@PathVariable(value = "id") Long classeId){
-				Reponse   resultat = classeService.delete(classeId);		
+		Reponse   resultat = classeService.bloquerClasse(classeId);		
 			
-					return resultat;
+		return resultat;
     }
 }

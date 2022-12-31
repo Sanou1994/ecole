@@ -1,6 +1,5 @@
 package com.gestion_ecole.ecole.service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,50 +8,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
-import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
 import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.DepartementRepository;
-import com.gestion_ecole.ecole.repository.FiliereRepository;
-import com.gestion_ecole.ecole.repository.PaiementRepository;
-import com.gestion_ecole.ecole.repository.StudentRepository;
-import com.gestion_ecole.ecole.repository.TeacherRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
-public class DepartementService {
+public class DepartementService   implements IDepartementService{
 @Autowired
 DepartementRepository departementRepository;
-@Autowired
-FiliereRepository filiereRepository;
-@Autowired
-StudentRepository studentRepository;
-@Autowired
-TeacherRepository teacherRepository;
-@Autowired
-PaiementRepository paiemenentRepository;
 
-public Reponse createDepartement(DepartementDtoRequest departement) 
-{
-	
+
+
+@Override
+public Reponse createOrUpdateDepartement(DepartementDtoRequest departement) {
 	Reponse reponse = new Reponse();	
 
 	try
 	{   
 		Optional<Departement> soft = this.departementRepository.findByNom(departement.getNom());
-		if(soft==null) {
-			departementRepository.save(Utility.toEntityDepartementFromRequest(departement));
-			reponse.setCode(200);
-	    	reponse.setMessage(" Le département a été créé avec succès!");
-	    	reponse.setResult(departement);
-	    	return reponse ;
+		if(!soft.isPresent()) 
+		{
+			if(departement.getId() != null)
+			{
+				Optional<Departement> departementGot = this.departementRepository.findById(departement.getId());
+
+				if(departementGot.isPresent())
+				{
+					departementGot.get().setNom(departement.getNom());
+					departementRepository.save(departementGot.get());
+			    	reponse.setMessage(" Le département a été modifié avec succès !");
+			    	reponse.setCode(200);
+
+				}
+				else
+				{
+					reponse.setCode(201);
+			    	reponse.setMessage(" Le département n'existe plus !");
+				}
+				
+			}
+			else
+			{
+				departementRepository.save(Utility.toEntityDepartementFromRequest(departement));
+				reponse.setCode(200);
+		    	reponse.setMessage(" Le département a été créée avec succès !");
+		    	reponse.setResult(departement);
+			}
+			
+		
 		}
-		else {
+		else 
+		{
 			reponse.setCode(201);
 	    	reponse.setMessage(" Le département existe déjà!");
 	    	reponse.setResult(departement);
-	    	return reponse ;
 		}
 		
 	}
@@ -60,38 +71,13 @@ public Reponse createDepartement(DepartementDtoRequest departement)
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
 	}
-	
-  }
+	return reponse ;
 
-public Reponse findAllDepartements()
-{
-	Reponse reponse = new Reponse();	
-
-	try
-	{   List<DepartementDtoResponse> departements= departementRepository.findAll()
-	                                                      .stream()
-	                                                      .map(Utility :: toDtoDepartementDtoResponse)
-	                                                      .collect(Collectors.toList());
-		reponse.setCode(200);
-    	reponse.setMessage(" La liste des  départements a été obtenue avec succès");
-    	reponse.setResult(departements);
-    	return reponse ;
-	}
-	catch (Exception e) 
-	{
-		reponse.setCode(500);
-    	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
-	}
 }
 
-
-
-public Reponse findById(Long id) 
-{
-	
+@Override
+public Reponse getDepartementById(Long id) {
 	Reponse reponse = new Reponse();	
 
 	try
@@ -100,20 +86,18 @@ public Reponse findById(Long id)
 		reponse.setCode(200);
     	reponse.setMessage(" Le département a été obtenu avec succès!");
     	reponse.setResult(Utility.toDtoDepartementDtoResponse(soft.orElse(null)));
-    	return reponse ;
 	}
 	catch (Exception e) 
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
 	}
-	
-  }
+	return reponse ;
 
+}
 
-
-public Reponse delete(Long id) {
+@Override
+public Reponse bloquerDepartement(Long id) {
 	Reponse reponse = new Reponse();		
 
 	try
@@ -121,7 +105,8 @@ public Reponse delete(Long id) {
 		Departement departement = departementRepository.findById(id).get();
 	    if(departement != null)
 	    {
-	    	departementRepository.deleteById(id);
+	    	departement.setStatus(false);
+	    	departementRepository.save(departement);
 	    	reponse.setCode(200);
 	    	reponse.setMessage(" Le département a été supprimé avec succès");
 	    	reponse.setResult(Utility.toDtoDepartementDtoResponse(departement));
@@ -140,7 +125,29 @@ public Reponse delete(Long id) {
     	reponse.setMessage(" Une erreur interne est survenue");
 		return reponse ;
 
-	}  
+	} 
+}
+
+@Override
+public Reponse ListeDepartements() {
+	Reponse reponse = new Reponse();	
+
+	try
+	{   List<DepartementDtoResponse> departements= departementRepository.findAll()
+	                                                      .stream()
+	                                                      .map(Utility :: toDtoDepartementDtoResponse)
+	                                                      .collect(Collectors.toList());
+		reponse.setCode(200);
+    	reponse.setMessage(" La liste des  départements a été obtenue avec succès");
+    	reponse.setResult(departements);
+    	return reponse ;
+	}
+	catch (Exception e) 
+	{
+		reponse.setCode(500);
+    	reponse.setMessage(" Une erreur interne est survenue");
+		return reponse ;
+	}
 }
 
 

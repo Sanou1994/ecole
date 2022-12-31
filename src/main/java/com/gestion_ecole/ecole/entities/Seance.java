@@ -15,17 +15,14 @@ public class Seance
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String type;
+	private boolean status=true;
 	private float coefficient;
 	private int nombreHeure;
 	private double montantHoraire;
 	@ManyToOne
 	private User  user;
 	@ManyToOne
-    private Teacher teacher;
-	@ManyToOne
     private Module module;
-	@ManyToOne
-    private Personnal personnal;
 	public Long getId() {
 		return id;
 	}
@@ -62,23 +59,19 @@ public class Seance
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Teacher getTeacher() {
-		return teacher;
-	}
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
+	
 	public Module getModule() {
 		return module;
 	}
 	public void setModule(Module module) {
 		this.module = module;
 	}
-	public Personnal getPersonnal() {
-		return personnal;
+	
+	public boolean isStatus() {
+		return status;
 	}
-	public void setPersonnal(Personnal personnal) {
-		this.personnal = personnal;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

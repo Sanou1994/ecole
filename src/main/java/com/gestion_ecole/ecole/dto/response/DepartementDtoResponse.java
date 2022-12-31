@@ -1,27 +1,14 @@
 package com.gestion_ecole.ecole.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.gestion_ecole.ecole.entities.Filiere;
-import com.gestion_ecole.ecole.entities.Paiement;
-import com.gestion_ecole.ecole.entities.Student;
-import com.gestion_ecole.ecole.entities.Teacher;
-
+@AllArgsConstructor @NoArgsConstructor
 public class DepartementDtoResponse {
 
 	private Long id;
 	private String nom;
-	
+	private boolean status;
 	public Long getId() {
 		return id;
 	}
@@ -33,6 +20,12 @@ public class DepartementDtoResponse {
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	

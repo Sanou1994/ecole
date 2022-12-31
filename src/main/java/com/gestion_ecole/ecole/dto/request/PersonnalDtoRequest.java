@@ -5,15 +5,17 @@ import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Note;
-import com.gestion_ecole.ecole.entities.Seance;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
  @AllArgsConstructor @NoArgsConstructor
 public class PersonnalDtoRequest  extends UserDtoRequest{
+	 
 		    private Filiere filiere;
 			private List<Note> notes = new ArrayList<Note>();
-			private List<Seance> seances = new ArrayList<Seance>();
+			
+			
+			
 			public Filiere getFiliere() {
 				return filiere;
 			}
@@ -26,11 +28,7 @@ public class PersonnalDtoRequest  extends UserDtoRequest{
 			public void setNotes(List<Note> notes) {
 				this.notes = notes;
 			}
-			public List<Seance> getSceances() {
-				return seances;
-			}
-			public void setSceances(List<Seance> seances) {
-				this.seances = seances;
-			}	
+			
+			
 			
 }

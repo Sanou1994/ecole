@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import lombok.Data;
-
 @Entity 
 public class EmploiDuTemps {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

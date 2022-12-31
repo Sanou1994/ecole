@@ -7,95 +7,96 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
-import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
-import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
 import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
-import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.FiliereRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
-public class FiliereService {
+public class FiliereService implements IFiliereService{
 @Autowired
-FiliereRepository filiereRepository;
+private FiliereRepository filiereRepository;
 
-public Reponse createFiliere(FiliereDtoRequest filiere) 
-{
-	
+
+@Override
+public Reponse createOrUpdateFiliere(FiliereDtoRequest filiere) {
 	Reponse reponse = new Reponse();	
 
 	try
 	{   
-		
-			filiereRepository.save(Utility.toFiliere(filiere));
-			reponse.setCode(200);
-	    	reponse.setMessage(" La filière a été créée avec succès!");
+		Filiere soft = this.filiereRepository.findByTitre(filiere.getTitre());
+		if( soft == null)
+		{
+			
+			if(filiere.getId() != null)
+			{
+				Optional<Filiere> softGot = this.filiereRepository.findById(filiere.getId());
+
+				if(softGot.isPresent())
+				{
+					softGot.get().setTitre(filiere.getTitre());
+					filiereRepository.save(softGot.get());
+			    	reponse.setMessage(" La filière a été modifiée avec succès !");
+			    	reponse.setCode(200);
+
+				}
+				else
+				{
+					reponse.setCode(201);
+			    	reponse.setMessage(" La filière n'existe plus !");
+				}
+				
+			}
+			else
+			{
+				filiereRepository.save(Utility.toFiliere(filiere));
+				reponse.setCode(200);
+		    	reponse.setMessage(" La filière a été créée avec succès !");
+		    	reponse.setResult(filiere);
+			}
+		}
+		else
+		{
+			reponse.setCode(201);
+	    	reponse.setMessage(" La filière existe déjà!");
 	    	reponse.setResult(filiere);
-	    	return reponse ;
-		
+	    	
+		}
 		
 	}
 	catch (Exception e) 
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
+		
 	}
-	
-  }
-
-public Reponse findAllFilieres()
-{
-	Reponse reponse = new Reponse();	
-
-	try
-	{   List<FiliereDtoResponse> filieres= filiereRepository.findAll()
-	                                                      .stream()
-	                                                      .map(Utility :: toFiliereDtoResponse)
-	                                                      .collect(Collectors.toList());
-		reponse.setCode(200);
-    	reponse.setMessage(" La liste des  filières a été obtenue avec succès");
-    	reponse.setResult(filieres);
-    	return reponse ;
-	}
-	catch (Exception e) 
-	{
-		reponse.setCode(500);
-    	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
-	}
+	return reponse ;
 }
 
-
-public Reponse findById(Long id) 
-{
-	
+@Override
+public Reponse getFiliereById(Long id) {
 	Reponse reponse = new Reponse();	
 
 	try
 	{   
 		Optional<Filiere> soft = this.filiereRepository.findById(id);
 		reponse.setCode(200);
-    	reponse.setMessage(" La filière a été obtenue avec succès!");
+    	reponse.setMessage(" La filière  a été obtenue avec succès!");
     	reponse.setResult(Utility.toFiliereDtoResponse(soft.orElse(null)));
-    	return reponse ;
+    	
 	}
 	catch (Exception e) 
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
 	}
-	
-  }
+	return reponse ;
+}
 
-
-
-public Reponse delete(Long id) {
+@Override
+public Reponse bloquerFiliere(Long id) {
 	Reponse reponse = new Reponse();		
 
 	try
@@ -103,25 +104,48 @@ public Reponse delete(Long id) {
 		Filiere filiere = filiereRepository.findById(id).get();
 	    if(filiere != null)
 	    {
-	    	filiereRepository.deleteById(id);
+	    	filiere.setStatus(false);
+	    	Filiere cs=	filiereRepository.save(filiere);
 	    	reponse.setCode(200);
 	    	reponse.setMessage(" La filière a été supprimée avec succès");
-	    	reponse.setResult(Utility.toFiliereDtoResponse(filiere));
+	    	reponse.setResult(Utility.toFiliereDtoResponse(cs));
 	    }	
 	    else
 	    {
 	    	reponse.setCode(201);
-	    	reponse.setMessage(" Cette filière n'existe pas ");
+	    	reponse.setMessage(" Cette classe n'existe pas ");
 	    }
-		return reponse ;
 
 	}
 	catch (Exception e) 
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-		return reponse ;
+		
 
 	}  
+	return reponse ;
+}
+
+@Override
+public Reponse ListeFilieres() {
+	Reponse reponse = new Reponse();	
+
+	try
+	{   List<FiliereDtoResponse> classes= filiereRepository.findAll()
+	                                                      .stream()
+	                                                      .map(Utility :: toFiliereDtoResponse)
+	                                                      .collect(Collectors.toList());
+		reponse.setCode(200);
+    	reponse.setMessage(" La liste des  filières a été obtenu avec succès");
+    	reponse.setResult(classes);
+    	return reponse ;
+	}
+	catch (Exception e) 
+	{
+		reponse.setCode(500);
+    	reponse.setMessage(" Une erreur interne est survenue");
+		return reponse ;
+	}
 }
 }

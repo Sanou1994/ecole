@@ -14,14 +14,13 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import lombok.Data;
-
 @Entity 
 public class Classe
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nom;
+	private boolean status=true;
 	@OneToMany(orphanRemoval = true,targetEntity=Module.class, cascade = CascadeType.ALL,mappedBy = "classe")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Module> modules = new ArrayList<Module>();
@@ -44,6 +43,13 @@ public class Classe
     private Teacher teacher;
 	@ManyToOne
     private Filiere filiere;
+	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	public Long getId() {
 		return id;
 	}

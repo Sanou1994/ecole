@@ -9,42 +9,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
 import com.gestion_ecole.ecole.entities.Reponse;
-import com.gestion_ecole.ecole.service.DepartementService;
+import com.gestion_ecole.ecole.service.IDepartementService;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @RestController
 public class DepartementRestControler {
 
 	@Autowired
-	DepartementService departementService;
+	private IDepartementService departementService;
 	
 	@PostMapping(Utility.ADD_DEPARTEMENT)
 	public Reponse addDepartement( @RequestBody DepartementDtoRequest departement){
-		Reponse resultatCreation = departementService.createDepartement(departement);
+		Reponse resultatCreation = departementService.createOrUpdateDepartement(departement);
 		return resultatCreation;
     }
 
-	/*@PostMapping(Utility.UPDATE_USER)
-	public Reponse getUpdateUser( @RequestBody StudentDtoRequest user){		
-		Reponse	 userUpdate = accountService.createOrUpdateUser(user);
-				
-		return userUpdate;
-    } */
 	
 	@GetMapping(Utility.GET_DEPARTEMENT_BY_ID)
 	public Reponse getDepartementById(@PathVariable(value = "id") Long departementId){		
-		Reponse	userUpdate =departementService.findById(departementId);		
+		Reponse	userUpdate =departementService.getDepartementById(departementId);		
 		return userUpdate ;
     }
 	@GetMapping(Utility.GET_ALL_DEPARTEMENT)
     public Reponse getAllDepartements() 
     {
-    	Reponse list = departementService.findAllDepartements();       
+    	Reponse list = departementService.ListeDepartements();       
         return list;
     }
 	@GetMapping(Utility.DELETE_DEPARTEMENT_BY_ID)
 	public Reponse getDeleteDepartement(@PathVariable(value = "id") Long departementId){
-				Reponse   resultat = departementService.delete(departementId);		
+				Reponse   resultat = departementService.bloquerDepartement(departementId);		
 			
 					return resultat;
     }

@@ -12,12 +12,11 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
-import lombok.Data;
 @Entity 
 public class Departement {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private boolean status=true;
 	private String nom;
 	@OneToMany(orphanRemoval = true,targetEntity=Filiere.class, cascade = CascadeType.ALL,mappedBy = "departement")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -66,6 +65,12 @@ public class Departement {
 	}
 	public void setPaiements(List<Paiement> paiements) {
 		this.paiements = paiements;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

@@ -5,7 +5,6 @@ import java.util.List;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Inscription;
-import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ public class TeacherDtoRequest extends UserDtoRequest {
 		private List<Inscription> inscriptions ;
 		private List<Student> students ;
 	private List<Classe> classes ;
-	private List<Seance> seances ;
+	
     private Classe classe;
     private Student student;
 	
@@ -46,14 +45,7 @@ public class TeacherDtoRequest extends UserDtoRequest {
 		this.classes = classes;
 	}
 
-	public List<Seance> getSceances() {
-		return seances;
-	}
-
-	public void setSceances(List<Seance> seances) {
-		this.seances = seances;
-	}
-
+	
 	public Classe getClasse() {
 		return classe;
 	}

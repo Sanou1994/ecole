@@ -6,6 +6,25 @@ public class SeanceDtoRequest {
 	private float coefficient;
 	private int nombreHeure;
 	private double montantHoraire;
+	private boolean status=true;
+	public SeanceDtoRequest() {
+		super();
+	}
+	public SeanceDtoRequest(Long id, String type, float coefficient, int nombreHeure, double montantHoraire) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.coefficient = coefficient;
+		this.nombreHeure = nombreHeure;
+		this.montantHoraire = montantHoraire;
+	}
+	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	public Long getId() {
 		return id;
 	}

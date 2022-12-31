@@ -45,158 +45,15 @@ public final class Utility {
 	public static final String NOTREEMAIL ="je.reserve@connecsen.com";
 	public static final String dev_phone_number ="221774602901";
 
-	// LES URLS D'ACCESS
-	public static final String ADD_INDISPONIBILITE = "/indisponibilite/add";
-	public static final String ADD_INDISPONIBILITE_TO_User = "/indisponibilite/add/User/{id}";
-	public static final String UPDATE_INDISPONIBILITE = "/indisponibilite/update";
-	public static final String GET_INDISPONIBILITE_BY_ID = "/indisponibilite/indisponibilites/{id}";
-	public static final String DELETE_INDISPONIBILITE_BY_ID = "/indisponibilite/indisponibilites/delete/{id}";
-	public static final String GET_ALL_INDISPONIBILITES = "/indisponibilite/indisponibilites";
 	
-	
-	public static final String ADD_MULTIMEDIA = "/multimedia/add";
-	public static final String UPDATE_MULTIMEDIA = "/multimedia/update";
-	public static final String GET_MULTIMEDIA_BY_ID = "/multimedia/multimedias/{id}";
-	public static final String DELETE_MULTIMEDIA_BY_ID = "/multimedia/multimedias/delete/{id}";
-	public static final String GET_ALL_MULTIMEDIAS = "/multimedia/multimedias";
-	
-	public static final String ADD_TICKET = "/ticket/add";
-	public static final String UPDATE_TICKET = "/ticket/update";
-	public static final String UPDATE_TICKET_PAYE = "/ticket/update/paye/{id}";
-	public static final String GET_TICKET_BY_ID = "/ticket/tickets/{id}";
-	public static final String GET_TICKET_BY_REFERENCE = "/ticket/tickets/reference/{reference}";
-	public static final String DELETE_TICKET_BY_ID = "/ticket/tickets/delete/{id}";
-	public static final String GET_ALL_TICKETS = "/ticket/tickets";
-	
-	
-	public static final String ADD_LIGNE = "/ligne/add";
-	public static final String UPDATE_LIGNE = "/ligne/update";
-	public static final String GET_LIGNE_BY_ID = "/ligne/lignes/{id}";
-	public static final String DESACTIVE_LIGNE_BY_ID = "/ligne/desactive/{id}";
-	public static final String ACTIVE_LIGNE_BY_ID = "/ligne/active/{id}";
-	public static final String GET_ALL_LIGNES_ACTIVE = "/ligne/lignes/active";
-	public static final String GET_ALL_LIGNES = "/ligne/lignes";
-	public static final String ADD_VOYAGE_TO_LIGNE = "/ligne/add/voyage";
-	public static final String ADD_VOYAGE_TRANCHE_TO_LIGNE = "/ligne/add/tranche/voyage";
-	public static final String DESACTIVE_VOYAGE_TO_LIGNE = "/ligne/desactive/voyage/{idVoyage}";
-	public static final String ACTIVE_VOYAGE_TO_LIGNE = "/ligne/active/voyage/{idVoyage}";
-	public static final String GET_SATISTIQUE = "/ligne/statistique/{id}";
-	public static final String POST_TICKETS_BY_INTERVALDATE = "/ligne/tickets/datedebut/datefin";
-
-	public static final String UPDATE_VOYAGE = "/voyage/update";
-	public static final String GET_VOYAGE_BY_ID = "/voyage/voyages/{id}";
-	public static final String GET_ALL_VOYAGES = "/voyage/voyages";
-	public static final String ADD_TICKET_TO_VOYAGE = "/voyage/add/ticket";
-	public static final String ADD_TRANSACTION_TO_VOYAGE = "/voyage/add/transaction";
-	public static final String RECHERCHE_VOYAGE = "/voyage/recherche";
-
-	
-	public static final String ADD_RESERVATION = "/reservation/add";
-	public static final String GET_SOLDE_RESERVATION_BY_PROPRIETAIRE = "/reservation/solde/{idProprietaire}";
-	public static final String UPDATE_RESERVATION = "/reservation/update";
-	public static final String UPDATE_RESERVATION_BY_STATUS = "/reservation/update/status";
-	public static final String GET_RESERVATION_BY_ID = "/reservation/reservations/{id}";
-	public static final String DELETE_RESERVATION_BY_ID = "/reservation/reservations/delete/{id}";
-	public static final String GET_ALL_RESERVATIONS = "/reservation/reservations";
-	public static final String GET_ALL_RESERVATIONS_BETWEEN_DATE = "/reservation/reservations/date";
-	
-	public static final String ADD_PUB = "/pub/add";
-	public static final String UPDATE_PUB = "/pub/update";
-	public static final String GET_PUB_BY_ID = "/acceuil/pub/pubs/{id}";
-	public static final String DELETE_PUB_BY_ID = "/pub/pubs/delete/{id}";
-	public static final String GET_ALL_PUBS = "/acceuil/pub/pubs";
-	
-	public static final String ADD_TRANSACTION = "/transaction/add";
-	public static final String UPDATE_TRANSACTION = "/transaction/update";
-	public static final String GET_TRANSACTION_BY_ID = "/transaction/transactions/{id}";
-	public static final String DELETE_TRANSACTION_BY_ID = "/transaction/transactions/delete/{id}";
-	public static final String GET_ALL_TRANSACTIONS = "/transaction/transactions";
-	public static final String ADD_TRANSACTION_TO_USER_AND_User = "/user/add/transaction/user/{idUser}/User/{idUser}";
-
-	public static final String ADD_PRIX = "/prix/add";
-	public static final String UPDATE_PRIX = "/prix/update/{idUser}";
-	public static final String GET_PRIX_BY_ID = "/prix/prixs/{id}";
-	public static final String DELETE_PRIX_BY_ID = "/prix/prixs/delete/{id}";
-	public static final String GET_ALL_PRIX = "/prix/prixs";
-	public static final String ADD_PRIX_TO_User = "/user/add/prix/User/{idUser}";
-
-	
-	public static final String ADD_VERSEMENT = "/versement/add";
-	public static final String UPDATE_VERSEMENT = "/versement/update";
-	public static final String GET_VERSEMENT_BY_ID = "/versement/versements/{id}";
-	public static final String GET_VERSEMENT_BY_ID_USER = "/versement/versements/user/{id}";
-	public static final String DELETE_VERSEMENT_BY_ID = "/versement/versements/delete/{id}";
-	public static final String GET_ALL_VERSEMENTS = "/versement/versements";
-	public static final String ADD_VERSEMENT_TO_USER = "/user/add/versement/user/{idUser}";
-	
-	public static final String ADD_CATEGORIE = "/categorie/add";
-	public static final String UPDATE_CATEGORIE = "/categorie/update";
-	public static final String GET_CATEGORIE_BY_ID = "/categorie/categories/{id}";
-	public static final String DELETE_CATEGORIE_BY_ID = "/categorie/categories/delete/{id}";
-	public static final String GET_ALL_CATEGORIES = "/categorie/categories";
-	public static final String ADD_User_TO_CATEGORIE = "/categorie/add/User/{id}";
-	public static final String ADD_SOUSCATEGORIE_TO_CATEGORIE = "/categorie/add/souscategorie/{id}";
-	public static final String REMOVE_User_TO_CATEGORIE = "/categorie/remove/User/{id}";
-	public static final String  REMOVE_SOUSCATEGORIE_TO_CATEGORIE = "/categorie/remove/souscategorie/{id}";
-
-	public static final String ADD_SOUSCATEGORIE = "/souscategorie/add";
-	public static final String UPDATE_SOUSCATEGORIE = "/souscategorie/update";
-	public static final String GET_SOUSCATEGORIE_BY_ID = "/souscategorie/souscategories/{id}";
-	public static final String DELETE_SOUSCATEGORIE_BY_ID = "/souscategorie/souscategories/delete/{id}";
-	public static final String GET_ALL_SOUSCATEGORIES = "/souscategorie/souscategories";
-	public static final String ADD_User_TO_SOUSCATEGORIE = "/souscategorie/{idS}/add/User/{idC}";
-	public static final String REMOVE_User_TO_SOUSCATEGORIE = "/souscategorie/remove/User";
-	
-	public static final String ADD_FICHIER = "/fichier/add";
-	public static final String UPDATE_FICHIER = "/fichier/update";
-	public static final String GET_FICHIER_BY_ID = "/acceuil/fichier/fichiers/{id}";
-	public static final String DELETE_FICHIER_BY_ID = "/fichier/fichiers/delete/{id}";
-	public static final String GET_ALL_FICHIERS = "/acceuil/fichier/fichiers";
-	
-	public static final String ADD_SERVICE = "/service/add";
-	public static final String UPDATE_SERVICE = "/service/update";
-	public static final String GET_SERVICE_BY_ID = "/acceuil/service/services/{id}";
-	public static final String DELETE_SERVICE_BY_ID = "/service/services/delete/{id}";
-	public static final String GET_ALL_SERVICES = "/acceuil/service/services";
-	
-	public static final String ADD_PROPOS = "/propos/add";
-	public static final String UPDATE_PROPOS = "/propos/update";
-	public static final String GET_PROPOS_BY_ID = "/acceuil/propos/propos/{id}";
-	public static final String DELETE_PROPOS_BY_ID = "/propos/propos/delete/{id}";
-	public static final String GET_ALL_PROPOS = "/acceuil/propos/propos";
-	
-	public static final String ADD_HOMEONE = "/homeone/add";
-	public static final String UPDATE_HOMEONE = "/homeone/update";
-	public static final String GET_HOMEONE_BY_ID = "/acceuil/homeone/homeones/{id}";
-	public static final String DELETE_HOMEONE_BY_ID = "/homeone/homeones/delete/{id}";
-	public static final String GET_ALL_HOMEONES = "/acceuil/homeone/homeones";
-	
-	
-	public static final String ADD_User = "/User/add/{id}";
-	public static final String ADD_RESERVATION_TO_User = "/User/add/reservation/{id}";
-	public static final String UPDATE_User = "/User/update/{id}";
-	public static final String GET_User_BY_ID = "/User/Users/{id}";
-	public static final String DELETE_User_BY_ID = "/User/Users/delete/{id}";
-	public static final String ENABLE_User_BY_ID = "/User/Users/enable/{id}";
-	public static final String GET_ALL_UserS = "/User/Users";
-	public static final String GET_ALL_RESERVATIONS_BY_ID_User = "/User/reservations";
-	public static final String GET_ALL_DAYS_AVAILABLE_ID_User = "/User/days";
-
 	public static final String ADD_USER = "/user/add";
-	public static final String ADD_RESERVATION_TO_USER = "/user/add/reservation/{id}";
-	public static final String ADD_RESERVATION_TO_USER_AND_User = "/user/add/reservation/user/{idUser}/User/{idUser}";
 	public static final String UPDATE_USER = "/user/update";
 	public static final String GET_USER_BY_ID = "/user/users/{id}";
 	public static final String DELETE_USER_BY_ID = "/user/users/delete/{id}";
 	public static final String GET_ALL_USERS = "/user/users";
 
 	
-	public static final String ADD_ROLE = "/user/role/add";
-	public static final String UPDATE_ROLE = "/user/role/update";
-	public static final String GET_ROLE_BY_ID = "/user/role/roles/{id}";
-	public static final String DELETE_ROLE_BY_ID = "/user/role/roles/delete/{id}";
-	public static final String GET_ALL_ROLES = "/user/role/roles";
-	
+		
 	public static final String DO_CONTACTED = "/acceuil/user/contacter";
 	public static final String DO_REGISTER = "/user/register";
 	public static final String DO_REGISTER_BY_ADMIN = "/user/register/admin";
@@ -263,11 +120,11 @@ public final class Utility {
 	public static String getTokenResetPassword() {
 		return RandomString.make(10);
 	}
-	 
+	static 	ModelMapper modelMapper = new ModelMapper();
+
 	//LES MAPPERS DTO A DAO USER
 		public static  UserDtoResponse UserConvertToUserDtoResponse(User userSave)
 		{
-			ModelMapper modelMapper = new ModelMapper();
 			UserDtoResponse UserDtoResponse = new UserDtoResponse() ;
 
 			if(userSave instanceof Personnal )
@@ -296,7 +153,6 @@ public final class Utility {
 		}
 		
 		public static  UserDtoRequest UserConvertToUserDtoRequest(User UserDtoRequest) {
-			ModelMapper modelMapper = new ModelMapper(); 
 			UserDtoRequest UserDtoResponse = new UserDtoRequest() ;
 			if(UserDtoRequest instanceof Personnal )
             {
@@ -324,7 +180,6 @@ public final class Utility {
 		}
 		
 		public static  User UserDtoResponseConvertToUser(UserDtoResponse UserDtoResponse) {
-			ModelMapper modelMapper = new ModelMapper(); 
 			if(UserDtoResponse instanceof  PersonnalDtoResponse )
             {
 			    return (UserDtoResponse != null)? modelMapper.map(UserDtoResponse, Personnal.class) :  new Personnal();
@@ -374,30 +229,31 @@ public final class Utility {
 			
 		}
 		
-		//LES MAPPERS Departement
-		static 	ModelMapper modelMapper = new ModelMapper();
+		//LES MAPPERS DEPARTEMENT
 		
 	    public static  DepartementDtoRequest toDtoDepartementDtoRequest(Departement departement) 
 	    {
-	    	
-		return modelMapper.map(departement, DepartementDtoRequest.class);
+	    	DepartementDtoRequest departementDtoRequest = new DepartementDtoRequest() ;
+
+		    return(departementDtoRequest != null)? modelMapper.map(departement, DepartementDtoRequest.class) :departementDtoRequest ;
 	    }
 	    
 	    public static  DepartementDtoResponse toDtoDepartementDtoResponse(Departement departement) 
 	    {
-	    	
-		return modelMapper.map(departement, DepartementDtoResponse.class);
+	    	DepartementDtoResponse departementDtoResponse = new DepartementDtoResponse() ;
+
+		return (departementDtoResponse != null)? modelMapper.map(departement, DepartementDtoResponse.class):departementDtoResponse;
 	    }
 	    
 		public static  Departement toEntityDepartementFromRequest(DepartementDtoRequest departementDtoRequest) 
 		{
-		return modelMapper.map(departementDtoRequest, Departement.class);
+		  return (departementDtoRequest != null) ? modelMapper.map(departementDtoRequest, Departement.class):new Departement();
 			
 		}	
 		
-		public static  Departement toEntityDepartementFromResponse(DepartementDtoRequest departementDtoRequest) 
+		public static  Departement toEntityDepartementFromResponse(DepartementDtoResponse departementDtoResponse) 
 		{
-		return modelMapper.map(departementDtoRequest, Departement.class);
+		 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, Departement.class):new Departement();
 			
 		}	
 		

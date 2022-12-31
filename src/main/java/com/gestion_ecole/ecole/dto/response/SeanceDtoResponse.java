@@ -1,11 +1,17 @@
 package com.gestion_ecole.ecole.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor @NoArgsConstructor
 public class SeanceDtoResponse {
 	private Long id;
 	private String type;
 	private float coefficient;
 	private int nombreHeure;
 	private double montantHoraire;
+	private boolean status;
+	
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +41,12 @@ public class SeanceDtoResponse {
 	}
 	public void setMontantHoraire(double montantHoraire) {
 		this.montantHoraire = montantHoraire;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

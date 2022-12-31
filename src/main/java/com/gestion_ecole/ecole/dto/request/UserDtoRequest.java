@@ -7,10 +7,6 @@ import com.gestion_ecole.ecole.entities.Abscence;
 import com.gestion_ecole.ecole.entities.Paiement;
 import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.SupportPysique;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 public class UserDtoRequest{
 	private Long id;
 	private String prenom;

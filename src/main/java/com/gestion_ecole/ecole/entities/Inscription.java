@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import lombok.Data;
-
 @Entity 
 @Table(name="Inscription")
 public class Inscription {

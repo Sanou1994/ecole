@@ -1,9 +1,5 @@
 package com.gestion_ecole.ecole.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
 public class Login {
 	
 	private String login;

@@ -9,41 +9,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.entities.Reponse;
-import com.gestion_ecole.ecole.service.SeanceService;
+import com.gestion_ecole.ecole.service.ISceanceService;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @RestController
 public class SeanceRestControler {
 	@Autowired
-	SeanceService seanceService;
+	private ISceanceService seanceService;
 	
 	@PostMapping(Utility.ADD_SEANCE)
 	public Reponse addSeance( @RequestBody SeanceDtoRequest seance){
-		Reponse resultatCreation = seanceService.createSeance(seance);
+		Reponse resultatCreation = seanceService.createOrUpdateSceance(seance);
 		return resultatCreation;
     }
 
-	/*@PostMapping(Utility.UPDATE_USER)
-	public Reponse getUpdateUser( @RequestBody StudentDtoRequest user){		
-		Reponse	 userUpdate = accountService.createOrUpdateUser(user);
-				
-		return userUpdate;
-    } */
 	
 	@GetMapping(Utility.GET_SEANCE_BY_ID)
 	public Reponse getFiliereById(@PathVariable(value = "id") Long seanceId){		
-		Reponse	seanceUpdate =seanceService.findById(seanceId);		
+		Reponse	seanceUpdate =seanceService.getSceanceById(seanceId);		
 		return seanceUpdate ;
     }
 	@GetMapping(Utility.GET_ALL_SEANCE)
     public Reponse getAllSeances() 
     {
-    	Reponse list = seanceService.findAllSeances();       
+    	Reponse list = seanceService.ListeSceances();       
         return list;
     }
 	@GetMapping(Utility.DELETE_SEANCE_BY_ID)
 	public Reponse deleteFiliere(@PathVariable(value = "id") Long seanceId){
-				Reponse   resultat = seanceService.delete(seanceId);		
+				Reponse   resultat = seanceService.bloquerSceance(seanceId);		
 			
 					return resultat;
     }

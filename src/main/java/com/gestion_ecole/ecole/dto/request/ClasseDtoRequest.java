@@ -1,8 +1,13 @@
 package com.gestion_ecole.ecole.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor @NoArgsConstructor
 public class ClasseDtoRequest {
 	private Long id;
 	private String nom;
+	private boolean status;
 	
 	public Long getId() {
 		return id;
@@ -15,6 +20,12 @@ public class ClasseDtoRequest {
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 

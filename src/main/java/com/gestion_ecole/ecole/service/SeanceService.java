@@ -7,71 +7,79 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
-import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
 import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
-import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.repository.SeanceRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
-public class SeanceService {
+public class SeanceService implements ISceanceService {
 	@Autowired
 	SeanceRepository seanceRepository;
 	
-	public Reponse createSeance(SeanceDtoRequest seance) 
-	{
-		
+	@Override
+	public Reponse createOrUpdateSceance(SeanceDtoRequest seance) {
 		Reponse reponse = new Reponse();	
 
 		try
 		{   
-			
-				seanceRepository.save(Utility.toSeance(seance));
-				reponse.setCode(200);
-		    	reponse.setMessage(" La seance a été créée avec succès!");
+			Optional<Seance> soft = this.seanceRepository.findByType(seance.getType());
+			if(!soft.isPresent())
+			{
+				
+				if(seance.getId() != null)
+				{
+					Optional<Seance> softGot = this.seanceRepository.findById(seance.getId());
+
+					if(softGot.isPresent())
+					{
+						softGot.get().setType(seance.getType());
+						softGot.get().setCoefficient(seance.getCoefficient());
+						softGot.get().setMontantHoraire(seance.getMontantHoraire());
+						softGot.get().setNombreHeure(seance.getNombreHeure());
+						seanceRepository.save(softGot.get());
+				    	reponse.setMessage(" La seance a été modifiée avec succès !");
+				    	reponse.setCode(200);
+
+					}
+					else
+					{
+						reponse.setCode(201);
+				    	reponse.setMessage(" La seance n'existe plus !");
+					}
+					
+				}
+				else
+				{
+					seanceRepository.save(Utility.toSeance(seance));
+					reponse.setCode(200);
+			    	reponse.setMessage(" La seance a été créée avec succès !");
+			    	reponse.setResult(seance);
+				}
+			}
+			else
+			{
+				reponse.setCode(201);
+		    	reponse.setMessage(" La seance existe déjà!");
 		    	reponse.setResult(seance);
-		    	return reponse ;
-			
+		    	
+			}
 			
 		}
 		catch (Exception e) 
 		{
 			reponse.setCode(500);
 	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
+			
 		}
-		
-	  }
+		return reponse ;
 
-	public Reponse findAllSeances()
-	{
-		Reponse reponse = new Reponse();	
-
-		try
-		{   List<SeanceDtoResponse> seances= seanceRepository.findAll()
-		                                                      .stream()
-		                                                      .map(Utility :: toSeanceDtoResponse)
-		                                                      .collect(Collectors.toList());
-			reponse.setCode(200);
-	    	reponse.setMessage(" La liste des  filières a été obtenue avec succès");
-	    	reponse.setResult(seances);
-	    	return reponse ;
-		}
-		catch (Exception e) 
-		{
-			reponse.setCode(500);
-	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
-		}
 	}
 
-	public Reponse findById(Long id) 
-	{
-		
+	@Override
+	public Reponse getSceanceById(Long id) {
 		Reponse reponse = new Reponse();	
 
 		try
@@ -80,20 +88,17 @@ public class SeanceService {
 			reponse.setCode(200);
 	    	reponse.setMessage(" La séance a été obtenue avec succès!");
 	    	reponse.setResult(Utility.toSeanceDtoResponse(soft.orElse(null)));
-	    	return reponse ;
 		}
 		catch (Exception e) 
 		{
 			reponse.setCode(500);
 	    	reponse.setMessage(" Une erreur interne est survenue");
-			return reponse ;
 		}
-		
-	  }
+		return reponse ;
+	}
 
-
-
-	public Reponse delete(Long id) {
+	@Override
+	public Reponse bloquerSceance(Long id) {
 		Reponse reponse = new Reponse();		
 
 		try
@@ -101,7 +106,8 @@ public class SeanceService {
 			Seance seance = seanceRepository.findById(id).get();
 		    if(seance != null)
 		    {
-		    	seanceRepository.deleteById(id);
+		    	seance.setStatus(false);
+		    	seanceRepository.save(seance);
 		    	reponse.setCode(200);
 		    	reponse.setMessage(" La séance a été supprimée avec succès");
 		    	reponse.setResult(Utility.toSeanceDtoResponse(seance));
@@ -121,6 +127,27 @@ public class SeanceService {
 			return reponse ;
 
 		}  
+	}
+
+	@Override
+	public Reponse ListeSceances() {
+		Reponse reponse = new Reponse();	
+
+		try
+		{   List<SeanceDtoResponse> seances= seanceRepository.findAll()
+		                                                      .stream()
+		                                                      .map(Utility :: toSeanceDtoResponse)
+		                                                      .collect(Collectors.toList());
+			reponse.setCode(200);
+	    	reponse.setMessage(" La liste des  scéances a été obtenue avec succès");
+	    	reponse.setResult(seances);
+		}
+		catch (Exception e) 
+		{
+			reponse.setCode(500);
+	    	reponse.setMessage(" Une erreur interne est survenue");
+		}
+		return reponse ;
 	}
 
 }

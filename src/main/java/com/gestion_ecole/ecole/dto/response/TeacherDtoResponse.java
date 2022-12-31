@@ -18,7 +18,6 @@ private List<Classe> classes ;
 private List<Seance> seances ;
 private Classe classe;
 private Student student;
-
 private Departement departement;
 
 public List<Inscription> getInscriptions() {

@@ -24,9 +24,6 @@ public class Teacher extends User{
 	@OneToMany(orphanRemoval = true,targetEntity=Classe.class, cascade = CascadeType.ALL,mappedBy = "teacher")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Classe> classes = new ArrayList<Classe>();
-	@OneToMany(orphanRemoval = true,targetEntity=Seance.class, cascade = CascadeType.ALL,mappedBy = "teacher")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Seance> seances = new ArrayList<Seance>();
 	@ManyToOne
     private Classe classe;
 	@ManyToOne
