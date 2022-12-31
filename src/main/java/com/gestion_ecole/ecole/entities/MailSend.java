@@ -1,5 +1,8 @@
 package com.gestion_ecole.ecole.entities;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 public class MailSend {
 	private String email;
 	private String name;
@@ -50,7 +53,12 @@ public class MailSend {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> origin/main
 
+    
+    
 }

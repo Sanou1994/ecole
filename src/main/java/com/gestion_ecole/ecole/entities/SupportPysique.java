@@ -5,7 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+<<<<<<< HEAD
 @Entity 
+=======
+
+@Entity
+>>>>>>> origin/main
 public class SupportPysique {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

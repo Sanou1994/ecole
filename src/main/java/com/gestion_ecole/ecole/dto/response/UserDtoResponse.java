@@ -1,7 +1,10 @@
 package com.gestion_ecole.ecole.dto.response;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/main
 public class UserDtoResponse {
 	private Long id;
 	private String prenom;
@@ -159,4 +162,10 @@ public class UserDtoResponse {
 	} 
 	
 	
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> origin/main
 }
+

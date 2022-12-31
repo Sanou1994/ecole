@@ -15,6 +15,10 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 @Entity  
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class User  {
@@ -50,7 +54,25 @@ public abstract class User  {
 	private List<Paiement> paiements = new ArrayList<Paiement>();
 	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
+<<<<<<< HEAD
 	private List<Seance> seances = new ArrayList<Seance>();
+=======
+	private List<Sceance> sceances = new ArrayList<Sceance>();
+	
+	
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+>>>>>>> origin/main
 	public Long getId() {
 		return id;
 	}
@@ -129,6 +151,7 @@ public abstract class User  {
 	public void setMonToken(String monToken) {
 		this.monToken = monToken;
 	}
+<<<<<<< HEAD
 	public String getLogin() {
 		return login;
 	}
@@ -141,6 +164,8 @@ public abstract class User  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+=======
+>>>>>>> origin/main
 	public String getCompteBancaire() {
 		return compteBancaire;
 	}
@@ -177,6 +202,7 @@ public abstract class User  {
 	public void setPaiements(List<Paiement> paiements) {
 		this.paiements = paiements;
 	}
+<<<<<<< HEAD
 	public List<Seance> getSceances() {
 		return seances;
 	}
@@ -184,5 +210,15 @@ public abstract class User  {
 		this.seances = seances;
 	}	
 	
+=======
+	public List<Sceance> getSceances() {
+		return sceances;
+	}
+	public void setSceances(List<Sceance> sceances) {
+		this.sceances = sceances;
+	}	
+	
+	
+>>>>>>> origin/main
 	
 }

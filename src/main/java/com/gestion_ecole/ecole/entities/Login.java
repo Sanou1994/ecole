@@ -1,16 +1,22 @@
 package com.gestion_ecole.ecole.entities;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 public class Login {
 	
 	private String login;
 	private String password;
 	private String email;
 	
+<<<<<<< HEAD
 	public Login() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+=======
+>>>>>>> origin/main
 	public Login(String login, String password, String email) {
 		super();
 		this.login = login;
@@ -18,6 +24,14 @@ public class Login {
 		this.email = email;
 	}
 
+<<<<<<< HEAD
+=======
+	public Login() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+>>>>>>> origin/main
 	public String getLogin() {
 		return login;
 	}
@@ -25,11 +39,19 @@ public class Login {
 	public void setLogin(String login) {
 		this.login = login;
 	}
+<<<<<<< HEAD
 
 	public String getPassword() {
 		return password;
 	}
 
+=======
+
+	public String getPassword() {
+		return password;
+	}
+
+>>>>>>> origin/main
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -43,5 +65,8 @@ public class Login {
 	}
 
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> origin/main
 }

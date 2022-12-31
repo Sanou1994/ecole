@@ -8,6 +8,11 @@ package com.gestion_ecole.ecole.entities;
 			this.message = message;
 		}
 
+		public OutboundSMSTextMessage() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
 		public String getMessage() {
 			return message;
 		}
