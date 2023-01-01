@@ -27,16 +27,20 @@ public class TeacherDtoRequest extends UserDtoRequest {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public TeacherDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
-			String telephone, String monToken, String login, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
-			List<Paiement> paiements, List<Seance> seances) {
+			String telephone, String monToken, String password, String compteBancaire, String resetPasswordToken,
+			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
+			List<Seance> seances) {
 		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
-				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques,
-				paiements, seances);
+				telephone, monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
+				seances);
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 	public List<Inscription> getInscriptions() {
 		return inscriptions;

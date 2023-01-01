@@ -22,7 +22,6 @@ public class UserDtoRequest{
 	private String email;
 	private String telephone;
 	private String monToken;
-	private String login;
 	private String password;
 	private String compteBancaire;
     private String resetPasswordToken;
@@ -42,7 +41,7 @@ public class UserDtoRequest{
 
 	public UserDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
-			String telephone, String monToken, String login, String password, String compteBancaire,
+			String telephone, String monToken,  String password, String compteBancaire,
 			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
 
 			List<Paiement> paiements, List<Seance> seances) {
@@ -61,7 +60,6 @@ public class UserDtoRequest{
 		this.email = email;
 		this.telephone = telephone;
 		this.monToken = monToken;
-		this.login = login;
 		this.password = password;
 		this.compteBancaire = compteBancaire;
 		this.resetPasswordToken = resetPasswordToken;
@@ -230,17 +228,7 @@ public class UserDtoRequest{
 
 
 
-	public String getLogin() {
-		return login;
-	}
-
-
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-
+	
 
 	public String getPassword() {
 		return password;

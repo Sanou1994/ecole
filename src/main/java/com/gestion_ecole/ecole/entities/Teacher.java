@@ -46,12 +46,12 @@ public class Teacher extends User{
 	}
 	public Teacher(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
-			String telephone, String monToken, String login, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
-			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+			String telephone, String monToken, String password, String compteBancaire, String resetPasswordToken,
+			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
+			List<Seance> seances, List<Code> codes) {
 		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
-				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques,
-				paiements, seances, codes);
+				telephone, monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
+				seances, codes);
 		// TODO Auto-generated constructor stub
 	}
 	

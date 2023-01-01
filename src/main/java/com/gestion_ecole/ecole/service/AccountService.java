@@ -128,14 +128,14 @@ public class AccountService implements IAccountService{
 				return reponse ;
 	}
 	@Override
-	public Reponse se_connecter(String username,String password)
+	public Reponse se_connecter(String phone,String password)
 	{
 		User userConnected=null;
 		Code codeSaveOK=null;
 		Reponse response = new Reponse();
 		try
 		{
-			Reponse user = this.getUserByLogin(username);
+			Reponse user = this.getUserByTelephone(phone);
 				if((user != null)&&(bCryptPasswordEncoder.matches(password, ((User) user.getResult()).getPassword())))
 				{
 					Code codeSave = new Code();
@@ -159,7 +159,7 @@ public class AccountService implements IAccountService{
 
 	               if(smsReponse.getCode() == 200)
 	               {
-	            	   ((User) user.getResult()).setMonToken(this.getToken(username,password));
+	            	   ((User) user.getResult()).setMonToken(this.getToken(phone,password));
 	    				response.setCode(200);
 	    				response.setMessage("Message envoyé");
 	    				response.setResult(((User) user.getResult()));		
@@ -204,24 +204,24 @@ public class AccountService implements IAccountService{
 	}
 	
 	@Override
-	public String getToken(String username , String password)
+	public String getToken(String phone , String password)
 	{
       try {
-		authenticate(username,  password);
+		authenticate(phone,  password);
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 		
 		final UserDetails userDetails = userDetailsService
-		.loadUserByUsername(username);		
+		.loadUserByUsername(phone);		
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		return token;
 		
 	}
-	public  void authenticate(String username, String password) throws Exception {
+	public  void authenticate(String phone, String password) throws Exception {
 		try {
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(phone, password));
 		} catch (DisabledException e) {
 		throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
@@ -237,8 +237,8 @@ public class AccountService implements IAccountService{
 	    if(users.size() != 0)
 	    {
 	    	for (int i = 0; i < users.size(); i++) {
-				switch (users.get(i).getEmail()) {
-				case "sanouarouna90@gmail.com":
+				switch (users.get(i).getTelephone()) {
+				case "775073511":
 					arouna=true;
 
 					break;
@@ -250,8 +250,8 @@ public class AccountService implements IAccountService{
 	    }
 				 
 		if(arouna == false) {
-			User directeur =new Parent();
-			directeur.setLogin("sanouarouna90@gmail.com");
+			User directeur =new Personnal();
+			directeur.setTelephone("775073511");
 			directeur.setEmail("sanouarouna90@gmail.com");
 			directeur.setPassword("1234");
 			directeur.setRole("Manager");
@@ -382,6 +382,7 @@ public class AccountService implements IAccountService{
             		 teacher.setEmail(user.getEmail());
             		 teacher.setTelephone(user.getTelephone());
             		 teacher.setCompteBancaire(user.getCompteBancaire());
+
             		 teacher.setRole(user.getRole());
             		 User userSave = teacherRepository.save(teacher);
           			reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
@@ -475,59 +476,7 @@ public class AccountService implements IAccountService{
 		
 		return reponse;
 	}
-	@Override
-	public Reponse getUserByLogin(String login) {
-		Reponse reponse = new Reponse();
-		try
-		{
-			Personnal personnal = personnalRepository.findByLogin(login);
-    		Student student = studentRepository.findByLogin(login);
-    		Parent parent = parentRepository.findByLogin(login);
-    		Teacher teacher = teacherRepository.findByLogin(login);      
-    		if(personnal != null)
-    		{
-    			reponse.setResult(Utility.UserConvertToUserDtoResponse(personnal));
-            	reponse.setMessage("Ce compte a été retrouvé avec succès");
-    		}
-    		else if(student != null)
-    		{
-    			reponse.setResult(Utility.UserConvertToUserDtoResponse(student));
 
-            	reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-    		}
-    		else if(parent !=null)
-    		{
-    			reponse.setResult(Utility.UserConvertToUserDtoResponse(parent));
-
-            	reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-    		}
-    		else if(teacher != null)
-    		{
-    			reponse.setResult(Utility.UserConvertToUserDtoResponse(teacher));
-
-            	reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-    		}
-    		else
-    		{
-            	reponse.setMessage("Ce compte n'existe pas");
-
-    		}
-    		reponse.setCode(200);
-    		
-        
-		}
-		catch (Exception e) {
-			reponse.setMessage("Une erreur interne est survenue");
-    		reponse.setCode(500);
-
-		}
-		
-		return reponse;
-	}
-	
 	@Override
 	public Reponse bloquerUser(Long id) {
 		Reponse reponse = new Reponse();
@@ -691,6 +640,59 @@ public class AccountService implements IAccountService{
 			
 		}
 		return response;
+	}
+	@Override
+	public Reponse getUserByTelephone(String telephone) {
+		Reponse reponse = new Reponse();
+		try
+		{
+			Personnal personnal = personnalRepository.findByTelephone(telephone);
+    		Student student = studentRepository.findByTelephone(telephone);
+    		Parent parent = parentRepository.findByTelephone(telephone);
+    		Teacher teacher = teacherRepository.findByTelephone(telephone);      
+    		if(personnal != null)
+    		{
+    			reponse.setResult(Utility.UserConvertToUserDtoResponse(personnal));
+            	reponse.setMessage("Ce compte a été retrouvé avec succès");
+    		}
+    		else if(student != null)
+    		{
+    			reponse.setResult(Utility.UserConvertToUserDtoResponse(student));
+
+            	reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+    		}
+    		else if(parent !=null)
+    		{
+    			reponse.setResult(Utility.UserConvertToUserDtoResponse(parent));
+
+            	reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+    		}
+    		else if(teacher != null)
+    		{
+    			reponse.setResult(Utility.UserConvertToUserDtoResponse(teacher));
+
+            	reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+    		}
+    		else
+    		{
+            	reponse.setMessage("Ce compte n'existe pas");
+
+    		}
+    		reponse.setCode(200);
+    		
+        
+		}
+		catch (Exception e) {
+			reponse.setMessage("Une erreur interne est survenue");
+    		reponse.setCode(500);
+
+		}
+		
+		return reponse;
+
 	}
     	
 	}

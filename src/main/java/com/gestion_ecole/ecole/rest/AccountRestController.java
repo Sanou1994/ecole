@@ -42,7 +42,6 @@ public class AccountRestController {
 		boolean reponse =false;
 		String token = Utility.getTokenResetPassword();
 		user.setPassword(token);
-		user.setLogin(user.getEmail());
 		Reponse userAdd =accountService.login_up(user);
 		if(userAdd !=null) {
 			reponse =true;

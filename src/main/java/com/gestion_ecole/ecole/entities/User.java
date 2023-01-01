@@ -34,7 +34,6 @@ public abstract class User  {
 	private String telephone;
 	@Transient
 	private String monToken;
-	private String login;
 	private String password;
 	private String compteBancaire;
 	@Column(name = "reset_password_token")
@@ -63,7 +62,7 @@ public abstract class User  {
 	}
 	public User(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
 			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
-			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
+			String monToken,  String password, String compteBancaire, String resetPasswordToken,
 			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
 			List<Seance> seances,List<Code> codes) {
 		super();
@@ -80,7 +79,6 @@ public abstract class User  {
 		this.email = email;
 		this.telephone = telephone;
 		this.monToken = monToken;
-		this.login = login;
 		this.password = password;
 		this.compteBancaire = compteBancaire;
 		this.resetPasswordToken = resetPasswordToken;
@@ -170,12 +168,7 @@ public abstract class User  {
 		this.monToken = monToken;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
+	
 	public String getPassword() {
 		return password;
 	}

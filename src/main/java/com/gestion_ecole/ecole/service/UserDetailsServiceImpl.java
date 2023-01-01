@@ -19,13 +19,13 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
     private AccountService accountService;
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Reponse user =accountService.getUserByLogin(username);
-		if(user == null) throw new UsernameNotFoundException(username);
+	public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+		Reponse user =accountService.getUserByTelephone(phone);
+		if(user == null) throw new UsernameNotFoundException(phone);
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
 
 		User userNew = new User(
-				((UserDtoResponse) user.getResult()).getLogin(),
+				((UserDtoResponse) user.getResult()).getTelephone(),
 				((UserDtoResponse) user.getResult()).getPassword(),
 				authorities	
 				);
