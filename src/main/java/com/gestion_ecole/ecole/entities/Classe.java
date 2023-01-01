@@ -33,10 +33,10 @@ public class Classe
 	@OneToMany(orphanRemoval = true,targetEntity=Teacher.class,cascade = CascadeType.REMOVE, mappedBy="classe")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Teacher> professeurs = new ArrayList<Teacher>();
-	@OneToMany(orphanRemoval = true,targetEntity=Abscence.class,cascade = CascadeType.REMOVE, mappedBy="classe")
+	@OneToMany(orphanRemoval = true,targetEntity=Absence.class,cascade = CascadeType.REMOVE, mappedBy="classe")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Abscence> abscences = new ArrayList<Abscence>();
-	@OneToMany(orphanRemoval = true,targetEntity=Abscence.class,cascade = CascadeType.REMOVE, mappedBy="classe")
+	private List<Absence> abscences = new ArrayList<Absence>();
+	@OneToMany(orphanRemoval = true,targetEntity=Absence.class,cascade = CascadeType.REMOVE, mappedBy="classe")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<CahierDeTexte> cahierDeTextes = new ArrayList<CahierDeTexte>();
 	@ManyToOne
@@ -48,7 +48,7 @@ public class Classe
 		super();
 	}
 	public Classe(Long id, String nom, boolean status, List<Module> modules, List<Student> students,
-			List<EmploiDuTemps> emploiDuTemps, List<Teacher> professeurs, List<Abscence> abscences,
+			List<EmploiDuTemps> emploiDuTemps, List<Teacher> professeurs, List<Absence> abscences,
 			List<CahierDeTexte> cahierDeTextes, Teacher teacher, Filiere filiere) {
 		super();
 		this.id = id;
@@ -105,10 +105,10 @@ public class Classe
 	public void setProfesseurs(List<Teacher> professeurs) {
 		this.professeurs = professeurs;
 	}
-	public List<Abscence> getAbscences() {
+	public List<Absence> getAbscences() {
 		return abscences;
 	}
-	public void setAbscences(List<Abscence> abscences) {
+	public void setAbscences(List<Absence> abscences) {
 		this.abscences = abscences;
 	}
 	public List<CahierDeTexte> getCahierDeTextes() {

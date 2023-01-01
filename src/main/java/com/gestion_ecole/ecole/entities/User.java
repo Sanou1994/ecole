@@ -40,18 +40,18 @@ public abstract class User  {
 	@Column(name = "reset_password_token")
     private String resetPasswordToken;
 	private String role ; 
-	@OneToMany(orphanRemoval = true,targetEntity=Abscence.class, cascade = CascadeType.ALL,mappedBy = "user")
+	@OneToMany(orphanRemoval = true,targetEntity=Absence.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Abscence> abscences = new ArrayList<Abscence>();
+	private List<Absence> abscences = new ArrayList<Absence>();
 	@OneToMany(orphanRemoval = true,targetEntity=SupportPysique.class,cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
 	@OneToMany(orphanRemoval = true,targetEntity=Paiement.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Paiement> paiements = new ArrayList<Paiement>();
-	@OneToMany(orphanRemoval = true,targetEntity=Sceance.class,cascade = CascadeType.REMOVE, mappedBy="user")
+	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Sceance> sceances = new ArrayList<Sceance>();
+	private List<Seance> sceances = new ArrayList<Seance>();
 	
 	@OneToMany(orphanRemoval = true,targetEntity=Code.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -64,8 +64,8 @@ public abstract class User  {
 	public User(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
 			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
 			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
-			String role, List<Abscence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Sceance> sceances,List<Code> codes) {
+			String role, List<Absence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
+			List<Seance> sceances,List<Code> codes) {
 		super();
 		this.id = id;
 		this.prenom = prenom;
@@ -201,10 +201,10 @@ public abstract class User  {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public List<Abscence> getAbscences() {
+	public List<Absence> getAbscences() {
 		return abscences;
 	}
-	public void setAbscences(List<Abscence> abscences) {
+	public void setAbscences(List<Absence> abscences) {
 		this.abscences = abscences;
 	}
 	public List<SupportPysique> getSupportPysiques() {
@@ -220,10 +220,10 @@ public abstract class User  {
 		this.paiements = paiements;
 	}
 
-	public List<Sceance> getSceances() {
+	public List<Seance> getSceances() {
 		return sceances;
 	}
-	public void setSceances(List<Sceance> sceances) {
+	public void setSceances(List<Seance> sceances) {
 		this.sceances = sceances;
 	}
 	public List<Code> getCodes() {

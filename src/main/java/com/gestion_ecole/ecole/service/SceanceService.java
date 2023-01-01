@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.entities.Reponse;
-import com.gestion_ecole.ecole.entities.Sceance;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.repository.SeanceRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
@@ -25,13 +25,13 @@ public class SceanceService implements ISceanceService {
 
 		try
 		{   
-			Optional<Sceance> soft = this.SceanceRepository.findByType(Sceance.getType());
+			Optional<Seance> soft = this.SceanceRepository.findByType(Sceance.getType());
 			if(!soft.isPresent())
 			{
 				
 				if(Sceance.getId() != null)
 				{
-					Optional<Sceance> softGot = this.SceanceRepository.findById(Sceance.getId());
+					Optional<Seance> softGot = this.SceanceRepository.findById(Sceance.getId());
 
 					if(softGot.isPresent())
 					{
@@ -84,7 +84,7 @@ public class SceanceService implements ISceanceService {
 
 		try
 		{   
-			Optional<Sceance> soft = this.SceanceRepository.findById(id);
+			Optional<Seance> soft = this.SceanceRepository.findById(id);
 			reponse.setCode(200);
 	    	reponse.setMessage(" La séance a été obtenue avec succès!");
 	    	reponse.setResult(Utility.toSceanceDtoResponse(soft.orElse(null)));
@@ -103,7 +103,7 @@ public class SceanceService implements ISceanceService {
 
 		try
 		{
-			Sceance sceance = SceanceRepository.findById(id).get();
+			Seance sceance = SceanceRepository.findById(id).get();
 		    if(sceance != null)
 		    {
 		    	sceance.setStatus(false);

@@ -29,7 +29,7 @@ import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
-import com.gestion_ecole.ecole.entities.Sceance;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.Teacher;
 import com.gestion_ecole.ecole.entities.User;
@@ -281,10 +281,10 @@ public final class Utility {
 			    }
 		
 		// Les mappers Seance
-			    public static Sceance toSceance(SeanceDtoRequest seanceDtoRequest) {
-			    	return modelMapper.map(seanceDtoRequest, Sceance.class);
+			    public static Seance toSceance(SeanceDtoRequest seanceDtoRequest) {
+			    	return modelMapper.map(seanceDtoRequest, Seance.class);
 			    }
-			    public static SeanceDtoResponse toSceanceDtoResponse(Sceance seance) {
+			    public static SeanceDtoResponse toSceanceDtoResponse(Seance seance) {
 			    	return modelMapper.map(seance, SeanceDtoResponse.class);
 			    }
 		

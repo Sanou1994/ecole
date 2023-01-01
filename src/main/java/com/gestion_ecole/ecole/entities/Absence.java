@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity @Data
-public class Abscence
+public class Absence
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -24,7 +24,7 @@ private Classe classe;
 private String raison;
 @ManyToOne
 private User user;
-public Abscence(Long id, long dateDebut, long dateFin, boolean status, long dateAbscenceCreate, Classe classe,
+public Absence(Long id, long dateDebut, long dateFin, boolean status, long dateAbscenceCreate, Classe classe,
 		String raison, User user) {
 	super();
 	this.id = id;
@@ -36,7 +36,7 @@ public Abscence(Long id, long dateDebut, long dateFin, boolean status, long date
 	this.raison = raison;
 	this.user = user;
 }
-public Abscence() {
+public Absence() {
 	super();
 }
 

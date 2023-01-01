@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity 
 @Table(name="Sceance")
-public class Sceance
+public class Seance
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,10 +27,10 @@ public class Sceance
 	@ManyToOne
     private Personnal personnal;
 	
-	public Sceance() {
+	public Seance() {
 		super();
 	}
-	public Sceance(Long id, String type, float coefficient, boolean status, int nombreHeure, double montantHoraire,
+	public Seance(Long id, String type, float coefficient, boolean status, int nombreHeure, double montantHoraire,
 			User user, Teacher teacher, Module module, Personnal personnal) {
 		super();
 		this.id = id;

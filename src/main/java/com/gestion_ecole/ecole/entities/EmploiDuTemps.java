@@ -21,14 +21,14 @@ public class EmploiDuTemps {
 	private String titre;
 	@OneToMany(orphanRemoval = true,targetEntity=Classe.class, cascade = CascadeType.ALL,mappedBy = "emploiDuTemps")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Sceance> Sceances = new ArrayList<Sceance>(); 
+	private List<Seance> Sceances = new ArrayList<Seance>(); 
 	@ManyToOne
     private Classe classe;
 	
 	public EmploiDuTemps() {
 		super();
 	}
-	public EmploiDuTemps(Long id, String titre, List<Sceance> sceances, Classe classe) {
+	public EmploiDuTemps(Long id, String titre, List<Seance> sceances, Classe classe) {
 		super();
 		this.id = id;
 		this.titre = titre;
@@ -47,10 +47,10 @@ public class EmploiDuTemps {
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-	public List<Sceance> getSceances() {
+	public List<Seance> getSceances() {
 		return Sceances;
 	}
-	public void setSceances(List<Sceance> Sceances) {
+	public void setSceances(List<Seance> Sceances) {
 		this.Sceances = Sceances;
 	}
 	public Classe getClasse() {

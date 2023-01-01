@@ -19,12 +19,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Module {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(orphanRemoval = true,targetEntity=Sceance.class, cascade = CascadeType.ALL,mappedBy = "module")
+	@OneToMany(orphanRemoval = true,targetEntity=Seance.class, cascade = CascadeType.ALL,mappedBy = "module")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Sceance> seances = new ArrayList<Sceance>();
+	private List<Seance> seances = new ArrayList<Seance>();
 	@ManyToOne
     private Classe classe;
-	public Module(Long id, List<Sceance> seances, Classe classe) {
+	public Module(Long id, List<Seance> seances, Classe classe) {
 		super();
 		this.id = id;
 		this.seances = seances;

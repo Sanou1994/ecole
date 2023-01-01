@@ -3,9 +3,9 @@ package com.gestion_ecole.ecole.dto.request;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gestion_ecole.ecole.entities.Abscence;
+import com.gestion_ecole.ecole.entities.Absence;
 import com.gestion_ecole.ecole.entities.Paiement;
-import com.gestion_ecole.ecole.entities.Sceance;
+import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.SupportPysique;
 
 public class UserDtoRequest{
@@ -27,10 +27,10 @@ public class UserDtoRequest{
 	private String compteBancaire;
     private String resetPasswordToken;
 	private String role ; 
-	private List<Abscence> abscences = new ArrayList<Abscence>();
+	private List<Absence> abscences = new ArrayList<Absence>();
 	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
 	private List<Paiement> paiements = new ArrayList<Paiement>();
-	private List<Sceance> seances = new ArrayList<Sceance>();
+	private List<Seance> seances = new ArrayList<Seance>();
 	
 
 
@@ -43,9 +43,9 @@ public class UserDtoRequest{
 	public UserDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
 			String telephone, String monToken, String login, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Abscence> abscences, List<SupportPysique> supportPysiques,
+			String resetPasswordToken, String role, List<Absence> abscences, List<SupportPysique> supportPysiques,
 
-			List<Paiement> paiements, List<Sceance> seances) {
+			List<Paiement> paiements, List<Seance> seances) {
 
 		super();
 		this.id = id;
@@ -290,13 +290,13 @@ public class UserDtoRequest{
 
 
 
-	public List<Abscence> getAbscences() {
+	public List<Absence> getAbscences() {
 		return abscences;
 	}
 
 
 
-	public void setAbscences(List<Abscence> abscences) {
+	public void setAbscences(List<Absence> abscences) {
 		this.abscences = abscences;
 	}
 
@@ -326,13 +326,13 @@ public class UserDtoRequest{
 
 
 
-	public List<Sceance> getSeances() {
+	public List<Seance> getSeances() {
 		return seances;
 	}
 
 
 
-	public void setSeances(List<Sceance> seances) {
+	public void setSeances(List<Seance> seances) {
 		this.seances = seances;
 	}
 
