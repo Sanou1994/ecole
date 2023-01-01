@@ -27,7 +27,7 @@ public class UserDtoRequest{
 	private String compteBancaire;
     private String resetPasswordToken;
 	private String role ; 
-	private List<Absence> abscences = new ArrayList<Absence>();
+	private List<Absence> absences = new ArrayList<Absence>();
 	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
 	private List<Paiement> paiements = new ArrayList<Paiement>();
 	private List<Seance> seances = new ArrayList<Seance>();
@@ -43,7 +43,7 @@ public class UserDtoRequest{
 	public UserDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
 			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
 			String telephone, String monToken, String login, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> abscences, List<SupportPysique> supportPysiques,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
 
 			List<Paiement> paiements, List<Seance> seances) {
 
@@ -66,7 +66,7 @@ public class UserDtoRequest{
 		this.compteBancaire = compteBancaire;
 		this.resetPasswordToken = resetPasswordToken;
 		this.role = role;
-		this.abscences = abscences;
+		this.absences = absences;
 		this.supportPysiques = supportPysiques;
 		this.paiements = paiements;
 		this.seances = seances;
@@ -291,13 +291,13 @@ public class UserDtoRequest{
 
 
 	public List<Absence> getAbscences() {
-		return abscences;
+		return absences;
 	}
 
 
 
-	public void setAbscences(List<Absence> abscences) {
-		this.abscences = abscences;
+	public void setAbscences(List<Absence> abcences) {
+		this.absences = abcences;
 	}
 
 

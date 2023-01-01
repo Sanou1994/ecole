@@ -14,16 +14,7 @@ import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.SupportPysique;
 import com.gestion_ecole.ecole.entities.Teacher;
 public class StudentDtoRequest extends UserDtoRequest {
-       public StudentDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
-			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
-			String telephone, String monToken, String login, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> abscences, List<SupportPysique> supportPysiques,
-			List<Paiement> paiements, List<Seance> seances) {
-		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
-				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
-				paiements, seances);
-		// TODO Auto-generated constructor stub
-	}
+       
 	private List<Inscription> inscriptions ;
 	   private List<Note> notes ;
 	   private List<Student> parains ;
@@ -32,6 +23,22 @@ public class StudentDtoRequest extends UserDtoRequest {
 	   private Parent parent;		
 	   private Classe classe;
 	   private Departement departement;
+	   
+	   
+	public StudentDtoRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public StudentDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
+			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
+			String telephone, String monToken, String login, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances) {
+		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
+				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques,
+				paiements, seances);
+		// TODO Auto-generated constructor stub
+	}
 	public List<Inscription> getInscriptions() {
 		return inscriptions;
 	}
