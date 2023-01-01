@@ -33,12 +33,14 @@ public class Parent extends User {
 			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
 			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
 			String role, List<Abscence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Sceance> sceances) {
+			List<Sceance> sceances, List<Code> codes) {
 		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
 				telephone, monToken, login, password, compteBancaire, resetPasswordToken, role, abscences, supportPysiques,
-				paiements, sceances);
+				paiements, sceances, codes);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 	
 	}

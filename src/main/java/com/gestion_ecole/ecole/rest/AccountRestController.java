@@ -62,6 +62,11 @@ public class AccountRestController {
 		Reponse user = accountService.se_connecter(login.getLogin(), login.getPassword());		
 		return user ;
 	}
+	@GetMapping(Utility.DO_ACTIVATION)
+	public Reponse getUserById(@PathVariable(value = "code") int code){		
+		Reponse	userUpdate =accountService.activation(code);		
+		return userUpdate ;
+    }
 	@PostMapping(Utility.DO_CONTACTED)
 	public void contacteNous(@RequestBody MailSend mail) throws MessagingException {	
 		//emailService.sendContactEmail(mail);
@@ -96,6 +101,7 @@ public class AccountRestController {
 		Reponse	userUpdate =accountService.getUserById(userId);		
 		return userUpdate ;
     }
+	
 	@GetMapping(Utility.DELETE_USER_BY_ID)
 	public Reponse getDeleteUser(@PathVariable(value = "id") Long userId){
 				Reponse   resultat = accountService.bloquerUser(userId);		

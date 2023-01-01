@@ -17,4 +17,5 @@ public interface IAccountService {
 	  public Reponse bloquerUser(Long id); 
 	  public Reponse se_connecter(String Username,String password);
 	  public Reponse login_up(UserDtoRequest User);
+	  public Reponse activation(int code);
 	 }

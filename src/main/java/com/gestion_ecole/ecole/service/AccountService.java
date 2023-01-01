@@ -1,6 +1,8 @@
 package com.gestion_ecole.ecole.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -15,12 +17,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
+import com.gestion_ecole.ecole.entities.Code;
+import com.gestion_ecole.ecole.entities.OutboundSMSMessageRequest;
+import com.gestion_ecole.ecole.entities.OutboundSMSTextMessage;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
 import com.gestion_ecole.ecole.entities.Reponse;
+import com.gestion_ecole.ecole.entities.SmsMessage;
 import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.Teacher;
 import com.gestion_ecole.ecole.entities.User;
+import com.gestion_ecole.ecole.repository.CodeRepository;
 import com.gestion_ecole.ecole.repository.ParentRepository;
 import com.gestion_ecole.ecole.repository.PersonnalRepository;
 import com.gestion_ecole.ecole.repository.StudentRepository;
@@ -50,7 +57,11 @@ public class AccountService implements IAccountService{
     @Autowired
     private TeacherRepository teacherRepository; 
     @Autowired
+    private CodeRepository codeRepository; 
+    @Autowired
    	private IEmailService emailService;
+    @Autowired
+   	private SmsService smsService;
    
 	@Override
 	public Reponse login_up(UserDtoRequest user) 
@@ -119,31 +130,77 @@ public class AccountService implements IAccountService{
 	@Override
 	public Reponse se_connecter(String username,String password)
 	{
-		Reponse reponse = new Reponse();
+		User userConnected=null;
+		Code codeSaveOK=null;
+		Reponse response = new Reponse();
 		try
 		{
-			    User user = personnalRepository.findByLogin(username);
-				if((user != null)&&(bCryptPasswordEncoder.matches(password, user.getPassword())))
+			Reponse user = this.getUserByLogin(username);
+				if((user != null)&&(bCryptPasswordEncoder.matches(password, ((User) user.getResult()).getPassword())))
 				{
-					user.setMonToken(this.getToken(username, password));
-					reponse.setCode(200);
-		        	reponse.setMessage("La connexion a reussi !");
-		        	reponse.setResult(Utility.UserConvertToUserDtoResponse(user));
+					Code codeSave = new Code();
+					codeSave.setCode(new Random().ints(1, 9999).findFirst().getAsInt());
+					codeSave.setTelephone(((User) user.getResult()).getTelephone());
+					codeSave.setStatus(true);
+					codeSave.setUser(((User) user.getResult()));
+					 codeSaveOK=codeRepository.save(codeSave);	
+					 
+					((User) user.getResult()).getCodes().add(codeRepository.save(codeSaveOK));			
+					 userConnected=(User) this.createOrUpdateUser(Utility.UserConvertToUserDtoRequest(((User) user.getResult()))).getResult();
+					String contentMessageClient=" Bonjour Monsieur/Madame:"+((User) user.getResult()).getNom()+"\n" + 
+	                        "Téléphone: "+((User) user.getResult()).getTelephone()+"\n" +
+	                        "Email: "+((User) user.getResult()).getTelephone()+"\n" + 
+	                        "Veuillez saisir le code  ci-dessous pour vous connectez "+"\n" + 
+	                        "Code :"+codeSave.getCode()+"\n" ;                   				
+					OutboundSMSTextMessage outboundSMSTextMessageClient= new OutboundSMSTextMessage(contentMessageClient);
+					OutboundSMSMessageRequest outboundSMSMessageRequestClient = new OutboundSMSMessageRequest("221" + ((User) user.getResult()).getTelephone(),outboundSMSTextMessageClient,"221" + ((User) user.getResult()).getTelephone(),"LAYDOU"); 
+					SmsMessage smsMessageClient = new SmsMessage(outboundSMSMessageRequestClient);					
+					Reponse smsReponse = smsService.sendMessage(smsMessageClient);   		
+
+	               if(smsReponse.getCode() == 200)
+	               {
+	            	   ((User) user.getResult()).setMonToken(this.getToken(username,password));
+	    				response.setCode(200);
+	    				response.setMessage("Message envoyé");
+	    				response.setResult(((User) user.getResult()));		
+
+	                }
+	                else
+	                {
+	                	throw new Exception("Error to send sms ");
+	                 }	
+				
 				}
+				
 				else
 				{
-					reponse.setCode(201);
-		        	reponse.setMessage("La connexion a échoué !");
+					response.setCode(201);
+					response.setMessage("La connexion a échoué !");
 				}
 		}
 		catch (Exception e)
 		{
-			reponse.setCode(500);
-        	reponse.setMessage("Une erreur interne est survenue !");
+			if(!(codeSaveOK == null))
+			{
+				 if(!(userConnected == null))
+				{
+					 userConnected.getCodes().remove(codeSaveOK);
+					 this.createOrUpdateUser(Utility.UserConvertToUserDtoRequest(userConnected));
+					 codeRepository.delete(codeSaveOK);
+				}
+				else
+				{
+					 codeRepository.delete(codeSaveOK);
+
+				}
+				
+			} 
+			response.setCode(500);
+			response.setMessage("Une erreur interne est survenue !");
 		}
 	
 		
-		return reponse ;
+		return response ;
 	}
 	
 	@Override
@@ -579,6 +636,61 @@ public class AccountService implements IAccountService{
 		}
 		
 		return reponse;
+	}
+	@Override
+	public Reponse activation(int code) {
+		Reponse response = new Reponse();	
+		try
+	   {
+			Code codeSave= codeRepository.findByCode(code).get();
+			if(codeSave.getId() > 0 && codeSave.isStatus() == true )
+			{
+				User userGot = (User) this.getUserById(codeSave.getUser().getId()).getResult();
+				
+				if(userGot != null  && userGot.getId()>0)
+				{
+					
+						Date dateFormatter = new Date();					
+	                    codeSave.setDateConnexion(dateFormatter.getTime());	
+	                    codeSave.setStatus(false);
+						codeRepository.save(codeSave); 						
+						userGot.setMonToken(this.getToken(userGot.getEmail(),userGot.getPassword()));	
+						userGot.setStatus(true);
+						this.createOrUpdateUser(Utility.UserConvertToUserDtoRequest(userGot));
+						response.setCode(200);
+						response.setMessage("L'activation a reussi");
+						response.setResult(userGot);						
+					
+					
+				}
+				else
+				{
+					
+					response.setCode(202);
+					response.setMessage("L'activation a échoué");
+					response.setResult(null);
+				}
+
+				
+			}
+			else
+			{
+				
+				response.setCode(203);
+				response.setMessage("Le code d'activation n'existe pas");
+				response.setResult(null);
+			}
+			
+			
+		}
+		catch(Exception e)
+		{
+			response.setCode(500);
+			response.setMessage("Une erreur interne est survenue");
+			response.setResult(null);		
+			
+		}
+		return response;
 	}
     	
 	}

@@ -51,10 +51,11 @@ public abstract class User  {
 	private List<Paiement> paiements = new ArrayList<Paiement>();
 	@OneToMany(orphanRemoval = true,targetEntity=Sceance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-
 	private List<Sceance> sceances = new ArrayList<Sceance>();
 	
-
+	@OneToMany(orphanRemoval = true,targetEntity=Code.class,cascade = CascadeType.REMOVE, mappedBy="user")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Code> codes = new ArrayList<Code>();
 
 	public User() {
 		super();
@@ -64,7 +65,7 @@ public abstract class User  {
 			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
 			String monToken, String login, String password, String compteBancaire, String resetPasswordToken,
 			String role, List<Abscence> abscences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Sceance> sceances) {
+			List<Sceance> sceances,List<Code> codes) {
 		super();
 		this.id = id;
 		this.prenom = prenom;
@@ -88,6 +89,7 @@ public abstract class User  {
 		this.supportPysiques = supportPysiques;
 		this.paiements = paiements;
 		this.sceances = sceances;
+		this.codes=codes;
 	}
 	public Long getId() {
 		return id;
@@ -223,8 +225,13 @@ public abstract class User  {
 	}
 	public void setSceances(List<Sceance> sceances) {
 		this.sceances = sceances;
+	}
+	public List<Code> getCodes() {
+		return codes;
+	}
+	public void setCodes(List<Code> codes) {
+		this.codes = codes;
 	}	
-	
 
 	
 }

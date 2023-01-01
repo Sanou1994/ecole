@@ -58,6 +58,8 @@ public final class Utility {
 	public static final String DO_REGISTER = "/user/register";
 	public static final String DO_REGISTER_BY_ADMIN = "/user/register/admin";
 	public static final String DO_LOGIN = "/user/login";
+	public static final String DO_ACTIVATION = "/user/activation/{code}";
+
 	public static final String DO_FORGOT_PASSWORD = "/user/forgot";
 	public static final String DO_UPDATE_PASSWORD = "/user/updatePassword";
 	public static final String DO_UPDATE_PASSWORD_USER = "/user/updatePassword/user";
