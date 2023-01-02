@@ -6,27 +6,39 @@ import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 
+import com.gestion_ecole.ecole.dto.request.AbsenceDtoRequest;
+import com.gestion_ecole.ecole.dto.request.CahierDeTexteDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
+import com.gestion_ecole.ecole.dto.request.EmploiDuTempsDtoRequest;
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
+import com.gestion_ecole.ecole.dto.request.InscriptionDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ParentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
+import com.gestion_ecole.ecole.dto.response.AbsenceDtoResponse;
+import com.gestion_ecole.ecole.dto.response.CahierDeTexteDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
+import com.gestion_ecole.ecole.dto.response.EmploiDuTempsDtoResponse;
 import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
+import com.gestion_ecole.ecole.dto.response.InscriptionDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ParentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.PersonnalDtoResponse;
 import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.dto.response.StudentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.TeacherDtoResponse;
 import com.gestion_ecole.ecole.dto.response.UserDtoResponse;
+import com.gestion_ecole.ecole.entities.Absence;
+import com.gestion_ecole.ecole.entities.CahierDeTexte;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Departement;
+import com.gestion_ecole.ecole.entities.EmploiDuTemps;
 import com.gestion_ecole.ecole.entities.Filiere;
+import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
 import com.gestion_ecole.ecole.entities.Seance;
@@ -87,6 +99,30 @@ public final class Utility {
 	public static final String GET_SEANCE_BY_ID = "/acceuil/seance/seances/{id}";
 	public static final String DELETE_SEANCE_BY_ID = "/seance/seances/delete/{id}";
 	public static final String GET_ALL_SEANCE = "/acceuil/seance/seances";
+	
+	public static final String ADD_ABSENCE = "/absence/add";
+	public static final String UPDATE_ABSENCE = "/absence/update";
+	public static final String GET_ABSENCE_BY_ID = "/acceuil/absence/absences/{id}";
+	public static final String DELETE_ABSENCE_BY_ID = "/absence/absences/delete/{id}";
+	public static final String GET_ALL_ABSENCE = "/acceuil/absence/absences";
+	
+	public static final String ADD_CAHIERDETEXTE = "/cahierDeTexte/add";
+	public static final String UPDATE_CAHIERDETEXTE = "/cahierDeTexte/update";
+	public static final String GET_CAHIERDETEXTE_BY_ID = "/acceuil/cahierDeTexte/cahierDeTextes/{id}";
+	public static final String DELETE_CAHIERDETEXTE_BY_ID = "/cahierDeTexte/cahierDeTextes/delete/{id}";
+	public static final String GET_ALL_CAHIERDETEXTE = "/acceuil/cahierDeTexte/cahierDeTextes";
+	
+	public static final String ADD_EMPLOIDUTEMPS = "/emploiDuTemps/add";
+	public static final String UPDATE_EMPLOIDUTEMPS = "/emploiDuTemps/update";
+	public static final String GET_EMPLOIDUTEMPS_BY_ID = "/acceuil/emploiDuTemps/emploiDuTemps/{id}";
+	public static final String DELETE_EMPLOIDUTEMPS_BY_ID = "/emploiDuTemps/emploiDuTemps/delete/{id}";
+	public static final String GET_ALL_EMPLOIDUTEMPS = "/acceuil/emploiDuTemps/emploiDuTemps";
+	
+	public static final String ADD_INSCRIPTION = "/inscription/add";
+	public static final String UPDATE_INSCRIPTION = "/inscription/update";
+	public static final String GET_INSCRIPTION_BY_ID = "/acceuil/inscription/inscriptions/{id}";
+	public static final String DELETE_INSCRIPTION_BY_ID = "/inscription/incriptions/delete/{id}";
+	public static final String GET_ALL_INSCRIPTION = "/acceuil/inscription/inscriptions";
 	
 	//GENERATE CALENDAR
 	public static int getMonthNumber(Date date) {
@@ -249,7 +285,8 @@ public final class Utility {
 	    
 		public static  Departement toEntityDepartementFromRequest(DepartementDtoRequest departementDtoRequest) 
 		{
-		  return (departementDtoRequest != null) ? modelMapper.map(departementDtoRequest, Departement.class):new Departement();
+			Departement departement = new Departement();
+		  return (departement != null) ? modelMapper.map(departementDtoRequest, Departement.class):new Departement();
 			
 		}	
 		
@@ -263,29 +300,84 @@ public final class Utility {
 				
 			    public static  ClasseDtoResponse toClasseDtoResponse(Classe classe) 
 			    {
-			    	
-				return modelMapper.map(classe, ClasseDtoResponse.class);
+			    	ClasseDtoResponse classeDtoResponse = new ClasseDtoResponse();
+				return (classeDtoResponse!=null)?modelMapper.map(classe, ClasseDtoResponse.class):classeDtoResponse;
 			    }
 			    
 			    public static Classe toClasse(ClasseDtoRequest classeDto) {
-			    	return modelMapper.map(classeDto, Classe.class);
+			    	Classe classe = new Classe();
+			    	return (classe!=null)?modelMapper.map(classeDto, Classe.class):classe;
 					
 				}
 			    
 		//Les mappers Filiere
 			    public static Filiere toFiliere(FiliereDtoRequest filiereDtoRequest) {
-			    	return modelMapper.map(filiereDtoRequest, Filiere.class);
+			    	Filiere filiere = new Filiere();
+			    	return(filiere!=null)? modelMapper.map(filiereDtoRequest, Filiere.class):filiere;
 			    }
 			    public static FiliereDtoResponse toFiliereDtoResponse (Filiere filiere) {
-			    	return modelMapper.map(filiere, FiliereDtoResponse.class);
+			    	FiliereDtoResponse filiereDtoResponse = new FiliereDtoResponse();
+			    	return(filiere !=null)? modelMapper.map(filiere, FiliereDtoResponse.class):filiereDtoResponse;
 			    }
 		
 		// Les mappers Seance
-			    public static Seance toSceance(SeanceDtoRequest seanceDtoRequest) {
-			    	return modelMapper.map(seanceDtoRequest, Seance.class);
+
+			    public static Seance toSeance(SeanceDtoRequest seanceDtoRequest) {
+			    	Seance seance = new Seance();
+			    	return (seanceDtoRequest!=null)?modelMapper.map(seanceDtoRequest, Seance.class):seance;
 			    }
+
 			    public static SeanceDtoResponse toSceanceDtoResponse(Seance seance) {
-			    	return modelMapper.map(seance, SeanceDtoResponse.class);
+			    	SeanceDtoResponse seanceDtoResponse = new SeanceDtoResponse();
+			    	return (seance!=null)? modelMapper.map(seance, SeanceDtoResponse.class):seanceDtoResponse;
+			    }
+			    
+			 // Les mappers Absence
+
+			    public static Absence toAbsence(AbsenceDtoRequest absenceDtoRequest) {
+			    	Absence absence = new Absence();
+			    	return (absenceDtoRequest!=null)?modelMapper.map(absenceDtoRequest, Absence.class):absence;
+			    }
+
+			    public static AbsenceDtoResponse toAbsenceDtoResponse(Absence absence) {
+			    	AbsenceDtoResponse absenceDtoResponse = new AbsenceDtoResponse();
+			    	return (absence!=null)? modelMapper.map(absence, AbsenceDtoResponse.class):absenceDtoResponse;
+			    }
+			    
+			    // Les mappers CahierDeTexte
+
+			    public static CahierDeTexte toCahierDeTexte(CahierDeTexteDtoRequest cahierDeTexteDtoRequest) {
+			    	CahierDeTexte cahierDeTexte = new CahierDeTexte();
+			    	return (cahierDeTexteDtoRequest!=null)?modelMapper.map(cahierDeTexteDtoRequest, CahierDeTexte.class):cahierDeTexte;
+			    }
+
+			    public static CahierDeTexteDtoResponse toCahierDeTexteDtoResponse(CahierDeTexte cahierDeTexte) {
+			    	CahierDeTexteDtoResponse cahierDeTexteDtoResponse = new CahierDeTexteDtoResponse();
+			    	return (cahierDeTexte!=null)? modelMapper.map(cahierDeTexte, CahierDeTexteDtoResponse.class):cahierDeTexteDtoResponse;
+			    }
+			    
+			    // Les mappers EmploiDuTemps
+
+			    public static EmploiDuTemps toEmploiDuTemps(EmploiDuTempsDtoRequest emploiDuTempsDtoRequest) {
+			    	EmploiDuTemps emploiDuTemps = new EmploiDuTemps();
+			    	return (emploiDuTempsDtoRequest!=null)?modelMapper.map(emploiDuTempsDtoRequest, EmploiDuTemps.class):emploiDuTemps;
+			    }
+
+			    public static EmploiDuTempsDtoResponse toEmploiDuTempsDtoResponse(EmploiDuTemps emploiDuTemps) {
+			    	EmploiDuTempsDtoResponse emploiDuTempsDtoResponse = new EmploiDuTempsDtoResponse();
+			    	return (emploiDuTemps!=null)? modelMapper.map(emploiDuTemps, EmploiDuTempsDtoResponse.class):emploiDuTempsDtoResponse;
+			    }
+			    
+			    // Les mappers Inscription
+
+			    public static Inscription toInscription(InscriptionDtoRequest inscriptionDtoRequest) {
+			    	Inscription inscription = new Inscription();
+			    	return (inscriptionDtoRequest!=null)?modelMapper.map(inscriptionDtoRequest, Inscription.class):inscription;
+			    }
+
+			    public static InscriptionDtoResponse toInscriptionDtoResponse(Inscription inscription) {
+			    	InscriptionDtoResponse inscriptionDtoResponse = new InscriptionDtoResponse();
+			    	return (inscription!=null)? modelMapper.map(inscription, InscriptionDtoResponse.class):inscriptionDtoResponse;
 			    }
 		
 }
