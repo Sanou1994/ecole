@@ -2,12 +2,12 @@ package com.gestion_ecole.ecole.entities;
 
 public class Login {
 	
-	private String login;
+	private String telephone;
 	private String password;
 	private String email;
-	public Login(String login, String password, String email) {
+	public Login(String telephone, String password, String email) {
 		super();
-		this.login = login;
+		this.telephone = telephone;
 		this.password = password;
 		this.email = email;
 	}
@@ -16,11 +16,11 @@ public class Login {
 		super();
 	}
 
-	public String getLogin() {
-		return login;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setLogin(String login) {
-		this.login = login;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	public String getPassword() {
 		return password;

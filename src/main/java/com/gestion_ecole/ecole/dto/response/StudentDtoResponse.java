@@ -1,5 +1,6 @@
 package com.gestion_ecole.ecole.dto.response;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Classe;
@@ -13,7 +14,9 @@ import com.gestion_ecole.ecole.entities.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
-public class StudentDtoResponse extends UserDtoResponse{
+public class StudentDtoResponse extends UserDtoResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private List<Inscription> inscriptions ;
 	   private List<Note> notes ;
 	   private List<Student> parains ;

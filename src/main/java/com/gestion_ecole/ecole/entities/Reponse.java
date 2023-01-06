@@ -1,6 +1,12 @@
 package com.gestion_ecole.ecole.entities;
 
-public class Reponse {
+import java.io.Serializable;
+
+public class Reponse implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 private String message;
 private int code;
 private Object result;

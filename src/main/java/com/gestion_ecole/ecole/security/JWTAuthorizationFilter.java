@@ -33,10 +33,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 		if(request.getMethod().equals("OPTIONS"))
 		{
 			response.setStatus(HttpServletResponse.SC_OK);
-		}else {
+		}
+		else
+		{
 			
 			String jwtToken =request.getHeader(Utility.HEADER_STRING);
-			if(jwtToken == null  || !jwtToken.startsWith(Utility.TOKEN_PREFIX)){
+			if(jwtToken == null  || !jwtToken.startsWith(Utility.TOKEN_PREFIX))
+			{
 				filterChain.doFilter(request, response);return ;
 			}
 			Claims claims =Jwts.parser()

@@ -21,13 +21,17 @@ import org.hibernate.annotations.LazyCollectionOption;
 public abstract class User  {
 	@Id @GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
+	private Long structureID;
 	private String prenom;
-	private String nom;
+	private String nom;	
+	private String sexe;
 	private String adresse;
 	private String numeroMatriciule;
 	private String typeDeRecrutement;
 	private String type;
 	private String naissance;
+	private String nationalite;
+	private String lieu_naissance;
 	private long dateCreation;
 	private boolean status =true;
 	private String email;
@@ -51,29 +55,35 @@ public abstract class User  {
 	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Seance> seances = new ArrayList<Seance>();
-	
-	@OneToMany(orphanRemoval = true,targetEntity=Code.class,cascade = CascadeType.REMOVE, mappedBy="user")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany
 	private List<Code> codes = new ArrayList<Code>();
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
-			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
-			String monToken,  String password, String compteBancaire, String resetPasswordToken,
-			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Seance> seances,List<Code> codes) {
+	
+	
+	
+
+	public User(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
+			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
 		super();
 		this.id = id;
+		this.structureID = structureID;
 		this.prenom = prenom;
 		this.nom = nom;
+		this.sexe = sexe;
 		this.adresse = adresse;
 		this.numeroMatriciule = numeroMatriciule;
 		this.typeDeRecrutement = typeDeRecrutement;
 		this.type = type;
 		this.naissance = naissance;
+		this.nationalite = nationalite;
+		this.lieu_naissance = lieu_naissance;
 		this.dateCreation = dateCreation;
 		this.status = status;
 		this.email = email;
@@ -87,8 +97,44 @@ public abstract class User  {
 		this.supportPysiques = supportPysiques;
 		this.paiements = paiements;
 		this.seances = seances;
-		this.codes=codes;
+		this.codes = codes;
 	}
+
+
+
+
+	public String getNationalite() {
+		return nationalite;
+	}
+
+
+
+
+	public void setNationalite(String nationalite) {
+		this.nationalite = nationalite;
+	}
+
+
+
+
+	public String getLieu_naissance() {
+		return lieu_naissance;
+	}
+
+
+	public void setLieu_naissance(String lieu_naissance) {
+		this.lieu_naissance = lieu_naissance;
+	}
+
+
+	public Long getStructureID() {
+		return structureID;
+	}
+
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -219,11 +265,20 @@ public abstract class User  {
 	public void setSceances(List<Seance> sceances) {
 		this.seances = sceances;
 	}
+	
 	public List<Code> getCodes() {
 		return codes;
 	}
 	public void setCodes(List<Code> codes) {
 		this.codes = codes;
+	}
+
+	public String getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
 	}	
 
 	

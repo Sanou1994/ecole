@@ -10,15 +10,20 @@ import com.gestion_ecole.ecole.entities.SupportPysique;
 
 public class UserDtoRequest{
 	private Long id;
+	private Long structureID;
 	private String prenom;
 	private String nom;
 	private String adresse;
 	private String numeroMatriciule;
-	private String typeDeRecrutement;
+	private String typeDeRecrutement; 
+	private String typeUser;
 	private String type;
 	private String naissance;
+	private String sexe;
+	private String nationalite;
 	private long dateCreation;
 	private boolean status =true;
+	private String lieu_naissance;
 	private String email;
 	private String telephone;
 	private String monToken;
@@ -31,32 +36,32 @@ public class UserDtoRequest{
 	private List<Paiement> paiements = new ArrayList<Paiement>();
 	private List<Seance> seances = new ArrayList<Seance>();
 	
-
-
 	public UserDtoRequest() {
 		super();
 	}
 
 
-
-	public UserDtoRequest(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
-			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String email,
-			String telephone, String monToken,  String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
-
-			List<Paiement> paiements, List<Seance> seances) {
-
+	public UserDtoRequest(Long id, Long structureID, String prenom, String nom, String adresse, String numeroMatriciule,
+			String typeDeRecrutement, String typeUser, String type, String naissance, String sexe, String nationalite,
+			long dateCreation, boolean status, String lieu_naissance, String email, String telephone, String monToken,
+			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances) {
 		super();
 		this.id = id;
+		this.structureID = structureID;
 		this.prenom = prenom;
 		this.nom = nom;
 		this.adresse = adresse;
 		this.numeroMatriciule = numeroMatriciule;
 		this.typeDeRecrutement = typeDeRecrutement;
+		this.typeUser = typeUser;
 		this.type = type;
 		this.naissance = naissance;
+		this.sexe = sexe;
+		this.nationalite = nationalite;
 		this.dateCreation = dateCreation;
 		this.status = status;
+		this.lieu_naissance = lieu_naissance;
 		this.email = email;
 		this.telephone = telephone;
 		this.monToken = monToken;
@@ -69,6 +74,64 @@ public class UserDtoRequest{
 		this.paiements = paiements;
 		this.seances = seances;
 	}
+
+
+	public String getNationalite() {
+		return nationalite;
+	}
+
+
+	public void setNationalite(String nationalite) {
+		this.nationalite = nationalite;
+	}
+
+
+	public String getLieu_naissance() {
+		return lieu_naissance;
+	}
+
+	public void setLieu_naissance(String lieu_naissance) {
+		this.lieu_naissance = lieu_naissance;
+	}
+
+
+
+
+
+	public String getTypeUser() {
+		return typeUser;
+	}
+
+
+
+	public void setTypeUser(String typeUser) {
+		this.typeUser = typeUser;
+	}
+
+
+
+	public String getSexe() {
+		return sexe;
+	}
+
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+
+
+
+	public Long getStructureID() {
+		return structureID;
+	}
+
+
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
+	}
+
+
+
 
 
 

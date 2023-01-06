@@ -29,21 +29,16 @@ public class Parent extends User {
 		this.students = students;
 	}
 
-	public Parent(Long id, String prenom, String nom, String adresse, String numeroMatriciule, String typeDeRecrutement,
-			String type, String naissance, long dateCreation, boolean status, String email, String telephone,
-			String monToken, String password, String compteBancaire, String resetPasswordToken, String role,
-			List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Seance> seances, List<Code> codes) {
-		super(id, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, dateCreation, status, email,
-				telephone, monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
-				seances, codes);
+	public Parent(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
+			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+		super(id, structureID, prenom, nom, sexe, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, nationalite,
+				lieu_naissance, dateCreation, status, email, telephone, monToken, password, compteBancaire, resetPasswordToken,
+				role, absences, supportPysiques, paiements, seances, codes);
 		// TODO Auto-generated constructor stub
 	}
-
-	
-
-	
-	
 
 	
 	}

@@ -9,9 +9,10 @@ public interface IAccountService {
 	      
 	         //GESTION User
 	  public void initAccount();
-	  public String getToken(String Username , String password);
+	  public String getToken(String email , String password);
 	  public Reponse createOrUpdateUser(UserDtoRequest User);
 	  public Reponse getUserById(Long id);
+	  public Reponse getAllUsersByType(String type);
 	  public Reponse getUserByTelephone(String telephone);
 	  public Reponse getUserByEmail(String Email);
 	  public Reponse bloquerUser(Long id); 

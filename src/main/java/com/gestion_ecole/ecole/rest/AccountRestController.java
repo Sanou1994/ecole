@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestion_ecole.ecole.dto.request.CodeDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
 import com.gestion_ecole.ecole.entities.Login;
@@ -58,12 +59,13 @@ public class AccountRestController {
 	
 	@PostMapping(Utility.DO_LOGIN)
 	public Reponse verifiedAccount( @RequestBody Login  login) {
-		Reponse user = accountService.se_connecter(login.getLogin(), login.getPassword());		
+		Reponse user = accountService.se_connecter(login.getTelephone(), login.getPassword());		
 		return user ;
 	}
-	@GetMapping(Utility.DO_ACTIVATION)
-	public Reponse getUserById(@PathVariable(value = "code") int code){		
-		Reponse	userUpdate =accountService.activation(code);		
+	@PostMapping(Utility.DO_ACTIVATION)
+	public Reponse getUserById(@RequestBody CodeDtoRequest code){	
+
+		Reponse	userUpdate =accountService.activation(code.getCode());		
 		return userUpdate ;
     }
 	@PostMapping(Utility.DO_CONTACTED)
@@ -104,6 +106,12 @@ public class AccountRestController {
 	@GetMapping(Utility.DELETE_USER_BY_ID)
 	public Reponse getDeleteUser(@PathVariable(value = "id") Long userId){
 				Reponse   resultat = accountService.bloquerUser(userId);		
+			
+					return resultat;
+    }
+	@GetMapping(Utility.GET_ALL_USERS)
+	public Reponse getAllUsers(@PathVariable(value = "type") String  type){
+				Reponse   resultat = accountService.getAllUsersByType(type);		
 			
 					return resultat;
     }

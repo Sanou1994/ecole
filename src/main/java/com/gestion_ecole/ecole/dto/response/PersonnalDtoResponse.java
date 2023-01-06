@@ -1,5 +1,6 @@
 package com.gestion_ecole.ecole.dto.response;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import com.gestion_ecole.ecole.entities.Note;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 @AllArgsConstructor @NoArgsConstructor
-public class PersonnalDtoResponse extends UserDtoResponse{
+public class PersonnalDtoResponse extends UserDtoResponse implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	 private Filiere filiere;
 		private List<Note> notes = new ArrayList<Note>();
 		public Filiere getFiliere() {

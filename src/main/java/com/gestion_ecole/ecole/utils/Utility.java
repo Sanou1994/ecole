@@ -50,7 +50,7 @@ public final class Utility {
 	public static final String UPDATE_USER = "/user/update";
 	public static final String GET_USER_BY_ID = "/user/users/{id}";
 	public static final String DELETE_USER_BY_ID = "/user/users/delete/{id}";
-	public static final String GET_ALL_USERS = "/user/users";
+	public static final String GET_ALL_USERS = "/user/users/type/{type}";
 
 	
 		
@@ -58,7 +58,7 @@ public final class Utility {
 	public static final String DO_REGISTER = "/user/register";
 	public static final String DO_REGISTER_BY_ADMIN = "/user/register/admin";
 	public static final String DO_LOGIN = "/user/login";
-	public static final String DO_ACTIVATION = "/user/activation/{code}";
+	public static final String DO_ACTIVATION = "/user/activation";
 
 	public static final String DO_FORGOT_PASSWORD = "/user/forgot";
 	public static final String DO_UPDATE_PASSWORD = "/user/updatePassword";
@@ -207,18 +207,18 @@ public final class Utility {
 		}
 		public static User UserDtoRequestConvertToUser(UserDtoRequest UserDtoRequest)  {
 			ModelMapper modelMapper = new ModelMapper();
-			if(UserDtoRequest instanceof PersonnalDtoRequest )
+			if(UserDtoRequest.getTypeUser().equals("PERSONNAL") )
             {
 			    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, Personnal.class) : new Personnal();
 
             	
             }
-            else if(UserDtoRequest instanceof ParentDtoRequest )
+            else if(UserDtoRequest.getTypeUser().equals("PARENT"))
             {
     		    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, Parent.class) : new Parent();
 
            	}
-            else if(UserDtoRequest instanceof StudentDtoRequest)
+            else if(UserDtoRequest.getTypeUser().equals("STUDENT"))
             {
     		    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, Student.class) : new Student();
 

@@ -1,11 +1,14 @@
 package com.gestion_ecole.ecole.dto.response;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor @NoArgsConstructor
-public class DepartementDtoResponse {
+public class DepartementDtoResponse implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nom;
 	private boolean status;

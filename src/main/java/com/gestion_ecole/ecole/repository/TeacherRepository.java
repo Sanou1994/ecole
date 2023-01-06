@@ -1,12 +1,14 @@
 package com.gestion_ecole.ecole.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gestion_ecole.ecole.entities.Teacher;
 
 public interface TeacherRepository extends JpaRepository<Teacher,Long>{
-	Teacher findByEmail(String email);
-	Teacher findByTelephone(String telephone);
+	Optional<Teacher> findByEmail(String email);
+	Optional<Teacher> findByTelephone(String telephone);
 
 }
  

@@ -1,16 +1,22 @@
 package com.gestion_ecole.ecole.dto.response;
 
-public class UserDtoResponse {
+import java.io.Serializable;
+
+public class UserDtoResponse implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Long id;
+	private Long structureID;
 	private String prenom;
 	private String nom;
 	private String adresse;
 	private String numeroMatriciule;
 	private String typeDeRecrutement;
 	private String type;
+	private String sexe;
 	private String naissance;
 	private long dateCreation;
 	private boolean status =true;
+	private String nationalite;
 	private String login;
 	private String email;
 	private String telephone;
@@ -19,21 +25,30 @@ public class UserDtoResponse {
 	private String compteBancaire;
     private String resetPasswordToken;
 	private String role ;
-	public UserDtoResponse(Long id, String prenom, String nom, String adresse, String numeroMatriciule,
-			String typeDeRecrutement, String type, String naissance, long dateCreation, boolean status, String login,
-			String email, String telephone, String monToken, String password, String compteBancaire,
-			String resetPasswordToken, String role) {
+	private String lieu_naissance;
+
+	
+	
+
+	public UserDtoResponse(Long id, Long structureID, String prenom, String nom, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, String type, String sexe, String naissance,
+			long dateCreation, boolean status, String nationalite, String login, String email, String telephone,
+			String monToken, String password, String compteBancaire, String resetPasswordToken, String role,
+			String lieu_naissance) {
 		super();
 		this.id = id;
+		this.structureID = structureID;
 		this.prenom = prenom;
 		this.nom = nom;
 		this.adresse = adresse;
 		this.numeroMatriciule = numeroMatriciule;
 		this.typeDeRecrutement = typeDeRecrutement;
 		this.type = type;
+		this.sexe = sexe;
 		this.naissance = naissance;
 		this.dateCreation = dateCreation;
 		this.status = status;
+		this.nationalite = nationalite;
 		this.login = login;
 		this.email = email;
 		this.telephone = telephone;
@@ -42,7 +57,33 @@ public class UserDtoResponse {
 		this.compteBancaire = compteBancaire;
 		this.resetPasswordToken = resetPasswordToken;
 		this.role = role;
+		this.lieu_naissance = lieu_naissance;
 	}
+
+	public String getNationalite() {
+		return nationalite;
+	}
+
+	public void setNationalite(String nationalite) {
+		this.nationalite = nationalite;
+	}
+
+	public String getLieu_naissance() {
+		return lieu_naissance;
+	}
+
+	public void setLieu_naissance(String lieu_naissance) {
+		this.lieu_naissance = lieu_naissance;
+	}
+
+	public String getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+
 	public UserDtoResponse() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -154,6 +195,12 @@ public class UserDtoResponse {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public Long getStructureID() {
+		return structureID;
+	}
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
 	} 
 
 }
