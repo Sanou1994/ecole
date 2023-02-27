@@ -12,6 +12,7 @@ public class DepartementDtoResponse implements Serializable {
 	private Long id;
 	private String nom;
 	private boolean status;
+	private Long structureID;
 	public Long getId() {
 		return id;
 	}
@@ -29,6 +30,12 @@ public class DepartementDtoResponse implements Serializable {
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public Long getStructureID() {
+		return structureID;
+	}
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
 	}
 
 	

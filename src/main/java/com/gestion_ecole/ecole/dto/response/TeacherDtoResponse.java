@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Classe;
-import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
@@ -21,7 +20,8 @@ private List<Classe> classes ;
 private List<Seance> seances ;
 private Classe classe;
 private Student student;
-private Departement departement;
+private Long departementID;
+private String niveauEtude;
 
 public List<Inscription> getInscriptions() {
 	return inscriptions;
@@ -71,12 +71,20 @@ public void setStudent(Student student) {
 	this.student = student;
 }
 
-public Departement getDepartement() {
-	return departement;
+public Long getdepartementID() {
+	return departementID;
 }
 
-public void setDepartement(Departement departement) {
-	this.departement = departement;
+public void setdepartementID(Long departementID) {
+	this.departementID = departementID;
+}
+
+public String getNiveauEtude() {
+	return niveauEtude;
+}
+
+public void setNiveauEtude(String niveauEtude) {
+	this.niveauEtude = niveauEtude;
 }
 	
 }

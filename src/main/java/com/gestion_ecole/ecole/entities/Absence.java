@@ -7,9 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity @Data
+@Entity @AllArgsConstructor 
+@NoArgsConstructor @Data
 public class Absence
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +27,6 @@ private Classe classe;
 private String raison;
 @ManyToOne
 private User user;
-public Absence(Long id, long dateDebut, long dateFin, boolean status, long dateAbscenceCreate, Classe classe,
-		String raison, User user) {
-	super();
-	this.id = id;
-	this.dateDebut = dateDebut;
-	this.dateFin = dateFin;
-	this.status = status;
-	this.dateAbscenceCreate = dateAbscenceCreate;
-	this.classe = classe;
-	this.raison = raison;
-	this.user = user;
-}
-public Absence() {
-	super();
-}
+private long anneeScolaireID;
 
 }

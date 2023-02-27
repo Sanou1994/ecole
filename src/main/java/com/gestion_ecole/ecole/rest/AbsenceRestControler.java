@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.AbsenceDtoRequest;
-import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.service.IAbsenceService;
 import com.gestion_ecole.ecole.utils.Utility;

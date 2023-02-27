@@ -20,43 +20,47 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class User  {
 	@Id @GeneratedValue(strategy = GenerationType.TABLE)
-	private Long id;
-	private Long structureID;
-	private String prenom;
-	private String nom;	
-	private String sexe;
-	private String adresse;
-	private String numeroMatriciule;
-	private String typeDeRecrutement;
-	private String type;
-	private String naissance;
-	private String nationalite;
-	private String lieu_naissance;
-	private long dateCreation;
-	private boolean status =true;
-	private String email;
-	private String telephone;
+	protected Long id;
+	protected Long structureID;
+	protected String prenom;
+	protected String nom;	
+	protected String sexe;
+	protected String adresse;
+	protected String numeroMatriciule;
+	protected String typeDeRecrutement;
+	protected Long type;
+	protected String naissance;
+	protected String nationalite;
+	protected String lieu_naissance;
+	protected long dateCreation;
+	protected boolean status =true;
+	protected String email;
+	protected String telephone;
+	protected String name_logo;
+    protected String url_logo;
+    @Column(name = "contratid", nullable = true)
+    protected Long contratID;
 	@Transient
-	private String monToken;
-	private String password;
-	private String compteBancaire;
+	protected String monToken;
+	protected String password;
+	protected String compteBancaire;
 	@Column(name = "reset_password_token")
-    private String resetPasswordToken;
-	private String role ; 
+    protected String resetPasswordToken;
+	protected String role ; 
 	@OneToMany(orphanRemoval = true,targetEntity=Absence.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Absence> absences = new ArrayList<Absence>();
+	protected List<Absence> absences = new ArrayList<Absence>();
 	@OneToMany(orphanRemoval = true,targetEntity=SupportPysique.class,cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
+	protected List<SupportPysique> supportPysiques = new ArrayList<SupportPysique>();
 	@OneToMany(orphanRemoval = true,targetEntity=Paiement.class, cascade = CascadeType.ALL,mappedBy = "user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Paiement> paiements = new ArrayList<Paiement>();
+	protected List<Paiement> paiements = new ArrayList<Paiement>();
 	@OneToMany(orphanRemoval = true,targetEntity=Seance.class,cascade = CascadeType.REMOVE, mappedBy="user")
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Seance> seances = new ArrayList<Seance>();
+	protected List<Seance> seances = new ArrayList<Seance>();
 	@OneToMany
-	private List<Code> codes = new ArrayList<Code>();
+	protected List<Code> codes = new ArrayList<Code>();
 
 	public User() {
 		super();
@@ -64,13 +68,12 @@ public abstract class User  {
 	}
 	
 	
-	
-
 	public User(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
-			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
-			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
-			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+			String numeroMatriciule, String typeDeRecrutement, Long type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String name_logo,
+			String url_logo, Long contratID, String monToken, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
 		super();
 		this.id = id;
 		this.structureID = structureID;
@@ -88,6 +91,9 @@ public abstract class User  {
 		this.status = status;
 		this.email = email;
 		this.telephone = telephone;
+		this.name_logo = name_logo;
+		this.url_logo = url_logo;
+		this.contratID = contratID;
 		this.monToken = monToken;
 		this.password = password;
 		this.compteBancaire = compteBancaire;
@@ -99,8 +105,6 @@ public abstract class User  {
 		this.seances = seances;
 		this.codes = codes;
 	}
-
-
 
 
 	public String getNationalite() {
@@ -171,10 +175,10 @@ public abstract class User  {
 	public void setTypeDeRecrutement(String typeDeRecrutement) {
 		this.typeDeRecrutement = typeDeRecrutement;
 	}
-	public String getType() {
+	public Long getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Long type) {
 		this.type = type;
 	}
 	public String getNaissance() {
@@ -279,6 +283,36 @@ public abstract class User  {
 
 	public void setSexe(String sexe) {
 		this.sexe = sexe;
+	}
+
+
+	public String getName_logo() {
+		return name_logo;
+	}
+
+
+	public void setName_logo(String name_logo) {
+		this.name_logo = name_logo;
+	}
+
+
+	public String getUrl_logo() {
+		return url_logo;
+	}
+
+
+	public void setUrl_logo(String url_logo) {
+		this.url_logo = url_logo;
+	}
+
+
+	public Long getContratID() {
+		return contratID;
+	}
+
+
+	public void setContratID(long contratID) {
+		this.contratID = contratID;
 	}	
 
 	

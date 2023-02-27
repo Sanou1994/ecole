@@ -8,20 +8,26 @@ import com.gestion_ecole.ecole.entities.Paiement;
 import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.SupportPysique;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+@AllArgsConstructor @NoArgsConstructor
 public class UserDtoRequest{
 	private Long id;
 	private Long structureID;
 	private String prenom;
+	private String name_logo;
+    private String url_logo;
 	private String nom;
 	private String adresse;
 	private String numeroMatriciule;
 	private String typeDeRecrutement; 
 	private String typeUser;
-	private String type;
+	private Long type;
 	private String naissance;
 	private String sexe;
 	private String nationalite;
-	private long dateCreation;
+	private long dateCreation;	
+	private long contratID;
 	private boolean status =true;
 	private String lieu_naissance;
 	private String email;
@@ -36,46 +42,7 @@ public class UserDtoRequest{
 	private List<Paiement> paiements = new ArrayList<Paiement>();
 	private List<Seance> seances = new ArrayList<Seance>();
 	
-	public UserDtoRequest() {
-		super();
-	}
-
-
-	public UserDtoRequest(Long id, Long structureID, String prenom, String nom, String adresse, String numeroMatriciule,
-			String typeDeRecrutement, String typeUser, String type, String naissance, String sexe, String nationalite,
-			long dateCreation, boolean status, String lieu_naissance, String email, String telephone, String monToken,
-			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
-			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances) {
-		super();
-		this.id = id;
-		this.structureID = structureID;
-		this.prenom = prenom;
-		this.nom = nom;
-		this.adresse = adresse;
-		this.numeroMatriciule = numeroMatriciule;
-		this.typeDeRecrutement = typeDeRecrutement;
-		this.typeUser = typeUser;
-		this.type = type;
-		this.naissance = naissance;
-		this.sexe = sexe;
-		this.nationalite = nationalite;
-		this.dateCreation = dateCreation;
-		this.status = status;
-		this.lieu_naissance = lieu_naissance;
-		this.email = email;
-		this.telephone = telephone;
-		this.monToken = monToken;
-		this.password = password;
-		this.compteBancaire = compteBancaire;
-		this.resetPasswordToken = resetPasswordToken;
-		this.role = role;
-		this.absences = absences;
-		this.supportPysiques = supportPysiques;
-		this.paiements = paiements;
-		this.seances = seances;
-	}
-
-
+	
 	public String getNationalite() {
 		return nationalite;
 	}
@@ -207,13 +174,13 @@ public class UserDtoRequest{
 
 
 
-	public String getType() {
+	public Long getType() {
 		return type;
 	}
 
 
 
-	public void setType(String type) {
+	public void setType(Long type) {
 		this.type = type;
 	}
 
@@ -385,6 +352,36 @@ public class UserDtoRequest{
 
 	public void setSeances(List<Seance> seances) {
 		this.seances = seances;
+	}
+
+
+	public String getName_logo() {
+		return name_logo;
+	}
+
+
+	public void setName_logo(String name_logo) {
+		this.name_logo = name_logo;
+	}
+
+
+	public String getUrl_logo() {
+		return url_logo;
+	}
+
+
+	public void setUrl_logo(String url_logo) {
+		this.url_logo = url_logo;
+	}
+
+
+	public long getContratID() {
+		return contratID;
+	}
+
+
+	public void setContratID(long contratID) {
+		this.contratID = contratID;
 	}
 
 	

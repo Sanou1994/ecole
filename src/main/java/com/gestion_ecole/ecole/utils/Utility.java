@@ -9,40 +9,52 @@ import org.modelmapper.ModelMapper;
 import com.gestion_ecole.ecole.dto.request.AbsenceDtoRequest;
 import com.gestion_ecole.ecole.dto.request.CahierDeTexteDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
+import com.gestion_ecole.ecole.dto.request.ContratDtoRequest;
 import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
 import com.gestion_ecole.ecole.dto.request.EmploiDuTempsDtoRequest;
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.request.InscriptionDtoRequest;
+import com.gestion_ecole.ecole.dto.request.NiveauEtudeDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ParentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
+import com.gestion_ecole.ecole.dto.request.PosteDtoRequest;
 import com.gestion_ecole.ecole.dto.request.SeanceDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
+import com.gestion_ecole.ecole.dto.request.SupportPhysiqueDtoRequest;
 import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
 import com.gestion_ecole.ecole.dto.response.AbsenceDtoResponse;
 import com.gestion_ecole.ecole.dto.response.CahierDeTexteDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
+import com.gestion_ecole.ecole.dto.response.ContratDtoResponse;
 import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
 import com.gestion_ecole.ecole.dto.response.EmploiDuTempsDtoResponse;
 import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
 import com.gestion_ecole.ecole.dto.response.InscriptionDtoResponse;
+import com.gestion_ecole.ecole.dto.response.NiveauEtudeDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ParentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.PersonnalDtoResponse;
+import com.gestion_ecole.ecole.dto.response.PosteDtoResponse;
 import com.gestion_ecole.ecole.dto.response.SeanceDtoResponse;
 import com.gestion_ecole.ecole.dto.response.StudentDtoResponse;
+import com.gestion_ecole.ecole.dto.response.SupportPhysiqueDtoResponse;
 import com.gestion_ecole.ecole.dto.response.TeacherDtoResponse;
 import com.gestion_ecole.ecole.dto.response.UserDtoResponse;
 import com.gestion_ecole.ecole.entities.Absence;
 import com.gestion_ecole.ecole.entities.CahierDeTexte;
 import com.gestion_ecole.ecole.entities.Classe;
+import com.gestion_ecole.ecole.entities.Contrat;
 import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.EmploiDuTemps;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Inscription;
+import com.gestion_ecole.ecole.entities.Niveau_etude;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
+import com.gestion_ecole.ecole.entities.Poste;
 import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
+import com.gestion_ecole.ecole.entities.SupportPysique;
 import com.gestion_ecole.ecole.entities.Teacher;
 import com.gestion_ecole.ecole.entities.User;
 
@@ -57,10 +69,20 @@ public final class Utility {
 	public static final String NOTREEMAIL ="je.reserve@connecsen.com";
 	public static final String dev_phone_number ="221774602901";
 
+	public static final String PERSONNAL = "PERSONNAL";
+	public static final String PARENT = "PARENT";
+	public static final String STUDENT = "STUDENT";
+	public static final String TEACHER = "TEACHER";
 	
-	public static final String ADD_USER = "/user/add";
-	public static final String UPDATE_USER = "/user/update";
-	public static final String GET_USER_BY_ID = "/user/users/{id}";
+	
+	public static final String ADD_PERSONNAL = "/user/personnal";
+	public static final String ADD_PARENT = "/user/parent";
+	public static final String ADD_STUDENT = "/user/student";
+	public static final String ADD_TEACHER = "/user/teacher";
+
+	
+	
+	public static final String GET_USER_BY_ID = "/user/users/type/{type}/id/{id}";
 	public static final String DELETE_USER_BY_ID = "/user/users/delete/{id}";
 	public static final String GET_ALL_USERS = "/user/users/type/{type}";
 
@@ -76,11 +98,28 @@ public final class Utility {
 	public static final String DO_UPDATE_PASSWORD = "/user/updatePassword";
 	public static final String DO_UPDATE_PASSWORD_USER = "/user/updatePassword/user";
 	
-	public static final String ADD_DEPARTEMENT = "/departement/add";
-	public static final String UPDATE_DEPARTEMENT = "/departement/update";
-	public static final String GET_DEPARTEMENT_BY_ID = "/acceuil/departement/departements/{id}";
-	public static final String DELETE_DEPARTEMENT_BY_ID = "/departement/departements/delete/{id}";
-	public static final String GET_ALL_DEPARTEMENT = "/acceuil/departement/departements";
+	public static final String ADD_DEPARTEMENT = "/departements/add";
+	public static final String GET_DEPARTEMENT_BY_ID = "/departements/{id}";
+	public static final String DELETE_DEPARTEMENT_BY_ID = "/departements/delete/{id}";
+	public static final String GET_ALL_DEPARTEMENTS = "/departements/structure/{id}";
+	
+	public static final String ADD_NIVEAU_ETUDE = "/niveauetudes/add";
+	public static final String GET_NIVEAU_ETUDE_BY_ID = "/niveauetudes/{id}";
+	public static final String DELETE_NIVEAU_ETUDE_BY_ID = "/niveauetudes/delete/{id}";
+	public static final String GET_ALL_NIVEAU_ETUDES = "/niveauetudes/structure/{id}";
+	
+	
+	
+	public static final String ADD_POSTE = "/postes/add";
+	public static final String GET_POSTE_BY_ID = "/postes/{id}";
+	public static final String DELETE_POSTE_BY_ID = "/postes/delete/{id}";
+	public static final String GET_ALL_POSTE = "/postes/structure/{id}";
+
+	public static final String ADD_CONTRAT = "/contrats/add";
+	public static final String GET_CONTRAT_BY_ID = "/contrats/{id}";
+	public static final String DELETE_CONTRAT_BY_ID = "/contrats/delete/{id}";
+	public static final String GET_ALL_CONTRAT = "/contrats/structure/{id}";
+
 	
 	public static final String ADD_CLASSE = "/classe/add";
 	public static final String UPDATE_CLASSE = "/classe/update";
@@ -88,11 +127,10 @@ public final class Utility {
 	public static final String DELETE_CLASSE_BY_ID = "/classe/classes/delete/{id}";
 	public static final String GET_ALL_CLASSE = "/acceuil/classe/classes";
 	
-	public static final String ADD_FILIERE = "/filiere/add";
-	public static final String UPDATE_FILIERE = "/filiere/update";
-	public static final String GET_FILIERE_BY_ID = "/acceuil/filiere/filieres/{id}";
-	public static final String DELETE_FILIERE_BY_ID = "/filiere/filieres/delete/{id}";
-	public static final String GET_ALL_FILIERE = "/acceuil/filiere/filieres";
+	public static final String ADD_FILIERE = "/filieres/add";
+	public static final String GET_FILIERE_BY_ID = "/filieres/{id}";
+	public static final String DELETE_FILIERE_BY_ID = "/filieres/delete/{id}";
+	public static final String GET_ALL_FILIERE = "/filieres/structure/{id}";
 	
 	public static final String ADD_SEANCE = "/seance/add";
 	public static final String UPDATE_SEANCE = "/seance/update";
@@ -124,6 +162,13 @@ public final class Utility {
 	public static final String DELETE_INSCRIPTION_BY_ID = "/inscription/incriptions/delete/{id}";
 	public static final String GET_ALL_INSCRIPTION = "/acceuil/inscription/inscriptions";
 	
+	public static final String UPLOAD_FILE = "/file/add";
+	public static final String GET_PHOTO = "/photo/{name}"; 
+
+	
+	
+	
+	
 	//GENERATE CALENDAR
 	public static int getMonthNumber(Date date) {
 		Calendar calendar = Calendar.getInstance();
@@ -142,6 +187,15 @@ public final class Utility {
 		return calendar.get(Calendar.YEAR);
 	}
 	
+	
+	public static String genererMatricule(long idUser, long idStructure)
+    {
+		String annee =Integer.toString(getAnnneNumber(new Date())) ;
+		String idUserS = Long.toString(idUser) ;
+		String idStructureS = Long.toString(idStructure) ; 
+		String matricule = "E"+ annee + idUserS+ idStructureS;
+        return matricule;
+    }
 	//CHECK OBJET IS NULL
 	public static boolean checkNull(Object obj) {
 		return (obj !=null)? true : false;
@@ -190,27 +244,27 @@ public final class Utility {
 			
 		}
 		
-		public static  UserDtoRequest UserConvertToUserDtoRequest(User UserDtoRequest) {
+		public static  UserDtoRequest UserConvertToUserDtoRequest(User userDtoRequest) {
 			UserDtoRequest UserDtoResponse = new UserDtoRequest() ;
-			if(UserDtoRequest instanceof Personnal )
+			if(userDtoRequest instanceof Personnal)
             {
-			    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, PersonnalDtoRequest.class) : UserDtoResponse;
+			    return (userDtoRequest != null)? modelMapper.map(userDtoRequest, PersonnalDtoRequest.class) : UserDtoResponse;
 
             	
             }
-            else if(UserDtoRequest instanceof Parent )
+            else if(userDtoRequest instanceof Parent )
             {
-    		    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, ParentDtoRequest.class) : UserDtoResponse;
+    		    return (userDtoRequest != null)? modelMapper.map(userDtoRequest, ParentDtoRequest.class) : UserDtoResponse;
 
            	}
-            else if(UserDtoRequest instanceof Student)
+            else if(userDtoRequest instanceof Student)
             {
-    		    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, StudentDtoRequest.class) : UserDtoResponse;
+    		    return (userDtoRequest != null)? modelMapper.map(userDtoRequest, StudentDtoRequest.class) : UserDtoResponse;
 
             }
             else 
             {
-    		    return (UserDtoRequest != null)? modelMapper.map(UserDtoRequest, TeacherDtoRequest.class) : UserDtoResponse;
+    		    return (userDtoRequest != null)? modelMapper.map(userDtoRequest, TeacherDtoRequest.class) : UserDtoResponse;
 
             }		
 			
@@ -294,7 +348,39 @@ public final class Utility {
 		{
 		 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, Departement.class):new Departement();
 			
+		}
+		
+       //LES MAPPERS NIVEAU ETUDE
+		
+	    public static  NiveauEtudeDtoRequest toDtoNiveau_etudeDtoRequest(Niveau_etude niveau_etude) 
+	    {
+	    	NiveauEtudeDtoRequest niveau_etudeDtoRequest = new NiveauEtudeDtoRequest() ;
+
+		    return(niveau_etude != null)? modelMapper.map(niveau_etude, NiveauEtudeDtoRequest.class) :niveau_etudeDtoRequest ;
+	    }
+	    
+	    public static  NiveauEtudeDtoResponse toDtoNiveau_etudeDtoResponse(Niveau_etude niveau_etude) 
+	    {
+	    	NiveauEtudeDtoResponse niveau_etudeDtoResponse = new NiveauEtudeDtoResponse() ;
+
+		   return (niveau_etude != null)? modelMapper.map(niveau_etude, NiveauEtudeDtoResponse.class):niveau_etudeDtoResponse;
+	    }
+	    
+		public static  Niveau_etude toEntityNiveau_etudeFromRequest(NiveauEtudeDtoRequest niveau_etudeDtoRequest) 
+		{
+		  return (niveau_etudeDtoRequest != null) ? modelMapper.map(niveau_etudeDtoRequest, Niveau_etude.class):new Niveau_etude();
+			
 		}	
+		
+		public static  Niveau_etude toEntityNiveau_etudeFromResponse(NiveauEtudeDtoResponse niveau_etudeDtoResponse) 
+		{
+		 return(niveau_etudeDtoResponse != null) ? modelMapper.map(niveau_etudeDtoResponse, Niveau_etude.class):new Niveau_etude();
+			
+		}
+		
+		
+		
+		
 		
 		//LES MAPPERS classe
 				
@@ -379,5 +465,88 @@ public final class Utility {
 			    	InscriptionDtoResponse inscriptionDtoResponse = new InscriptionDtoResponse();
 			    	return (inscription!=null)? modelMapper.map(inscription, InscriptionDtoResponse.class):inscriptionDtoResponse;
 			    }
-		
+			  //LES MAPPERS POSTE
+				
+			    public static  PosteDtoRequest toDtoPosteDtoRequest(Poste poste) 
+			    {
+			    	PosteDtoRequest posteDtoRequest = new PosteDtoRequest() ;
+
+				    return(posteDtoRequest != null)? modelMapper.map(poste, PosteDtoRequest.class) :posteDtoRequest ;
+			    }
+			    
+			    public static  PosteDtoResponse toDtoPosteDtoResponse(Poste poste) 
+			    {
+			    	PosteDtoResponse posteDtoResponse = new PosteDtoResponse() ;
+
+				return (posteDtoResponse != null)? modelMapper.map(poste, PosteDtoResponse.class):posteDtoResponse;
+			    }
+			    
+				public static  Poste toEntityPosteFromRequest(PosteDtoRequest posteDtoRequest) 
+				{
+					Poste poste = new Poste();
+				  return (poste != null) ? modelMapper.map(posteDtoRequest, Poste.class):new Poste();
+					
+				}	
+				
+				public static  Poste toEntityPosteFromResponse(PosteDtoResponse departementDtoResponse) 
+				{
+				 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, Poste.class):new Poste();
+					
+				}	
+                //LES MAPPERS POSTE
+				
+			    public static  ContratDtoRequest toDtoContratDtoRequest(Contrat contrat) 
+			    {
+			    	ContratDtoRequest contratDtoRequest = new ContratDtoRequest() ;
+
+				    return(contratDtoRequest != null)? modelMapper.map(contrat, ContratDtoRequest.class) :contratDtoRequest ;
+			    }
+			    
+			    public static  ContratDtoResponse toDtoContratDtoResponse(Contrat contrat) 
+			    {
+			    	ContratDtoResponse contratDtoResponse = new ContratDtoResponse() ;
+
+				return (contratDtoResponse != null)? modelMapper.map(contrat, ContratDtoResponse.class):contratDtoResponse;
+			    }
+			    
+				public static  Contrat toEntityContratFromRequest(ContratDtoRequest contratDtoRequest) 
+				{
+					Contrat contrat = new Contrat();
+				  return (contrat != null) ? modelMapper.map(contratDtoRequest, Contrat.class):new Contrat();
+					
+				}	
+				
+				public static  Contrat toEntityContratFromResponse(ContratDtoResponse contratDtoResponse) 
+				{
+				 return(contratDtoResponse != null) ? modelMapper.map(contratDtoResponse, Contrat.class):new Contrat();
+					
+				}	
+              //LES MAPPERS SUPPORT PHYSIQUE
+				
+			    public static  SupportPhysiqueDtoRequest toDtoSupportPysiqueDtoRequest(SupportPysique supportPysique) 
+			    {
+			    	SupportPhysiqueDtoRequest supportPysiqueDtoRequest = new SupportPhysiqueDtoRequest() ;
+
+				    return(supportPysiqueDtoRequest != null)? modelMapper.map(supportPysique, SupportPhysiqueDtoRequest.class) :supportPysiqueDtoRequest ;
+			    }
+			    
+			    public static  SupportPhysiqueDtoResponse toDtoSupportPysiqueDtoResponse(SupportPysique supportPysique) 
+			    {
+			    	SupportPhysiqueDtoResponse supportPysiqueDtoResponse = new SupportPhysiqueDtoResponse() ;
+
+				return (supportPysiqueDtoResponse != null)? modelMapper.map(supportPysique, SupportPhysiqueDtoResponse.class):supportPysiqueDtoResponse;
+			    }
+			    
+				public static  SupportPysique toEntitySupportPysiqueFromRequest(SupportPhysiqueDtoRequest supportPysiqueDtoRequest) 
+				{
+					SupportPysique supportPysique = new SupportPysique();
+				  return (supportPysique != null) ? modelMapper.map(supportPysiqueDtoRequest, SupportPysique.class):new SupportPysique();
+					
+				}	
+				
+				public static  SupportPysique toEntitySupportPysiqueFromResponse(SupportPhysiqueDtoResponse supportPysiqueDtoResponse) 
+				{
+				 return(supportPysiqueDtoResponse != null) ? modelMapper.map(supportPysiqueDtoResponse, SupportPysique.class):new SupportPysique();
+					
+				}	
 }

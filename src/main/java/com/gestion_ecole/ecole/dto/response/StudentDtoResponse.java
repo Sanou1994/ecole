@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Classe;
-import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Note;
 import com.gestion_ecole.ecole.entities.Parent;
@@ -24,7 +23,10 @@ public class StudentDtoResponse extends UserDtoResponse implements Serializable 
 	   private Teacher teacher;
 	   private Parent parent;		
 	   private Classe classe;
-	   private Departement departement;
+	   private Long departementID;
+	   private Long filiereID;
+		  private Long niveauEtudeID;
+
 	public List<Inscription> getInscriptions() {
 		return inscriptions;
 	}
@@ -67,11 +69,24 @@ public class StudentDtoResponse extends UserDtoResponse implements Serializable 
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
-	public Departement getDepartement() {
-		return departement;
+	
+	public Long getFiliereID() {
+		return filiereID;
 	}
-	public void setDepartement(Departement departement) {
-		this.departement = departement;
+	public void setFiliereID(Long filiereID) {
+		this.filiereID = filiereID;
+	}
+	public Long getDepartementID() {
+		return departementID;
+	}
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
+	}
+	public Long getNiveauEtudeID() {
+		return niveauEtudeID;
+	}
+	public void setNiveauEtudeID(Long niveauEtudeID) {
+		this.niveauEtudeID = niveauEtudeID;
 	}
 	   
 }

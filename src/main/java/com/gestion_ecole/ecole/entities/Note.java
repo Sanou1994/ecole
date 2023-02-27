@@ -6,7 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-@Entity
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Entity @AllArgsConstructor 
+@NoArgsConstructor @Data
 @Table(name="Note")
 public class Note {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,14 +20,7 @@ public class Note {
     private Student student;
 	@ManyToOne
     private Personnal personnal;
-	public Note(Long id, Student student, Personnal personnal) {
-		super();
-		this.id = id;
-		this.student = student;
-		this.personnal = personnal;
-	}
-	public Note() {
-		super();
-	}
+	private long anneeScolaireID;
+	
 	
 }

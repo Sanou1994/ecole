@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
+import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
+import com.gestion_ecole.ecole.repository.DepartementRepository;
 import com.gestion_ecole.ecole.repository.FiliereRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
@@ -18,6 +20,9 @@ import com.gestion_ecole.ecole.utils.Utility;
 public class FiliereService implements IFiliereService{
 @Autowired
 private FiliereRepository filiereRepository;
+
+@Autowired
+private DepartementRepository departementRepository;
 
 
 @Override
@@ -27,16 +32,17 @@ public Reponse createOrUpdateFiliere(FiliereDtoRequest filiere) {
 	try
 	{   
 		Filiere soft = this.filiereRepository.findByTitre(filiere.getTitre());
-		if( soft == null)
+		if( soft == null || (soft != null && filiere.getDepartementID() != null))
 		{
 			
-			if(filiere.getId() != null)
+			if(filiere.getId() != 0)
 			{
 				Optional<Filiere> softGot = this.filiereRepository.findById(filiere.getId());
 
 				if(softGot.isPresent())
 				{
 					softGot.get().setTitre(filiere.getTitre());
+					soft.setDepartementID(filiere.getDepartementID());
 					filiereRepository.save(softGot.get());
 			    	reponse.setMessage(" La filière a été modifiée avec succès !");
 			    	reponse.setCode(200);
@@ -128,17 +134,20 @@ public Reponse bloquerFiliere(Long id) {
 }
 
 @Override
-public Reponse ListeFilieres() {
+public Reponse ListeFilieres(Long id) {
 	Reponse reponse = new Reponse();	
 
 	try
-	{   List<FiliereDtoResponse> classes= filiereRepository.findAll()
+	{ 
+		List<Departement> departements = departementRepository.findByStructureID(id);
+		List<FiliereDtoResponse> filieres= filiereRepository.findAll()
 	                                                      .stream()
+	                                                      .filter(p-> departements.stream().filter(f->f.getId() == p.getDepartementID()).count() !=0  )
 	                                                      .map(Utility :: toFiliereDtoResponse)
 	                                                      .collect(Collectors.toList());
 		reponse.setCode(200);
     	reponse.setMessage(" La liste des  filières a été obtenu avec succès");
-    	reponse.setResult(classes);
+    	reponse.setResult(filieres);
     	return reponse ;
 	}
 	catch (Exception e) 

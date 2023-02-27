@@ -12,6 +12,7 @@ public class FiliereDtoResponse implements Serializable {
 	private Long id;
 	private String titre;
 	private boolean status;
+	private Long departementID;
 	public Long getId() {
 		return id;
 	}
@@ -29,6 +30,12 @@ public class FiliereDtoResponse implements Serializable {
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public Long getDepartementID() {
+		return departementID;
+	}
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
 	}
 	
 }

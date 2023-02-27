@@ -29,16 +29,16 @@ public class Personnal extends User {
 		// TODO Auto-generated constructor stub
 	}
 	public Personnal(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
-			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
-			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
-			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+			String numeroMatriciule, String typeDeRecrutement, Long type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String name_logo,
+			String url_logo, long contratID, String monToken, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
 		super(id, structureID, prenom, nom, sexe, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, nationalite,
-				lieu_naissance, dateCreation, status, email, telephone, monToken, password, compteBancaire, resetPasswordToken,
-				role, absences, supportPysiques, paiements, seances, codes);
+				lieu_naissance, dateCreation, status, email, telephone, name_logo, url_logo, contratID, monToken, password,
+				compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements, seances, codes);
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 		}

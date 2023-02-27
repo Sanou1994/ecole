@@ -33,10 +33,17 @@ public class Student extends User{
     private Parent parent;
 	@ManyToOne
     private Classe classe;
-	@ManyToOne
-	private Departement departement;
+	private Long departementID;
+	private Long filiereID;
+	private Long niveauEtudeID;
+	
+	public Student() {
+		super();
+	}
+	
 	public Student(List<Inscription> inscriptions, List<Note> notes, List<Student> parains,
-			List<Teacher> professeurAppuis, Teacher teacher, Parent parent, Classe classe, Departement departement) {
+			List<Teacher> professeurAppuis, Teacher teacher, Parent parent, Classe classe, Long departementID,
+			Long filiereID, Long niveauEtudeID) {
 		super();
 		this.inscriptions = inscriptions;
 		this.notes = notes;
@@ -45,21 +52,40 @@ public class Student extends User{
 		this.teacher = teacher;
 		this.parent = parent;
 		this.classe = classe;
-		this.departement = departement;
+		this.departementID = departementID;
+		this.filiereID = filiereID;
+		this.niveauEtudeID = niveauEtudeID;
 	}
-	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+
 	public Student(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
-			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
-			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
-			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+			String numeroMatriciule, String typeDeRecrutement, Long type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String name_logo,
+			String url_logo, Long contratID, String monToken, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
 		super(id, structureID, prenom, nom, sexe, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, nationalite,
-				lieu_naissance, dateCreation, status, email, telephone, monToken, password, compteBancaire, resetPasswordToken,
-				role, absences, supportPysiques, paiements, seances, codes);
+				lieu_naissance, dateCreation, status, email, telephone, name_logo, url_logo, contratID, monToken, password,
+				compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements, seances, codes);
 		// TODO Auto-generated constructor stub
+	}
+
+	public Long getDepartementID() {
+		return departementID;
+	}
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
+	}
+	public Long getFiliereID() {
+		return filiereID;
+	}
+	public void setFiliereID(Long filiereID) {
+		this.filiereID = filiereID;
+	}
+	public Long getNiveauEtudeID() {
+		return niveauEtudeID;
+	}
+	public void setNiveauEtudeID(Long niveauEtudeID) {
+		this.niveauEtudeID = niveauEtudeID;
 	}
 	
 	

@@ -6,33 +6,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-@Entity
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity @AllArgsConstructor 
+@NoArgsConstructor @Data
 public class CahierDeTexte {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
     private Classe classe;
+	private long anneeScolaireID;
 	
-	public CahierDeTexte() {
-		super();
-	}
-	public CahierDeTexte(Long id, Classe classe) {
-		super();
-		this.id = id;
-		this.classe = classe;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Classe getClasse() {
-		return classe;
-	}
-	public void setClasse(Classe classe) {
-		this.classe = classe;
-	}
 	
 	
 }

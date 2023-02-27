@@ -2,6 +2,9 @@ package com.gestion_ecole.ecole.dto.response;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+@AllArgsConstructor @NoArgsConstructor
 public class UserDtoResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
@@ -11,7 +14,7 @@ public class UserDtoResponse implements Serializable {
 	private String adresse;
 	private String numeroMatriciule;
 	private String typeDeRecrutement;
-	private String type;
+	private Long type;
 	private String sexe;
 	private String naissance;
 	private long dateCreation;
@@ -26,40 +29,10 @@ public class UserDtoResponse implements Serializable {
     private String resetPasswordToken;
 	private String role ;
 	private String lieu_naissance;
-
+	private String name_logo;
+    private String url_logo;
+    private long contratID;
 	
-	
-
-	public UserDtoResponse(Long id, Long structureID, String prenom, String nom, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String type, String sexe, String naissance,
-			long dateCreation, boolean status, String nationalite, String login, String email, String telephone,
-			String monToken, String password, String compteBancaire, String resetPasswordToken, String role,
-			String lieu_naissance) {
-		super();
-		this.id = id;
-		this.structureID = structureID;
-		this.prenom = prenom;
-		this.nom = nom;
-		this.adresse = adresse;
-		this.numeroMatriciule = numeroMatriciule;
-		this.typeDeRecrutement = typeDeRecrutement;
-		this.type = type;
-		this.sexe = sexe;
-		this.naissance = naissance;
-		this.dateCreation = dateCreation;
-		this.status = status;
-		this.nationalite = nationalite;
-		this.login = login;
-		this.email = email;
-		this.telephone = telephone;
-		this.monToken = monToken;
-		this.password = password;
-		this.compteBancaire = compteBancaire;
-		this.resetPasswordToken = resetPasswordToken;
-		this.role = role;
-		this.lieu_naissance = lieu_naissance;
-	}
-
 	public String getNationalite() {
 		return nationalite;
 	}
@@ -84,10 +57,7 @@ public class UserDtoResponse implements Serializable {
 		this.sexe = sexe;
 	}
 
-	public UserDtoResponse() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+
 	public Long getId() {
 		return id;
 	}
@@ -124,10 +94,10 @@ public class UserDtoResponse implements Serializable {
 	public void setTypeDeRecrutement(String typeDeRecrutement) {
 		this.typeDeRecrutement = typeDeRecrutement;
 	}
-	public String getType() {
+	public Long getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Long type) {
 		this.type = type;
 	}
 	public String getNaissance() {
@@ -201,6 +171,30 @@ public class UserDtoResponse implements Serializable {
 	}
 	public void setStructureID(Long structureID) {
 		this.structureID = structureID;
+	}
+
+	public String getName_logo() {
+		return name_logo;
+	}
+
+	public void setName_logo(String name_logo) {
+		this.name_logo = name_logo;
+	}
+
+	public String getUrl_logo() {
+		return url_logo;
+	}
+
+	public void setUrl_logo(String url_logo) {
+		this.url_logo = url_logo;
+	}
+
+	public long getContratID() {
+		return contratID;
+	}
+
+	public void setContratID(long contratID) {
+		this.contratID = contratID;
 	} 
 
 }

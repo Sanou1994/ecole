@@ -7,11 +7,12 @@ import javax.persistence.Id;
 
 
 
-@Entity
+@Entity 
 public class SupportPysique {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     private String name;
+    private String type;
 	private String url;
 	private long dateCreation;
 	public Long getId() {
@@ -38,10 +39,18 @@ public class SupportPysique {
 	public void setDateCreation(long dateCreation) {
 		this.dateCreation = dateCreation;
 	}
-	public SupportPysique(Long id, String name, String url, long dateCreation) {
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public SupportPysique(Long id, String name, String type, String url, long dateCreation) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.type = type;
 		this.url = url;
 		this.dateCreation = dateCreation;
 	}

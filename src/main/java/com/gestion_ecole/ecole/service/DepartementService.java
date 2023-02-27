@@ -19,8 +19,6 @@ public class DepartementService   implements IDepartementService{
 @Autowired
 DepartementRepository departementRepository;
 
-
-
 @Override
 public Reponse createOrUpdateDepartement(DepartementDtoRequest departement) {
 	Reponse reponse = new Reponse();	
@@ -30,7 +28,7 @@ public Reponse createOrUpdateDepartement(DepartementDtoRequest departement) {
 		Optional<Departement> soft = this.departementRepository.findByNom(departement.getNom());
 		if(!soft.isPresent()) 
 		{
-			if(departement.getId() != null)
+			if(departement.getId() != 0)
 			{
 				Optional<Departement> departementGot = this.departementRepository.findById(departement.getId());
 
@@ -61,8 +59,9 @@ public Reponse createOrUpdateDepartement(DepartementDtoRequest departement) {
 		}
 		else 
 		{
-			reponse.setCode(201);
-	    	reponse.setMessage(" Le département existe déjà!");
+			departementRepository.save(Utility.toEntityDepartementFromRequest(departement));
+			reponse.setCode(200);
+	    	reponse.setMessage(" Le département a été créée avec succès !");
 	    	reponse.setResult(departement);
 		}
 		
@@ -71,7 +70,7 @@ public Reponse createOrUpdateDepartement(DepartementDtoRequest departement) {
 	{
 		reponse.setCode(500);
     	reponse.setMessage(" Une erreur interne est survenue");
-	}
+	} 
 	return reponse ;
 
 }
@@ -108,7 +107,7 @@ public Reponse bloquerDepartement(Long id) {
 	    	departement.setStatus(false);
 	    	departementRepository.save(departement);
 	    	reponse.setCode(200);
-	    	reponse.setMessage(" Le département a été supprimé avec succès");
+	    	reponse.setMessage(" Le département a été bloqué avec succès");
 	    	reponse.setResult(Utility.toDtoDepartementDtoResponse(departement));
 	    }	
 	    else
@@ -129,11 +128,11 @@ public Reponse bloquerDepartement(Long id) {
 }
 
 @Override
-public Reponse ListeDepartements() {
+public Reponse ListeDepartements(Long id) {
 	Reponse reponse = new Reponse();	
 
 	try
-	{   List<DepartementDtoResponse> departements= departementRepository.findAll()
+	{   List<DepartementDtoResponse> departements= departementRepository.findByStructureID(id)
 	                                                      .stream()
 	                                                      .map(Utility :: toDtoDepartementDtoResponse)
 	                                                      .collect(Collectors.toList());

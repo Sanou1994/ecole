@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.CodeDtoRequest;
+import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
+import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
 import com.gestion_ecole.ecole.entities.Login;
 import com.gestion_ecole.ecole.entities.MailSend;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.service.IAccountService;
 import com.gestion_ecole.ecole.service.IEmailService;
+import com.gestion_ecole.ecole.service.IPersonnalService;
+import com.gestion_ecole.ecole.service.IStudentService;
+import com.gestion_ecole.ecole.service.ITeacherService;
 import com.gestion_ecole.ecole.utils.Utility;
 
 
@@ -28,15 +33,18 @@ public class AccountRestController {
 	@Autowired
 	private IAccountService accountService;
 	@Autowired
+	private IPersonnalService personnalService;
+	@Autowired
+	private ITeacherService teacherService;
+	@Autowired
+	private IStudentService studentService;
+	@Autowired
 	private IEmailService emailService;
 	@PostMapping(Utility.DO_REGISTER)
-	public boolean register( @RequestBody UserDtoRequest user) {
-		boolean reponse =false;
+	public Reponse register( @RequestBody UserDtoRequest user) {
 		Reponse userAdd =accountService.login_up(user);
-		if(userAdd !=null) {
-			reponse =true;
-		} 
-		return reponse;
+		
+		return userAdd;
 	}
 	@PostMapping(Utility.DO_REGISTER_BY_ADMIN)
 	public boolean registerByAmdin( @RequestBody UserDtoRequest user) {
@@ -84,22 +92,26 @@ public class AccountRestController {
         return idUser;
     }
 	
-	@PostMapping(Utility.ADD_USER)
-	public Reponse getAddOrUpdateUser( @RequestBody UserDtoRequest user){
-		Reponse resultatCreation = accountService.createOrUpdateUser(user);
-		return resultatCreation;
+	@PostMapping(Utility.ADD_PERSONNAL)
+	public Reponse getAddOrUpdatePersonnal( @RequestBody PersonnalDtoRequest personnal){
+		Reponse reponse = personnalService.createOrUpdatePersonnal(personnal);
+		return reponse;
+    }
+	@PostMapping(Utility.ADD_TEACHER)
+	public Reponse getAddOrUpdateTeacher( @RequestBody TeacherDtoRequest teacher){
+		Reponse reponse = teacherService.createOrUpdateTeacher(teacher);
+		return reponse;
+    }
+	@PostMapping(Utility.ADD_STUDENT)
+	public Reponse getAddOrUpdateStudent( @RequestBody StudentDtoRequest student){
+		Reponse reponse = studentService.createOrUpdateStudent(student);
+		return reponse;
     }
 
-	@PostMapping(Utility.UPDATE_USER)
-	public Reponse getUpdateUser( @RequestBody StudentDtoRequest user){		
-		Reponse	 userUpdate = accountService.createOrUpdateUser(user);
-				
-		return userUpdate;
-    }
 	
 	@GetMapping(Utility.GET_USER_BY_ID)
-	public Reponse getUserById(@PathVariable(value = "id") Long userId){		
-		Reponse	userUpdate =accountService.getUserById(userId);		
+	public Reponse getUserById(@PathVariable(value = "type") String  type,@PathVariable(value = "id") Long userId){		
+		Reponse	userUpdate =accountService.getUserById(userId,type);		
 		return userUpdate ;
     }
 	

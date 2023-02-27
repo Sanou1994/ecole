@@ -1,17 +1,13 @@
 package com.gestion_ecole.ecole.dto.response;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor 
+@NoArgsConstructor @Data
 public class CahierDeTexteDtoResponse {
-
+	private long anneeScolaireID;
 	private Long id;
-	public CahierDeTexteDtoResponse() {
-		// TODO Auto-generated constructor stub
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	
 }

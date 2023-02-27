@@ -30,14 +30,15 @@ public class Struture
 	@OneToMany(orphanRemoval = true,targetEntity=User.class,cascade = CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<User> users = new ArrayList<User>();
-	
-	
-	
+	@OneToMany(orphanRemoval = true,targetEntity=User.class,cascade = CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Departement> departements = new ArrayList<Departement>();
 	public Struture() {
 		super();
 	}
+	
 	public Struture(Long id, String nom, String adresse, String type, long dateCreation, boolean status, String email,
-			String telephone, List<User> users) {
+			String telephone, List<User> users, List<Departement> departements) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -48,7 +49,9 @@ public class Struture
 		this.email = email;
 		this.telephone = telephone;
 		this.users = users;
+		this.departements = departements;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -102,6 +105,14 @@ public class Struture
 	}
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<Departement> getDepartements() {
+		return departements;
+	}
+
+	public void setDepartements(List<Departement> departements) {
+		this.departements = departements;
 	}
 	
 	

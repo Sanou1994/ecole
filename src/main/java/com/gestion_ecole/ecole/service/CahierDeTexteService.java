@@ -5,17 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.CahierDeTexteDtoRequest;
-import com.gestion_ecole.ecole.dto.request.EmploiDuTempsDtoRequest;
 import com.gestion_ecole.ecole.dto.response.CahierDeTexteDtoResponse;
-import com.gestion_ecole.ecole.dto.response.EmploiDuTempsDtoResponse;
 import com.gestion_ecole.ecole.entities.CahierDeTexte;
-import com.gestion_ecole.ecole.entities.EmploiDuTemps;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.CahierDeTexteRepository;
 import com.gestion_ecole.ecole.utils.Utility;
-
+@Service
 public class CahierDeTexteService implements ICahierDeTexteService {
 	@Autowired
 	CahierDeTexteRepository cahierDeTexteRepository;

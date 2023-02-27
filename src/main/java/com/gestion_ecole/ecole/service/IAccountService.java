@@ -11,7 +11,7 @@ public interface IAccountService {
 	  public void initAccount();
 	  public String getToken(String email , String password);
 	  public Reponse createOrUpdateUser(UserDtoRequest User);
-	  public Reponse getUserById(Long id);
+	  public Reponse getUserById(Long id,String type);
 	  public Reponse getAllUsersByType(String type);
 	  public Reponse getUserByTelephone(String telephone);
 	  public Reponse getUserByEmail(String Email);

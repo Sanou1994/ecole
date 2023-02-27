@@ -1,9 +1,14 @@
 package com.gestion_ecole.ecole.dto.response;
 
-public class InscriptionDtoResponse {
 
-	public InscriptionDtoResponse() {
-		// TODO Auto-generated constructor stub
-	}
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor 
+@NoArgsConstructor @Data
+public class InscriptionDtoResponse {
+	private long anneeScolaireID;
+	
 
 }

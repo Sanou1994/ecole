@@ -10,10 +10,14 @@ public class Code {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String telephone;
+	private String type;
+
 	private int code;
 	private boolean status=false;
 	private long dateConnexion ;
 	private Long userID;	
+
+	
 
 	public Code(Long id, String telephone, int code, boolean status, long dateConnexion, Long userID) {
 		super();
@@ -23,6 +27,25 @@ public class Code {
 		this.status = status;
 		this.dateConnexion = dateConnexion;
 		this.userID = userID;
+	}
+
+	public Code(Long id, String telephone, String type, int code, boolean status, long dateConnexion, Long userID) {
+		super();
+		this.id = id;
+		this.telephone = telephone;
+		this.type = type;
+		this.code = code;
+		this.status = status;
+		this.dateConnexion = dateConnexion;
+		this.userID = userID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Code() {

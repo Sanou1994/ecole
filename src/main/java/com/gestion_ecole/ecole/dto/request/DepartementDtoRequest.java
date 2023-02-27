@@ -1,19 +1,15 @@
 package com.gestion_ecole.ecole.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor @NoArgsConstructor
 public class DepartementDtoRequest {
 
 	private Long id;
 	private String nom;
 	private boolean status;
-	public DepartementDtoRequest() {
-		super();
-	}
-	public DepartementDtoRequest(Long id, String nom) {
-		super();
-		this.id = id;
-		this.nom = nom;
-	}
+	private Long structureID;
 	public Long getId() {
 		return id;
 	}
@@ -31,6 +27,12 @@ public class DepartementDtoRequest {
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public Long getStructureID() {
+		return structureID;
+	}
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
 	}
 		
 }

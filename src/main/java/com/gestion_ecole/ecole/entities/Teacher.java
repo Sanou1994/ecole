@@ -28,31 +28,59 @@ public class Teacher extends User{
     private Classe classe;
 	@ManyToOne
     private Student student;
-	@ManyToOne
-	private Departement departement;
+	private String niveauEtude;
+	private Long departementID;
 	public Teacher() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+
+
+	public Teacher(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, Long type, String naissance, String nationalite,
+			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String name_logo,
+			String url_logo, Long contratID, String monToken, String password, String compteBancaire,
+			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
+			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+		super(id, structureID, prenom, nom, sexe, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, nationalite,
+				lieu_naissance, dateCreation, status, email, telephone, name_logo, url_logo, contratID, monToken, password,
+				compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements, seances, codes);
+		// TODO Auto-generated constructor stub
+	}
 	public Teacher(List<Inscription> inscriptions, List<Student> students, List<Classe> classes, Classe classe,
-			Student student, Departement departement) {
+			Student student, String niveauEtude, Long departementID) {
 		super();
 		this.inscriptions = inscriptions;
 		this.students = students;
 		this.classes = classes;
 		this.classe = classe;
 		this.student = student;
-		this.departement = departement;
+		this.niveauEtude = niveauEtude;
+		this.departementID = departementID;
 	}
-	public Teacher(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String type, String naissance, String nationalite,
-			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String monToken,
-			String password, String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
-			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
-		super(id, structureID, prenom, nom, sexe, adresse, numeroMatriciule, typeDeRecrutement, type, naissance, nationalite,
-				lieu_naissance, dateCreation, status, email, telephone, monToken, password, compteBancaire, resetPasswordToken,
-				role, absences, supportPysiques, paiements, seances, codes);
-		// TODO Auto-generated constructor stub
+
+
+
+
+
+	public Long getDepartementID() {
+		return departementID;
+	}
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
+	}
+
+
+	public String getNiveauEtude() {
+		return niveauEtude;
+	}
+
+
+	public void setNiveauEtude(String niveauEtude) {
+		this.niveauEtude = niveauEtude;
 	}
 	
 

@@ -9,7 +9,7 @@ public interface IFiliereService {
 	  public Reponse createOrUpdateFiliere(FiliereDtoRequest filiere);
 	  public Reponse getFiliereById(Long id);
 	  public Reponse bloquerFiliere(Long id); 
-	  public Reponse ListeFilieres(); 
+	  public Reponse ListeFilieres(Long id); 
 
 	 
 	 }

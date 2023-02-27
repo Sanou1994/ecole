@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Absence;
 import com.gestion_ecole.ecole.entities.Classe;
-import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Paiement;
 import com.gestion_ecole.ecole.entities.Seance;
@@ -16,11 +15,11 @@ public class TeacherDtoRequest extends UserDtoRequest {
     private List<Inscription> inscriptions ;
     private List<Student> students ;
 	private List<Classe> classes ;
-	
+	private String niveauEtude;
     private Classe classe;
     private Student student;
 	
-	private Departement departement;
+	private Long departementID;
 
 	public TeacherDtoRequest() {
 		super();
@@ -28,17 +27,54 @@ public class TeacherDtoRequest extends UserDtoRequest {
 	}
 
 	
-	public TeacherDtoRequest(Long id, Long structureID, String prenom, String nom, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String typeUser, String type, String naissance,
-			String sexe, String nationalite, long dateCreation, boolean status, String lieu_naissance, String email,
-			String telephone, String monToken, String password, String compteBancaire, String resetPasswordToken,
-			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Seance> seances) {
-		super(id, structureID, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser, type, naissance, sexe,
-				nationalite, dateCreation, status, lieu_naissance, email, telephone, monToken, password, compteBancaire,
-				resetPasswordToken, role, absences, supportPysiques, paiements, seances);
+
+	public TeacherDtoRequest(Long id, Long structureID, String prenom, String name_logo, String url_logo, String nom,
+			String adresse, String numeroMatriciule, String typeDeRecrutement, String typeUser, Long type,
+			String naissance, String sexe, String nationalite, long dateCreation, long contratID, boolean status,
+			String lieu_naissance, String email, String telephone, String monToken, String password,
+			String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances,
+			List<Inscription> inscriptions, List<Student> students, List<Classe> classes, String niveauEtude,
+			Classe classe, Student student, Long departementID) {
+		super(id, structureID, prenom, name_logo, url_logo, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser,
+				type, naissance, sexe, nationalite, dateCreation, contratID, status, lieu_naissance, email, telephone,
+				monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
+				seances);
+		this.inscriptions = inscriptions;
+		this.students = students;
+		this.classes = classes;
+		this.niveauEtude = niveauEtude;
+		this.classe = classe;
+		this.student = student;
+		this.departementID = departementID;
+	}
+
+
+
+	public TeacherDtoRequest(Long id, Long structureID, String prenom, String name_logo, String url_logo, String nom,
+			String adresse, String numeroMatriciule, String typeDeRecrutement, String typeUser, Long type,
+			String naissance, String sexe, String nationalite, long dateCreation, long contratID, boolean status,
+			String lieu_naissance, String email, String telephone, String monToken, String password,
+			String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances) {
+		super(id, structureID, prenom, name_logo, url_logo, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser, type,
+				naissance, sexe, nationalite, dateCreation, contratID, status, lieu_naissance, email, telephone, monToken,
+				password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements, seances);
 		// TODO Auto-generated constructor stub
 	}
+
+
+
+	public String getNiveauEtude() {
+		return niveauEtude;
+	}
+
+
+
+	public void setNiveauEtude(String niveauEtude) {
+		this.niveauEtude = niveauEtude;
+	}
+
 
 
 	public List<Inscription> getInscriptions() {
@@ -82,12 +118,12 @@ public class TeacherDtoRequest extends UserDtoRequest {
 		this.student = student;
 	}
 
-	public Departement getDepartement() {
-		return departement;
+	public Long getdepartementID() {
+		return departementID;
 	}
 
-	public void setDepartement(Departement departement) {
-		this.departement = departement;
+	public void setdepartementID(Long departementID) {
+		this.departementID = departementID;
 	}
     
 }

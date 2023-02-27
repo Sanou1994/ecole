@@ -9,7 +9,7 @@ public interface IDepartementService {
 	  public Reponse createOrUpdateDepartement(DepartementDtoRequest departement);
 	  public Reponse getDepartementById(Long id);
 	  public Reponse bloquerDepartement(Long id); 
-	  public Reponse ListeDepartements(); 
+	  public Reponse ListeDepartements(Long id); 
 
 	 
 	 }

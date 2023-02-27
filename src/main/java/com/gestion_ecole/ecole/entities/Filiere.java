@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.LazyCollection;
@@ -26,22 +25,21 @@ public class Filiere {
 	@OneToMany(orphanRemoval = true,targetEntity=Personnal.class, cascade = CascadeType.ALL,mappedBy = "filiere")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Personnal> personnals = new ArrayList<Personnal>();
-	@ManyToOne
-	private Departement departement;
+	private Long departementID;
 	
 	
 	public Filiere() {
 		super();
 	}
 	public Filiere(Long id, boolean status, String titre, List<Classe> classes, List<Personnal> personnals,
-			Departement departement) {
+			Long departementID) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.titre = titre;
 		this.classes = classes;
 		this.personnals = personnals;
-		this.departement = departement;
+		this.departementID = departementID;
 	}
 	public boolean isStatus() {
 		return status;
@@ -73,11 +71,11 @@ public class Filiere {
 	public void setPersonnals(List<Personnal> personnals) {
 		this.personnals = personnals;
 	}
-	public Departement getDepartement() {
-		return departement;
+	public Long getDepartementID() {
+		return departementID;
 	}
-	public void setDepartement(Departement departement) {
-		this.departement = departement;
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
 	}
 	
 	

@@ -73,66 +73,761 @@ public class AccountService implements IAccountService{
 	@Override
 	public Reponse login_up(UserDtoRequest user) 
 	{
+
 		Reponse reponse = new Reponse();
 		try
 		{
 
-			User personnalGot = personnalRepository.findByEmail(user.getEmail()).get();
-			User studentGot = studentRepository.findByEmail(user.getEmail()).get();
-			User parentGot = parentRepository.findByEmail(user.getEmail()).get();
-			User teacherGot = teacherRepository.findByEmail(user.getEmail()).get();
-			if(personnalGot == null &&  studentGot == null &&  parentGot == null && teacherGot == null )
-			{
-				String pwdCryp = bCryptPasswordEncoder.encode(user.getPassword());
-				user.setPassword(pwdCryp);		
-				User userConverted = Utility.UserDtoRequestConvertToUser(user);
-
-				if(userConverted instanceof Personnal )
-				{
-					User userSave = personnalRepository.save((Personnal)userConverted);
-					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-
-
-				}
-				else if(userConverted instanceof Parent )
-				{
-					User userSave = parentRepository.save((Parent)userConverted);
-					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				}
-				else if(userConverted instanceof Student)
-				{
-					User userSave = studentRepository.save((Student)userConverted);
-					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				}
-				else if(userConverted instanceof Teacher )
-				{
-					User userSave = teacherRepository.save((Teacher)userConverted);
-					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				}
-				reponse.setCode(200);
-				reponse.setMessage("Ce compte a été enregistré avec succès");
-			}       
-			else
-			{
-				if(user.isStatus()==false) 
+		Reponse userByEmail=this.getUserByEmail(user.getEmail());
+		Reponse userByTelephone=this.getUserByTelephone(user.getTelephone());		
+		String pwdCryp = bCryptPasswordEncoder.encode(user.getPassword());
+		switch(userByEmail.getCode())
+		{
+		  case 200:
+			    if(((UserDtoResponse)userByEmail.getResult()).isStatus()==false) 
 				{
 					//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
-
+			    	reponse.setCode(201);
+					reponse.setMessage("Cet email est déjà utilisé  !");
 				}
-				reponse.setCode(201);
-				reponse.setMessage("Cet email est déjà utilisé  !");	
+			    else if(user.getId() != null && user.getId() != 0)
+			    {
+			    	switch(userByTelephone.getCode())
+					{
+					  case 200:
+						    if(((UserDtoResponse)userByTelephone.getResult()).isStatus()==false) 
+							{
+								//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
 
-			}
+							}
+						    else if(user.getId() != null && user.getId() != 0)
+						    {
+						    	
+									Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+									Optional<Student> student = studentRepository.findById(user.getId());
+									Optional<Parent> parent = parentRepository.findById(user.getId());
+									Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+									if(user.getTypeUser().equals("PERSONNAL"))
+									{
+										if(personnal.isPresent() )
+										{
+											personnal.get().setAdresse(user.getAdresse());
+											personnal.get().setPrenom(user.getPrenom());
+											personnal.get().setNom(user.getNom());
+											personnal.get().setLieu_naissance(user.getLieu_naissance());
+											personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											personnal.get().setContratID(user.getContratID());
+											personnal.get().setType(user.getType());
+											personnal.get().setNaissance(user.getNaissance());       			
+											personnal.get().setEmail(user.getEmail());
+											personnal.get().setTelephone(user.getTelephone());
+											personnal.get().setCompteBancaire(user.getCompteBancaire());
+											personnal.get().setRole(user.getRole());
+											personnal.get().setNationalite(user.getNationalite());
+											User userSave = personnalRepository.save(personnal.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+									}
+									else if(user.getTypeUser().equals("PARENT"))
+									{
+										if(parent.isPresent() )
+										{
+											parent.get().setAdresse(user.getAdresse());
+											parent.get().setPrenom(user.getPrenom());
+											parent.get().setNom(user.getNom());
+											parent.get().setContratID(user.getContratID());
+											parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											parent.get().setType(user.getType());
+											parent.get().setNaissance(user.getNaissance());
+											parent.get().setLieu_naissance(user.getLieu_naissance());
+											parent.get().setEmail(user.getEmail());
+											parent.get().setTelephone(user.getTelephone());
+											parent.get().setCompteBancaire(user.getCompteBancaire());
+											parent.get().setRole(user.getRole());
+											parent.get().setNationalite(user.getNationalite());
+											User userSave = parentRepository.save(parent.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+
+									}
+									else if(user.getTypeUser().equals("STUDENT"))
+									{
+										if(student.isPresent() )
+										{
+											student.get().setName_logo(user.getName_logo());
+											student.get().setPrenom(user.getPrenom());
+											student.get().setNom(user.getNom());
+											student.get().setContratID(user.getContratID());
+											student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											student.get().setType(user.getType());
+											student.get().setNaissance(user.getNaissance());   
+											student.get().setNationalite(user.getNationalite());
+											student.get().setEmail(user.getEmail());
+											student.get().setTelephone(user.getTelephone());
+											student.get().setLieu_naissance(user.getLieu_naissance());
+											student.get().setCompteBancaire(user.getCompteBancaire());
+											student.get().setRole(user.getRole());
+											User userSave = studentRepository.save(student.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
 
 
+									}
+									else
+									{
+										if(teacher.isPresent() )
+										{
+											teacher.get().setAdresse(user.getAdresse());
+											teacher.get().setPrenom(user.getPrenom());
+											teacher.get().setNom(user.getNom());
+											teacher.get().setContratID(user.getContratID());
+											teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											teacher.get().setType(user.getType());
+											teacher.get().setNaissance(user.getNaissance());
+											teacher.get().setNationalite(user.getNationalite());
+											teacher.get().setEmail(user.getEmail());
+											teacher.get().setTelephone(user.getTelephone());
+											teacher.get().setCompteBancaire(user.getCompteBancaire());
+											teacher.get().setLieu_naissance(user.getLieu_naissance());
+											teacher.get().setRole(user.getRole());
+											User userSave = teacherRepository.save(teacher.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+
+									}		
+
+								
+						    }
+						    else
+						    {
+						    	reponse.setCode(201);
+								reponse.setMessage("Cet numéro est déjà utilisé  !");
+						    }
+						    
+					    break;
+					  case 201:
+					  {
+						  
+						  
+							if(  user.getId() != null && user.getId() != 0)
+							{
+								Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+								Optional<Student> student = studentRepository.findById(user.getId());
+								Optional<Parent> parent = parentRepository.findById(user.getId());
+								Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+									if(personnal.isPresent() )
+									{
+										personnal.get().setAdresse(user.getAdresse());
+								    	personnal.get().setPrenom(user.getPrenom());
+										personnal.get().setNom(user.getNom());
+										personnal.get().setContratID(user.getContratID());
+										personnal.get().setLieu_naissance(user.getLieu_naissance());
+										personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										personnal.get().setType(user.getType());
+										personnal.get().setNaissance(user.getNaissance());       			
+										personnal.get().setEmail(user.getEmail());
+										personnal.get().setTelephone(user.getTelephone());
+										personnal.get().setCompteBancaire(user.getCompteBancaire());
+										personnal.get().setRole(user.getRole());
+										personnal.get().setNationalite(user.getNationalite());
+										User userSave = personnalRepository.save(personnal.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+									if(parent.isPresent() )
+									{
+										parent.get().setAdresse(user.getAdresse());
+										parent.get().setPrenom(user.getPrenom());
+										parent.get().setNom(user.getNom());
+										parent.get().setContratID(user.getContratID());
+										parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										parent.get().setType(user.getType());
+										parent.get().setNaissance(user.getNaissance());
+										parent.get().setLieu_naissance(user.getLieu_naissance());
+										parent.get().setEmail(user.getEmail());
+										parent.get().setTelephone(user.getTelephone());
+										parent.get().setCompteBancaire(user.getCompteBancaire());
+										parent.get().setRole(user.getRole());
+										parent.get().setNationalite(user.getNationalite());
+										User userSave = parentRepository.save(parent.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+									if(student.isPresent() )
+									{
+										student.get().setAdresse(user.getAdresse());
+										student.get().setPrenom(user.getPrenom());
+										student.get().setNom(user.getNom());
+										student.get().setContratID(user.getContratID());
+										student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										student.get().setType(user.getType());
+										student.get().setNaissance(user.getNaissance());   
+										student.get().setNationalite(user.getNationalite());
+										student.get().setEmail(user.getEmail());
+										student.get().setTelephone(user.getTelephone());
+										student.get().setLieu_naissance(user.getLieu_naissance());
+										student.get().setCompteBancaire(user.getCompteBancaire());
+										student.get().setRole(user.getRole());
+										User userSave = studentRepository.save(student.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+
+								}
+								else
+								{
+									if(teacher.isPresent() )
+									{
+										teacher.get().setAdresse(user.getAdresse());
+										teacher.get().setPrenom(user.getPrenom());
+										teacher.get().setNom(user.getNom());
+										teacher.get().setContratID(user.getContratID());
+										teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										teacher.get().setType(user.getType());
+										teacher.get().setNaissance(user.getNaissance());
+										teacher.get().setNationalite(user.getNationalite());
+										teacher.get().setEmail(user.getEmail());
+										teacher.get().setTelephone(user.getTelephone());
+										teacher.get().setCompteBancaire(user.getCompteBancaire());
+										teacher.get().setLieu_naissance(user.getLieu_naissance());
+										teacher.get().setRole(user.getRole());
+										User userSave = teacherRepository.save(teacher.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}			
+
+							}
+							else
+							{
+								User userConverted = Utility.UserDtoRequestConvertToUser(user);			
+
+								user.setPassword(pwdCryp);
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+
+									User userSave = personnalRepository.save((Personnal)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));      			               	
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+
+									reponse.setCode(200);
+
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+
+									User userSave = parentRepository.save((Parent)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+									reponse.setCode(200);
+
+
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+
+									User userSave = studentRepository.save((Student)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+									reponse.setCode(200);
+
+
+
+
+								}
+								else
+								{
+									Teacher userSave = teacherRepository.save(((Teacher)userConverted));
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès : TE" +((Teacher)userConverted).getNiveauEtude());
+									reponse.setCode(200);
+
+								}           	  
+
+
+							}		  
+						  
+					  }
+					    break;
+					  default:
+						  reponse=userByTelephone;
+					}	
+			    }
+			    else
+			    {
+			    	reponse.setCode(201);
+					reponse.setMessage("Cet email est déjà utilisé  !");
+			    }
+				
+		    break;
+		  case 201:
+		  {
+			  switch(userByTelephone.getCode())
+				{
+				  case 200:
+					    if(user.isStatus()==false) 
+						{
+							//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
+
+						}
+					    else if(user.getId() != null && user.getId() != 0)
+					    {
+					    	
+								Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+								Optional<Student> student = studentRepository.findById(user.getId());
+								Optional<Parent> parent = parentRepository.findById(user.getId());
+								Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+									if(personnal.isPresent() )
+									{
+										personnal.get().setAdresse(user.getAdresse());
+										personnal.get().setPrenom(user.getPrenom());
+										personnal.get().setContratID(user.getContratID());
+										personnal.get().setNom(user.getNom());
+										personnal.get().setLieu_naissance(user.getLieu_naissance());
+										personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										personnal.get().setType(user.getType());
+										personnal.get().setNaissance(user.getNaissance());       			
+										personnal.get().setEmail(user.getEmail());
+										personnal.get().setTelephone(user.getTelephone());
+										personnal.get().setCompteBancaire(user.getCompteBancaire());
+										personnal.get().setRole(user.getRole());
+										personnal.get().setNationalite(user.getNationalite());
+										User userSave = personnalRepository.save(personnal.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+									if(parent.isPresent() )
+									{
+										parent.get().setAdresse(user.getAdresse());
+										parent.get().setPrenom(user.getPrenom());
+										parent.get().setNom(user.getNom());
+										parent.get().setContratID(user.getContratID());
+										parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										parent.get().setType(user.getType());
+										parent.get().setNaissance(user.getNaissance());
+										parent.get().setLieu_naissance(user.getLieu_naissance());
+										parent.get().setEmail(user.getEmail());
+										parent.get().setTelephone(user.getTelephone());
+										parent.get().setCompteBancaire(user.getCompteBancaire());
+										parent.get().setRole(user.getRole());
+										parent.get().setNationalite(user.getNationalite());
+										User userSave = parentRepository.save(parent.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+									if(student.isPresent() )
+									{
+										student.get().setAdresse(user.getAdresse());
+										student.get().setPrenom(user.getPrenom());
+										student.get().setNom(user.getNom());
+										student.get().setContratID(user.getContratID());
+										student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										student.get().setType(user.getType());
+										student.get().setNaissance(user.getNaissance());   
+										student.get().setNationalite(user.getNationalite());
+										student.get().setEmail(user.getEmail());
+										student.get().setTelephone(user.getTelephone());
+										student.get().setLieu_naissance(user.getLieu_naissance());
+										student.get().setCompteBancaire(user.getCompteBancaire());
+										student.get().setRole(user.getRole());
+										User userSave = studentRepository.save(student.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+
+								}
+								else
+								{
+									if(teacher.isPresent() )
+									{
+										teacher.get().setAdresse(user.getAdresse());
+										teacher.get().setPrenom(user.getPrenom());
+										teacher.get().setNom(user.getNom());
+										teacher.get().setContratID(user.getContratID());
+										teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										teacher.get().setType(user.getType());
+										teacher.get().setNaissance(user.getNaissance());
+										teacher.get().setNationalite(user.getNationalite());
+										teacher.get().setEmail(user.getEmail());
+										teacher.get().setTelephone(user.getTelephone());
+										teacher.get().setCompteBancaire(user.getCompteBancaire());
+										teacher.get().setLieu_naissance(user.getLieu_naissance());
+										teacher.get().setRole(user.getRole());
+										User userSave = teacherRepository.save(teacher.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}		
+
+							
+					    }
+					    else
+					    {
+					    	reponse.setCode(201);
+							reponse.setMessage("Cet numéro est déjà utilisé  !");
+					    }
+					    
+				    break;
+				  case 201:
+				  {
+					  
+					  
+						if(  user.getId() != null && user.getId() != 0)
+						{
+							Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+							Optional<Student> student = studentRepository.findById(user.getId());
+							Optional<Parent> parent = parentRepository.findById(user.getId());
+							Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+							if(user.getTypeUser().equals("PERSONNAL"))
+							{
+								if(personnal.isPresent() )
+								{
+									personnal.get().setAdresse(user.getAdresse());
+									personnal.get().setPrenom(user.getPrenom());									
+									personnal.get().setContratID(user.getContratID());
+									personnal.get().setNom(user.getNom());
+									personnal.get().setLieu_naissance(user.getLieu_naissance());
+									personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+									personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+									personnal.get().setType(user.getType());
+									personnal.get().setNaissance(user.getNaissance());       			
+									personnal.get().setEmail(user.getEmail());
+									personnal.get().setTelephone(user.getTelephone());
+									personnal.get().setCompteBancaire(user.getCompteBancaire());
+									personnal.get().setRole(user.getRole());
+									personnal.get().setNationalite(user.getNationalite());
+									User userSave = personnalRepository.save(personnal.get());
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été modifié avec succès");
+									reponse.setCode(200);
+
+								}
+								else
+								{
+									reponse.setMessage("Ce compte n'existe plus");
+									reponse.setCode(201);
+
+								}
+							}
+							else if(user.getTypeUser().equals("PARENT"))
+							{
+								if(parent.isPresent() )
+								{
+									parent.get().setAdresse(user.getAdresse());
+									parent.get().setPrenom(user.getPrenom());
+									parent.get().setNom(user.getNom());
+									parent.get().setContratID(user.getContratID());
+									parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+									parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+									parent.get().setType(user.getType());
+									parent.get().setNaissance(user.getNaissance());
+									parent.get().setLieu_naissance(user.getLieu_naissance());
+									parent.get().setEmail(user.getEmail());
+									parent.get().setTelephone(user.getTelephone());
+									parent.get().setCompteBancaire(user.getCompteBancaire());
+									parent.get().setRole(user.getRole());
+									parent.get().setNationalite(user.getNationalite());
+									User userSave = parentRepository.save(parent.get());
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été modifié avec succès");
+									reponse.setCode(200);
+
+								}
+								else
+								{
+									reponse.setMessage("Ce compte n'existe plus");
+									reponse.setCode(201);
+
+								}
+
+							}
+							else if(user.getTypeUser().equals("STUDENT"))
+							{
+								if(student.isPresent() )
+								{
+									student.get().setAdresse(user.getAdresse());
+									student.get().setPrenom(user.getPrenom());
+									student.get().setNom(user.getNom());
+									student.get().setContratID(user.getContratID());
+									student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+									student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+									student.get().setType(user.getType());
+									student.get().setNaissance(user.getNaissance());   
+									student.get().setNationalite(user.getNationalite());
+									student.get().setEmail(user.getEmail());
+									student.get().setTelephone(user.getTelephone());
+									student.get().setLieu_naissance(user.getLieu_naissance());
+									student.get().setCompteBancaire(user.getCompteBancaire());
+									student.get().setRole(user.getRole());
+									User userSave = studentRepository.save(student.get());
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été modifié avec succès");
+
+									reponse.setCode(200);
+
+								}
+								else
+								{
+									reponse.setMessage("Ce compte n'existe plus");
+									reponse.setCode(201);
+
+								}
+
+
+							}
+							else
+							{
+								if(teacher.isPresent() )
+								{
+									teacher.get().setAdresse(user.getAdresse());
+									teacher.get().setPrenom(user.getPrenom());
+									teacher.get().setNom(user.getNom());
+									teacher.get().setContratID(user.getContratID());
+									teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+									teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+									teacher.get().setType(user.getType());
+									teacher.get().setNaissance(user.getNaissance());
+									teacher.get().setNationalite(user.getNationalite());
+									teacher.get().setEmail(user.getEmail());
+									teacher.get().setTelephone(user.getTelephone());
+									teacher.get().setCompteBancaire(user.getCompteBancaire());
+									teacher.get().setLieu_naissance(user.getLieu_naissance());
+									teacher.get().setRole(user.getRole());
+									User userSave = teacherRepository.save(teacher.get());
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été modifié avec succès");
+
+									reponse.setCode(200);
+
+								}
+								else
+								{
+									reponse.setMessage("Ce compte n'existe plus");
+									reponse.setCode(201);
+
+								}
+
+							}			
+
+						}
+						else
+						{
+							User userConverted = Utility.UserDtoRequestConvertToUser(user);			
+
+							user.setPassword(pwdCryp);
+
+							if(user.getTypeUser().equals("PERSONNAL"))
+							{
+
+								User userSave = personnalRepository.save((Personnal)userConverted);
+								reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));      			               	
+								reponse.setMessage("Ce compte a été enregistré avec succès");
+
+								reponse.setCode(200);
+
+							}
+							else if(user.getTypeUser().equals("PARENT"))
+							{
+
+								User userSave = parentRepository.save((Parent)userConverted);
+								reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+								reponse.setMessage("Ce compte a été enregistré avec succès");
+								reponse.setCode(200);
+
+
+
+							}
+							else if(user.getTypeUser().equals("STUDENT"))
+							{
+
+								User userSave = studentRepository.save((Student)userConverted);
+								reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+								reponse.setMessage("Ce compte a été enregistré avec succès");
+								reponse.setCode(200);
+
+
+
+
+							}
+							else
+							{
+								Teacher userSave = teacherRepository.save(((Teacher)userConverted));
+								reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+								reponse.setMessage("Ce compte a été enregistré avec succès : TE" +((Teacher)userConverted).getNiveauEtude());
+								reponse.setCode(200);
+
+							}           	  
+
+
+						}		  
+					  
+				  }
+				    break;
+				  default:
+					  reponse=userByTelephone;
+				}
+		  }
+		    // code block
+		    break;
+		  default:
+			  reponse=userByEmail;
 		}
-		catch (Exception e)
-		{
-			reponse.setCode(500);
-			reponse.setMessage("Une erreur interne est survenue  !");	
-		} 
+		
+	}
+	catch (Exception e)
+	{
+		 reponse.setCode(500);
+    	 reponse.setMessage("Une erreur interne est survenue coté serveur  !");	
+	}  
 
-		return reponse ;
+	return reponse ;
+		
+		
 	}
 	@Override
 	public Reponse se_connecter(String phone,String password)
@@ -180,6 +875,7 @@ public class AccountService implements IAccountService{
 					codeSave.setCode(new Random().ints(1, 9999).findFirst().getAsInt());
 					codeSave.setTelephone(userConvert.getTelephone());
 					codeSave.setStatus(true);
+					codeSave.setType(userConvert.getRole());
 					codeSave.setUserID(userC.getId());
 					codeSaveOK=codeRepository.save(codeSave);					 
 					userC.getCodes().add(codeRepository.save(codeSaveOK));			
@@ -226,7 +922,7 @@ public class AccountService implements IAccountService{
 			}
 
 
-		}
+   	}
 		catch (Exception e)
 		{
 			if(!(codeSaveOK == null))
@@ -245,8 +941,8 @@ public class AccountService implements IAccountService{
 
 			} 
 			response.setCode(500);
-			response.setMessage("Une erreur interne est survenue !");
-		}  
+			response.setMessage("Une erreur serveur est survenue !");
+		}   
 
 
 		return response ;
@@ -278,33 +974,39 @@ public class AccountService implements IAccountService{
 		}
 	}
 	@Override
-	public void initAccount() {
+	public void initAccount()
+	{
 
-		List<Personnal> users=personnalRepository.findAll();
+		List<Personnal> users=  personnalRepository.findAll();
 		boolean arouna =false;
 
 		if(users.size() != 0)
 		{
-			for (int i = 0; i < users.size(); i++) {
-				switch (users.get(i).getTelephone()) {
-				case "775073511":
-					arouna=true;
-
-					break;
-
-				default:
-					break;
+			for (int i = 0; i < users.size(); i++)
+			{
+				switch (users.get(i).getTelephone())
+				{
+					case "775073511":
+						arouna=true;
+	
+						break;
+	
+					default:
+						break;
 				}
 			}	
 		}
 
-		if(arouna == false) {
-			User directeur =new Personnal();
+		if(arouna == false) 
+		{
+			
+			UserDtoRequest directeur =new UserDtoRequest();
 			directeur.setTelephone("775073511");
 			directeur.setEmail("sanouarouna90@gmail.com");
 			directeur.setPassword("1234");
 			directeur.setRole("Manager");
-			login_up(Utility.UserConvertToUserDtoRequest(directeur));
+			directeur.setTypeUser("PERSONNAL");
+			login_up(directeur);
 		}
 
 
@@ -323,26 +1025,535 @@ public class AccountService implements IAccountService{
 		switch(userByEmail.getCode())
 		{
 		  case 200:
-			  if(user.isStatus()==false) 
+			    if(((UserDtoResponse)userByEmail.getResult()).isStatus()==false) 
 				{
 					//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
-
+			    	reponse.setCode(201);
+					reponse.setMessage("Cet email est déjà utilisé  !");
 				}
-				reponse.setCode(201);
-				reponse.setMessage("Cet email est déjà utilisé  !");
+			    else if(user.getId() != null && user.getId() != 0)
+			    {
+			    	switch(userByTelephone.getCode())
+					{
+					  case 200:
+						    if(((UserDtoResponse)userByTelephone.getResult()).isStatus()==false) 
+							{
+								//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
+
+							}
+						    else if(user.getId() != null && user.getId() != 0)
+						    {
+						    	
+									Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+									Optional<Student> student = studentRepository.findById(user.getId());
+									Optional<Parent> parent = parentRepository.findById(user.getId());
+									Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+									if(user.getTypeUser().equals("PERSONNAL"))
+									{
+										if(personnal.isPresent() )
+										{
+											personnal.get().setAdresse(user.getAdresse());
+											personnal.get().setPrenom(user.getPrenom());
+											personnal.get().setNom(user.getNom());
+											personnal.get().setLieu_naissance(user.getLieu_naissance());
+											personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											personnal.get().setContratID(user.getContratID());
+											personnal.get().setType(user.getType());
+											personnal.get().setNaissance(user.getNaissance());       			
+											personnal.get().setEmail(user.getEmail());
+											personnal.get().setTelephone(user.getTelephone());
+											personnal.get().setCompteBancaire(user.getCompteBancaire());
+											personnal.get().setRole(user.getRole());
+											personnal.get().setNationalite(user.getNationalite());
+											User userSave = personnalRepository.save(personnal.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+									}
+									else if(user.getTypeUser().equals("PARENT"))
+									{
+										if(parent.isPresent() )
+										{
+											parent.get().setAdresse(user.getAdresse());
+											parent.get().setPrenom(user.getPrenom());
+											parent.get().setNom(user.getNom());
+											parent.get().setContratID(user.getContratID());
+											parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											parent.get().setType(user.getType());
+											parent.get().setNaissance(user.getNaissance());
+											parent.get().setLieu_naissance(user.getLieu_naissance());
+											parent.get().setEmail(user.getEmail());
+											parent.get().setTelephone(user.getTelephone());
+											parent.get().setCompteBancaire(user.getCompteBancaire());
+											parent.get().setRole(user.getRole());
+											parent.get().setNationalite(user.getNationalite());
+											User userSave = parentRepository.save(parent.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+
+									}
+									else if(user.getTypeUser().equals("STUDENT"))
+									{
+										if(student.isPresent() )
+										{
+											student.get().setName_logo(user.getName_logo());
+											student.get().setPrenom(user.getPrenom());
+											student.get().setNom(user.getNom());
+											student.get().setContratID(user.getContratID());
+											student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											student.get().setType(user.getType());
+											student.get().setNaissance(user.getNaissance());   
+											student.get().setNationalite(user.getNationalite());
+											student.get().setEmail(user.getEmail());
+											student.get().setTelephone(user.getTelephone());
+											student.get().setLieu_naissance(user.getLieu_naissance());
+											student.get().setCompteBancaire(user.getCompteBancaire());
+											student.get().setRole(user.getRole());
+											User userSave = studentRepository.save(student.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+
+
+									}
+									else
+									{
+										if(teacher.isPresent() )
+										{
+											teacher.get().setNiveauEtude(teacher.get().getNiveauEtude());
+											teacher.get().setAdresse(user.getAdresse());
+											teacher.get().setPrenom(user.getPrenom());
+											teacher.get().setNom(user.getNom());
+											teacher.get().setContratID(user.getContratID());
+											teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+											teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+											teacher.get().setType(user.getType());
+											teacher.get().setNaissance(user.getNaissance());
+											teacher.get().setNationalite(user.getNationalite());
+											teacher.get().setEmail(user.getEmail());
+											teacher.get().setTelephone(user.getTelephone());
+											teacher.get().setCompteBancaire(user.getCompteBancaire());
+											teacher.get().setLieu_naissance(user.getLieu_naissance());
+											teacher.get().setRole(user.getRole());
+											User userSave = teacherRepository.save(teacher.get());
+											reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+											reponse.setMessage("Ce compte a été modifié avec succès");
+
+											reponse.setCode(200);
+
+										}
+										else
+										{
+											reponse.setMessage("Ce compte n'existe plus");
+											reponse.setCode(201);
+
+										}
+
+									}		
+
+								
+						    }
+						    else
+						    {
+						    	reponse.setCode(201);
+								reponse.setMessage("Cet numéro est déjà utilisé  !");
+						    }
+						    
+					    break;
+					  case 201:
+					  {
+						  
+						  
+							if(  user.getId() != null && user.getId() != 0)
+							{
+								Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+								Optional<Student> student = studentRepository.findById(user.getId());
+								Optional<Parent> parent = parentRepository.findById(user.getId());
+								Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+									if(personnal.isPresent() )
+									{
+										personnal.get().setAdresse(user.getAdresse());
+								    	personnal.get().setPrenom(user.getPrenom());
+										personnal.get().setNom(user.getNom());
+										personnal.get().setContratID(user.getContratID());
+										personnal.get().setLieu_naissance(user.getLieu_naissance());
+										personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										personnal.get().setType(user.getType());
+										personnal.get().setNaissance(user.getNaissance());       			
+										personnal.get().setEmail(user.getEmail());
+										personnal.get().setTelephone(user.getTelephone());
+										personnal.get().setCompteBancaire(user.getCompteBancaire());
+										personnal.get().setRole(user.getRole());
+										personnal.get().setNationalite(user.getNationalite());
+										User userSave = personnalRepository.save(personnal.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+									if(parent.isPresent() )
+									{
+										parent.get().setAdresse(user.getAdresse());
+										parent.get().setPrenom(user.getPrenom());
+										parent.get().setNom(user.getNom());
+										parent.get().setContratID(user.getContratID());
+										parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										parent.get().setType(user.getType());
+										parent.get().setNaissance(user.getNaissance());
+										parent.get().setLieu_naissance(user.getLieu_naissance());
+										parent.get().setEmail(user.getEmail());
+										parent.get().setTelephone(user.getTelephone());
+										parent.get().setCompteBancaire(user.getCompteBancaire());
+										parent.get().setRole(user.getRole());
+										parent.get().setNationalite(user.getNationalite());
+										User userSave = parentRepository.save(parent.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+									if(student.isPresent() )
+									{
+										student.get().setAdresse(user.getAdresse());
+										student.get().setPrenom(user.getPrenom());
+										student.get().setNom(user.getNom());
+										student.get().setContratID(user.getContratID());
+										student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										student.get().setType(user.getType());
+										student.get().setNaissance(user.getNaissance());   
+										student.get().setNationalite(user.getNationalite());
+										student.get().setEmail(user.getEmail());
+										student.get().setTelephone(user.getTelephone());
+										student.get().setLieu_naissance(user.getLieu_naissance());
+										student.get().setCompteBancaire(user.getCompteBancaire());
+										student.get().setRole(user.getRole());
+										User userSave = studentRepository.save(student.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+
+								}
+								else
+								{
+									if(teacher.isPresent() )
+									{
+										teacher.get().setNiveauEtude(teacher.get().getNiveauEtude());
+										teacher.get().setAdresse(user.getAdresse());
+										teacher.get().setPrenom(user.getPrenom());
+										teacher.get().setNom(user.getNom());
+										teacher.get().setContratID(user.getContratID());
+										teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										teacher.get().setType(user.getType());
+										teacher.get().setNaissance(user.getNaissance());
+										teacher.get().setNationalite(user.getNationalite());
+										teacher.get().setEmail(user.getEmail());
+										teacher.get().setTelephone(user.getTelephone());
+										teacher.get().setCompteBancaire(user.getCompteBancaire());
+										teacher.get().setLieu_naissance(user.getLieu_naissance());
+										teacher.get().setRole(user.getRole());
+										User userSave = teacherRepository.save(teacher.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}			
+
+							}
+							else
+							{
+								
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+
+									User userSave = personnalRepository.save((Personnal)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));      			               	
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+
+									reponse.setCode(200);
+
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+
+									User userSave = parentRepository.save((Parent)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+									reponse.setCode(200);
+
+
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+
+									User userSave = studentRepository.save((Student)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+									reponse.setCode(200);
+
+
+
+
+								}
+								else
+								{
+
+									User userSave = teacherRepository.save((Teacher)userConverted);
+									reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+									reponse.setMessage("Ce compte a été enregistré avec succès");
+									reponse.setCode(200);
+
+								}           	  
+
+
+							}		  
+						  
+					  }
+					    break;
+					  default:
+						  reponse=userByTelephone;
+					}	
+			    }
+			    else
+			    {
+			    	reponse.setCode(201);
+					reponse.setMessage("Cet email est déjà utilisé  !");
+			    }
+				
 		    break;
 		  case 201:
 		  {
 			  switch(userByTelephone.getCode())
 				{
 				  case 200:
-					  if(user.isStatus()==false) 
+					    if(user.isStatus()==false) 
 						{
 							//emailService.sendEmailToActivateAccount(userGot.getNom(), userGot.getEmail());	
 
 						}
-						reponse.setCode(201);
-						reponse.setMessage("Cet numéro est déjà utilisé  !");
+					    else if(user.getId() != null && user.getId() != 0)
+					    {
+					    	
+								Optional<Personnal> personnal = personnalRepository.findById(user.getId());
+								Optional<Student> student = studentRepository.findById(user.getId());
+								Optional<Parent> parent = parentRepository.findById(user.getId());
+								Optional<Teacher> teacher = teacherRepository.findById(user.getId());        	
+
+								if(user.getTypeUser().equals("PERSONNAL"))
+								{
+									if(personnal.isPresent() )
+									{
+										personnal.get().setAdresse(user.getAdresse());
+										personnal.get().setPrenom(user.getPrenom());
+										personnal.get().setContratID(user.getContratID());
+										personnal.get().setNom(user.getNom());
+										personnal.get().setLieu_naissance(user.getLieu_naissance());
+										personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										personnal.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										personnal.get().setType(user.getType());
+										personnal.get().setNaissance(user.getNaissance());       			
+										personnal.get().setEmail(user.getEmail());
+										personnal.get().setTelephone(user.getTelephone());
+										personnal.get().setCompteBancaire(user.getCompteBancaire());
+										personnal.get().setRole(user.getRole());
+										personnal.get().setNationalite(user.getNationalite());
+										User userSave = personnalRepository.save(personnal.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+								}
+								else if(user.getTypeUser().equals("PARENT"))
+								{
+									if(parent.isPresent() )
+									{
+										parent.get().setAdresse(user.getAdresse());
+										parent.get().setPrenom(user.getPrenom());
+										parent.get().setNom(user.getNom());
+										parent.get().setContratID(user.getContratID());
+										parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										parent.get().setType(user.getType());
+										parent.get().setNaissance(user.getNaissance());
+										parent.get().setLieu_naissance(user.getLieu_naissance());
+										parent.get().setEmail(user.getEmail());
+										parent.get().setTelephone(user.getTelephone());
+										parent.get().setCompteBancaire(user.getCompteBancaire());
+										parent.get().setRole(user.getRole());
+										parent.get().setNationalite(user.getNationalite());
+										User userSave = parentRepository.save(parent.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}
+								else if(user.getTypeUser().equals("STUDENT"))
+								{
+									if(student.isPresent() )
+									{
+										student.get().setAdresse(user.getAdresse());
+										student.get().setPrenom(user.getPrenom());
+										student.get().setNom(user.getNom());
+										student.get().setContratID(user.getContratID());
+										student.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										student.get().setType(user.getType());
+										student.get().setNaissance(user.getNaissance());   
+										student.get().setNationalite(user.getNationalite());
+										student.get().setEmail(user.getEmail());
+										student.get().setTelephone(user.getTelephone());
+										student.get().setLieu_naissance(user.getLieu_naissance());
+										student.get().setCompteBancaire(user.getCompteBancaire());
+										student.get().setRole(user.getRole());
+										User userSave = studentRepository.save(student.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+
+								}
+								else
+								{
+									if(teacher.isPresent() )
+									{
+										teacher.get().setNiveauEtude(teacher.get().getNiveauEtude());
+										teacher.get().setAdresse(user.getAdresse());
+										teacher.get().setPrenom(user.getPrenom());
+										teacher.get().setNom(user.getNom());
+										teacher.get().setContratID(user.getContratID());
+										teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
+										teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+										teacher.get().setType(user.getType());
+										teacher.get().setNaissance(user.getNaissance());
+										teacher.get().setNationalite(user.getNationalite());
+										teacher.get().setEmail(user.getEmail());
+										teacher.get().setTelephone(user.getTelephone());
+										teacher.get().setCompteBancaire(user.getCompteBancaire());
+										teacher.get().setLieu_naissance(user.getLieu_naissance());
+										teacher.get().setRole(user.getRole());
+										User userSave = teacherRepository.save(teacher.get());
+										reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+										reponse.setMessage("Ce compte a été modifié avec succès");
+
+										reponse.setCode(200);
+
+									}
+									else
+									{
+										reponse.setMessage("Ce compte n'existe plus");
+										reponse.setCode(201);
+
+									}
+
+								}		
+
+							
+					    }
+					    else
+					    {
+					    	reponse.setCode(201);
+							reponse.setMessage("Cet numéro est déjà utilisé  !");
+					    }
+					    
 				    break;
 				  case 201:
 				  {
@@ -360,7 +1571,8 @@ public class AccountService implements IAccountService{
 								if(personnal.isPresent() )
 								{
 									personnal.get().setAdresse(user.getAdresse());
-									personnal.get().setPrenom(user.getPrenom());
+									personnal.get().setPrenom(user.getPrenom());									
+									personnal.get().setContratID(user.getContratID());
 									personnal.get().setNom(user.getNom());
 									personnal.get().setLieu_naissance(user.getLieu_naissance());
 									personnal.get().setNumeroMatriciule(user.getNumeroMatriciule());
@@ -392,6 +1604,7 @@ public class AccountService implements IAccountService{
 									parent.get().setAdresse(user.getAdresse());
 									parent.get().setPrenom(user.getPrenom());
 									parent.get().setNom(user.getNom());
+									parent.get().setContratID(user.getContratID());
 									parent.get().setNumeroMatriciule(user.getNumeroMatriciule());
 									parent.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
 									parent.get().setType(user.getType());
@@ -423,6 +1636,7 @@ public class AccountService implements IAccountService{
 									student.get().setAdresse(user.getAdresse());
 									student.get().setPrenom(user.getPrenom());
 									student.get().setNom(user.getNom());
+									student.get().setContratID(user.getContratID());
 									student.get().setNumeroMatriciule(user.getNumeroMatriciule());
 									student.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
 									student.get().setType(user.getType());
@@ -453,9 +1667,11 @@ public class AccountService implements IAccountService{
 							{
 								if(teacher.isPresent() )
 								{
+									teacher.get().setNiveauEtude(teacher.get().getNiveauEtude());
 									teacher.get().setAdresse(user.getAdresse());
 									teacher.get().setPrenom(user.getPrenom());
 									teacher.get().setNom(user.getNom());
+									teacher.get().setContratID(user.getContratID());
 									teacher.get().setNumeroMatriciule(user.getNumeroMatriciule());
 									teacher.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
 									teacher.get().setType(user.getType());
@@ -554,45 +1770,82 @@ public class AccountService implements IAccountService{
 	return reponse ;
 }
 @Override
-public Reponse getUserById(Long id) {
+public Reponse getUserById(Long id,String type)
+{
 	Reponse reponse = new Reponse();
 	try
 	{
-		Optional<Personnal> personnal = personnalRepository.findById(id);
-		Optional<Student> student = studentRepository.findById(id);
-		Optional<Parent> parent = parentRepository.findById(id);
-		Optional<Teacher> teacher = teacherRepository.findById(id);      
-		if(personnal.isPresent())
+		
+		
+		switch (type)
 		{
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(personnal.get()));
-			reponse.setMessage("Ce compte a été retrouvé avec succès");
+			case Utility.STUDENT:
+				Optional<Student> student = studentRepository.findById(id);
+				if(student.isPresent())
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(student.get()));
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+				}
+				else 
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(student.get()));
+
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+				}
+				break;
+			case Utility.PERSONNAL:
+				Optional<Personnal> personnal = personnalRepository.findById(id);
+				if(personnal.isPresent())
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(personnal.get()));
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+				}
+				else 
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(personnal.get()));
+
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+				}
+
+				break;
+			case Utility.PARENT:
+				Optional<Parent> parent = parentRepository.findById(id);
+				if(parent.isPresent())
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(parent.get()));
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+				}
+				else 
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(parent.get()));
+
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+				}
+
+
+				break;
+			default:
+				Optional<Teacher> teacher = teacherRepository.findById(id);  
+				if(teacher.isPresent())
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(teacher.get()));
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+				}
+				else 
+				{
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(teacher.get()));
+
+					reponse.setMessage("Ce compte a été retrouvé avec succès");
+
+				}
+				break;
 		}
-		else if(student .isPresent())
-		{
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(student.get()));
-
-			reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-		}
-		else if(parent.isPresent())
-		{
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(parent.get()));
-
-			reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-		}
-		else if(teacher.isPresent())
-		{
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(teacher.get()));
-
-			reponse.setMessage("Ce compte a été retrouvé avec succès");
-
-		}
-		else
-		{
-			reponse.setMessage("Ce compte n'existe pas");
-
-		}
+		
+		
+		
 		reponse.setCode(200);
 
 
@@ -728,7 +1981,7 @@ public Reponse activation(int code) {
 	if(codeSave.isPresent() && codeSave.get().isStatus() == true )
 	{			
 
-		Reponse userGot = this.getUserById(codeSave.get().getUserID());
+		Reponse userGot = this.getUserById(codeSave.get().getUserID(),codeSave.get().getType());
 		if(userGot.getCode() == 200)
 		{					
 
@@ -849,7 +2102,7 @@ public Reponse getUserByTelephone(String telephone) {
 		reponse.setMessage("Une erreur interne est survenue");
 		reponse.setCode(500);
 		reponse.setResult(null);
-	} 
+	}  
 
 	return reponse;
 

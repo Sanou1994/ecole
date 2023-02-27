@@ -5,17 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gestion_ecole.ecole.dto.request.AbsenceDtoRequest;
-import com.gestion_ecole.ecole.dto.request.InscriptionDtoRequest;
 import com.gestion_ecole.ecole.dto.response.AbsenceDtoResponse;
-import com.gestion_ecole.ecole.dto.response.InscriptionDtoResponse;
 import com.gestion_ecole.ecole.entities.Absence;
-import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.AbsenceRepository;
 import com.gestion_ecole.ecole.utils.Utility;
-
+@Service
 public class AbsenceService implements IAbsenceService {
 	@Autowired
 	AbsenceRepository absenceRepository;

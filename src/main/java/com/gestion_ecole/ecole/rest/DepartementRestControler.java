@@ -30,10 +30,9 @@ public class DepartementRestControler {
 		Reponse	userUpdate =departementService.getDepartementById(departementId);		
 		return userUpdate ;
     }
-	@GetMapping(Utility.GET_ALL_DEPARTEMENT)
-    public Reponse getAllDepartements() 
-    {
-    	Reponse list = departementService.ListeDepartements();       
+	@GetMapping(Utility.GET_ALL_DEPARTEMENTS)
+    public Reponse getAllDepartements(@PathVariable(value = "id") Long departementId) {
+    	Reponse list = departementService.ListeDepartements(departementId);       
         return list;
     }
 	@GetMapping(Utility.DELETE_DEPARTEMENT_BY_ID)

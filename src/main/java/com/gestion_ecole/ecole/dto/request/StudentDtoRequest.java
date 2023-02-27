@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.gestion_ecole.ecole.entities.Absence;
 import com.gestion_ecole.ecole.entities.Classe;
-import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Note;
 import com.gestion_ecole.ecole.entities.Paiement;
@@ -13,6 +12,10 @@ import com.gestion_ecole.ecole.entities.Seance;
 import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.SupportPysique;
 import com.gestion_ecole.ecole.entities.Teacher;
+
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class StudentDtoRequest extends UserDtoRequest {
        
 	private List<Inscription> inscriptions ;
@@ -22,29 +25,72 @@ public class StudentDtoRequest extends UserDtoRequest {
 	   private Teacher teacher;
 	   private Parent parent;		
 	   private Classe classe;
-	   private Departement departement;
+	   private Long departementID;
+	  private Long filiereID;
+	  private Long niveauEtudeID;
 	   
-	   
-	public StudentDtoRequest() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	
 	
 
-	public StudentDtoRequest(Long id, Long structureID, String prenom, String nom, String adresse,
-			String numeroMatriciule, String typeDeRecrutement, String typeUser, String type, String naissance,
-			String sexe, String nationalite, long dateCreation, boolean status, String lieu_naissance, String email,
-			String telephone, String monToken, String password, String compteBancaire, String resetPasswordToken,
-			String role, List<Absence> absences, List<SupportPysique> supportPysiques, List<Paiement> paiements,
-			List<Seance> seances) {
-		super(id, structureID, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser, type, naissance, sexe,
-				nationalite, dateCreation, status, lieu_naissance, email, telephone, monToken, password, compteBancaire,
-				resetPasswordToken, role, absences, supportPysiques, paiements, seances);
-		// TODO Auto-generated constructor stub
+	public StudentDtoRequest(Long id, Long structureID, String prenom, String name_logo, String url_logo, String nom,
+			String adresse, String numeroMatriciule, String typeDeRecrutement, String typeUser, Long type,
+			String naissance, String sexe, String nationalite, long dateCreation, long contratID, boolean status,
+			String lieu_naissance, String email, String telephone, String monToken, String password,
+			String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances) {
+		super(id, structureID, prenom, name_logo, url_logo, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser,
+				type, naissance, sexe, nationalite, dateCreation, contratID, status, lieu_naissance, email, telephone,
+				monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
+				seances);
 	}
 
+	public StudentDtoRequest(Long id, Long structureID, String prenom, String name_logo, String url_logo, String nom,
+			String adresse, String numeroMatriciule, String typeDeRecrutement, String typeUser, Long type,
+			String naissance, String sexe, String nationalite, long dateCreation, long contratID, boolean status,
+			String lieu_naissance, String email, String telephone, String monToken, String password,
+			String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances,
+			List<Inscription> inscriptions, List<Note> notes, List<Student> parains, List<Teacher> professeurAppuis,
+			Teacher teacher, Parent parent, Classe classe, Long departementID, Long filiereID, Long niveauEtudeID) {
+		super(id, structureID, prenom, name_logo, url_logo, nom, adresse, numeroMatriciule, typeDeRecrutement, typeUser,
+				type, naissance, sexe, nationalite, dateCreation, contratID, status, lieu_naissance, email, telephone,
+				monToken, password, compteBancaire, resetPasswordToken, role, absences, supportPysiques, paiements,
+				seances);
+		this.inscriptions = inscriptions;
+		this.notes = notes;
+		this.parains = parains;
+		this.professeurAppuis = professeurAppuis;
+		this.teacher = teacher;
+		this.parent = parent;
+		this.classe = classe;
+		this.departementID = departementID;
+		this.filiereID = filiereID;
+		this.niveauEtudeID = niveauEtudeID;
+	}
 
+	public Long getDepartementID() {
+		return departementID;
+	}
+
+	public void setDepartementID(Long departementID) {
+		this.departementID = departementID;
+	}
+
+	public Long getNiveauEtudeID() {
+		return niveauEtudeID;
+	}
+
+	public void setNiveauEtudeID(Long niveauEtudeID) {
+		this.niveauEtudeID = niveauEtudeID;
+	}
+
+	public Long getFiliereID() {
+		return filiereID;
+	}
+
+	public void setFiliereID(Long filiereID) {
+		this.filiereID = filiereID;
+	}
 
 	public List<Inscription> getInscriptions() {
 		return inscriptions;
@@ -88,13 +134,6 @@ public class StudentDtoRequest extends UserDtoRequest {
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
-	public Departement getDepartement() {
-		return departement;
-	}
-	public void setDepartement(Departement departement) {
-		this.departement = departement;
-	}
-	   
-	   
+	 
     
 }

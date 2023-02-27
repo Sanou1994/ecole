@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.service.IFiliereService;
@@ -31,9 +30,9 @@ public class FiliereRestControler {
 		return filiereUpdate ;
     }
 	@GetMapping(Utility.GET_ALL_FILIERE)
-    public Reponse getAllFilieres() 
+    public Reponse getAllFilieres(@PathVariable(value = "id") Long idStructure) 
     {
-    	Reponse list = filiereService.ListeFilieres();       
+    	Reponse list = filiereService.ListeFilieres(idStructure);       
         return list;
     }
 	@GetMapping(Utility.DELETE_FILIERE_BY_ID)
