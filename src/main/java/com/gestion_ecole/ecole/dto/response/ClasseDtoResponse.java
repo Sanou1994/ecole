@@ -1,35 +1,14 @@
 package com.gestion_ecole.ecole.dto.response;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@Data
 @AllArgsConstructor @NoArgsConstructor
-public class ClasseDtoResponse implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class ClasseDtoResponse  {
 	private Long id;
 	private String nom;
 	private boolean status;
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getNom() {
-		return nom;
-	}
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	public boolean isStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-	
+	private Long strutureID;
 	
 }

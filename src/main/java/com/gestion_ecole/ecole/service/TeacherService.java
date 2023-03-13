@@ -21,72 +21,98 @@ public class TeacherService implements ITeacherService{
 		@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
-	private TeacherRepository teacherRepository; 	
+	private TeacherRepository teacherRepository; 
+	@Autowired
+	private IAccountService accountService;
 	@Override
-	public Reponse createOrUpdateTeacher(TeacherDtoRequest user) {
+	public Reponse createOrUpdateTeacher(TeacherDtoRequest user) {		
 		Reponse reponse = new Reponse();
 		try
 		{
+			Optional<Teacher> userByEmail = teacherRepository.findByEmail(user.getEmail());		
+			Teacher userConverted = (Teacher) Utility.UserDtoRequestConvertToUser(user);
+			String pwdCryp = bCryptPasswordEncoder.encode(user.getPassword());
+			Reponse userExiste = accountService.CheckEmailOrPhone(user.getTelephone(),user.getEmail());			
 
-		Optional<Teacher> userByEmail = teacherRepository.findByEmail(user.getEmail());		
-		Teacher userConverted = (Teacher) Utility.UserDtoRequestConvertToUser(user);
-		String pwdCryp = bCryptPasswordEncoder.encode(user.getPassword());
-				
-		if(userByEmail.isPresent() )
-		{
-			if( user.getId() != 0 && user.getId() == userByEmail.get().getId() )
+			if(userExiste.getCode() == 200)
 			{
-				userByEmail.get().setNiveauEtude(user.getNiveauEtude());
-				userByEmail.get().setAdresse(user.getAdresse());
-				userByEmail.get().setPrenom(user.getPrenom());
-				userByEmail.get().setNom(user.getNom());
-				userByEmail.get().setContratID(user.getContratID());
-				userByEmail.get().setNumeroMatriciule(user.getNumeroMatriciule());
-				userByEmail.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
-				userByEmail.get().setType(user.getType());
-				userByEmail.get().setNaissance(user.getNaissance());
-				userByEmail.get().setNationalite(user.getNationalite());
-				userByEmail.get().setEmail(user.getEmail());
-				userByEmail.get().setTelephone(user.getTelephone());
-				userByEmail.get().setCompteBancaire(user.getCompteBancaire());
-				userByEmail.get().setLieu_naissance(user.getLieu_naissance());
-				userByEmail.get().setRole(user.getRole());
-				Teacher userSave = teacherRepository.save(userByEmail.get());
-				reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				reponse.setMessage("Ce compte a été modifié avec succès");
+				if( user.getId() != 0)
+				{
+					userByEmail.get().setNiveauEtude(user.getNiveauEtude());
+					userByEmail.get().setAdresse(user.getAdresse());
+					userByEmail.get().setPrenom(user.getPrenom());
+					userByEmail.get().setNom(user.getNom());
+					userByEmail.get().setContratID(user.getContratID());
+					userByEmail.get().setNumeroMatriciule(user.getNumeroMatriciule());
+					userByEmail.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+					userByEmail.get().setType(user.getType());
+					userByEmail.get().setNaissance(user.getNaissance());
+					userByEmail.get().setNationalite(user.getNationalite());
+					userByEmail.get().setEmail(user.getEmail());
+					userByEmail.get().setTelephone(user.getTelephone());
+					userByEmail.get().setCompteBancaire(user.getCompteBancaire());
+					userByEmail.get().setLieu_naissance(user.getLieu_naissance());
+					userByEmail.get().setRole(user.getRole());
+					Teacher userSave = teacherRepository.save(userByEmail.get());
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été modifié avec succès");
 
-				reponse.setCode(200);
-
+					reponse.setCode(200);
+				}				
+				else
+				{
+					userConverted.setPassword(pwdCryp);
+					Teacher userSave = teacherRepository.save(userConverted);
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été enregistré avec succès");
+					reponse.setCode(200);	
+					
+				}				
 				
 			}
-			else if( user.getId() == 0 && user.getId() != userByEmail.get().getId())
+			else if(userExiste.getCode() == 201)
 			{
-				reponse.setMessage("Cet email existe déjà !");
-				reponse.setCode(201);	
+				
+				
+				if( user.getId() != 0 && user.getId() == userByEmail.get().getId() )
+				{
+					userByEmail.get().setNiveauEtude(user.getNiveauEtude());
+					userByEmail.get().setAdresse(user.getAdresse());
+					userByEmail.get().setPrenom(user.getPrenom());
+					userByEmail.get().setNom(user.getNom());
+					userByEmail.get().setContratID(user.getContratID());
+					userByEmail.get().setNumeroMatriciule(user.getNumeroMatriciule());
+					userByEmail.get().setTypeDeRecrutement(user.getTypeDeRecrutement());
+					userByEmail.get().setType(user.getType());
+					userByEmail.get().setNaissance(user.getNaissance());
+					userByEmail.get().setNationalite(user.getNationalite());
+					userByEmail.get().setEmail(user.getEmail());
+					userByEmail.get().setTelephone(user.getTelephone());
+					userByEmail.get().setCompteBancaire(user.getCompteBancaire());
+					userByEmail.get().setLieu_naissance(user.getLieu_naissance());
+					userByEmail.get().setRole(user.getRole());
+					Teacher userSave = teacherRepository.save(userByEmail.get());
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été modifié avec succès");
+
+					reponse.setCode(200);
+					
+				}				
+				else
+				{					
+					reponse.setMessage(userExiste.getMessage());
+					reponse.setCode(userExiste.getCode());	
+					
+				}				
 			}
 			else
 			{
-				userConverted.setPassword(pwdCryp);
-				Teacher userSave = teacherRepository.save(userConverted);
-				reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				reponse.setMessage("Ce compte a été enregistré avec succès");
-				reponse.setCode(200);	
 				
+				reponse.setMessage(userExiste.getMessage());
+				reponse.setCode(userExiste.getCode());					
 			}
 			
-			
-
-		}
-		else
-		{
-			userConverted.setPassword(pwdCryp);
-			Teacher userSave = teacherRepository.save(userConverted);
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-			reponse.setMessage("Ce compte a été enregistré avec succès");
-			reponse.setCode(200);	
-			
-
-		}
+		
 		
 	}
 	catch (Exception e)
@@ -97,6 +123,5 @@ public class TeacherService implements ITeacherService{
 
 	return reponse ;
 }
-
 }
 

@@ -31,9 +31,9 @@ public class FileRestControler {
 	private String fileStorageProperties;
 	 //FILE
     @PostMapping(path = Utility.UPLOAD_FILE, headers = "Content-Type= multipart/form-data")
-    public Reponse uploadFile(@RequestParam("file")  MultipartFile file) 
+    public Reponse uploadFile(@RequestParam("file")  MultipartFile file,@RequestParam("type")  String type) 
     {       
-       return this.fileService.uploadFile(file,"PHOTO");           
+       return this.fileService.uploadFile(file,type);           
     }
     @RequestMapping(value = Utility.GET_PHOTO, method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable String name) throws IOException, URISyntaxException {

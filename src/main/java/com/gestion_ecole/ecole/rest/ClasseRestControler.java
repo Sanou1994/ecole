@@ -30,9 +30,9 @@ public class ClasseRestControler {
 		return classeUpdate ;
     }
 	@GetMapping(Utility.GET_ALL_CLASSE)
-    public Reponse getAllClasses() 
+    public Reponse getAllClasses(@PathVariable(value = "id") Long structureID) 
     {
-    	Reponse list = classeService.ListeClasses();       
+    	Reponse list = classeService.ListeClasses(structureID);       
         return list;
     }
 	@GetMapping(Utility.DELETE_CLASSE_BY_ID)

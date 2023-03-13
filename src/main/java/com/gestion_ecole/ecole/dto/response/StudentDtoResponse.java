@@ -6,7 +6,6 @@ import java.util.List;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Inscription;
 import com.gestion_ecole.ecole.entities.Note;
-import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Student;
 import com.gestion_ecole.ecole.entities.Teacher;
 
@@ -21,12 +20,13 @@ public class StudentDtoResponse extends UserDtoResponse implements Serializable 
 	   private List<Student> parains ;
 	   private List<Teacher> professeurAppuis ;
 	   private Teacher teacher;
-	   private Parent parent;		
 	   private Classe classe;
 	   private Long departementID;
 	   private Long filiereID;
-		  private Long niveauEtudeID;
-
+	   private Long niveauEtudeID;
+	   private Long parentID;
+	
+	
 	public List<Inscription> getInscriptions() {
 		return inscriptions;
 	}
@@ -57,24 +57,11 @@ public class StudentDtoResponse extends UserDtoResponse implements Serializable 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	public Parent getParent() {
-		return parent;
-	}
-	public void setParent(Parent parent) {
-		this.parent = parent;
-	}
 	public Classe getClasse() {
 		return classe;
 	}
 	public void setClasse(Classe classe) {
 		this.classe = classe;
-	}
-	
-	public Long getFiliereID() {
-		return filiereID;
-	}
-	public void setFiliereID(Long filiereID) {
-		this.filiereID = filiereID;
 	}
 	public Long getDepartementID() {
 		return departementID;
@@ -82,11 +69,56 @@ public class StudentDtoResponse extends UserDtoResponse implements Serializable 
 	public void setDepartementID(Long departementID) {
 		this.departementID = departementID;
 	}
+	public Long getFiliereID() {
+		return filiereID;
+	}
+	public void setFiliereID(Long filiereID) {
+		this.filiereID = filiereID;
+	}
 	public Long getNiveauEtudeID() {
 		return niveauEtudeID;
 	}
 	public void setNiveauEtudeID(Long niveauEtudeID) {
 		this.niveauEtudeID = niveauEtudeID;
 	}
-	   
+	public Long getParentID() {
+		return parentID;
+	}
+	public void setParentID(Long parentID) {
+		this.parentID = parentID;
+	}
+	
+	
+	public StudentDtoResponse(Long id, Long structureID, String prenom, String nom, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, Long type, String sexe, String naissance,
+			long dateCreation, boolean status, String nationalite, String login, String email, String telephone,
+			String monToken, String password, String compteBancaire, String resetPasswordToken, String role,
+			String lieu_naissance, String name_logo, String url_logo, long contratID, boolean monPremiereConnexion,
+			List<Inscription> inscriptions, List<Note> notes, List<Student> parains, List<Teacher> professeurAppuis,
+			Teacher teacher, Classe classe, Long departementID, Long filiereID, Long niveauEtudeID, Long parentID) {
+		super(id, structureID, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, sexe, naissance,
+				dateCreation, status, nationalite, login, email, telephone, monToken, password, compteBancaire,
+				resetPasswordToken, role, lieu_naissance, name_logo, url_logo, contratID, monPremiereConnexion);
+		this.inscriptions = inscriptions;
+		this.notes = notes;
+		this.parains = parains;
+		this.professeurAppuis = professeurAppuis;
+		this.teacher = teacher;
+		this.classe = classe;
+		this.departementID = departementID;
+		this.filiereID = filiereID;
+		this.niveauEtudeID = niveauEtudeID;
+		this.parentID = parentID;
+	}
+	public StudentDtoResponse(Long id, Long structureID, String prenom, String nom, String adresse,
+			String numeroMatriciule, String typeDeRecrutement, Long type, String sexe, String naissance,
+			long dateCreation, boolean status, String nationalite, String login, String email, String telephone,
+			String monToken, String password, String compteBancaire, String resetPasswordToken, String role,
+			String lieu_naissance, String name_logo, String url_logo, long contratID, boolean monPremiereConnexion) {
+		super(id, structureID, prenom, nom, adresse, numeroMatriciule, typeDeRecrutement, type, sexe, naissance, dateCreation,
+				status, nationalite, login, email, telephone, monToken, password, compteBancaire, resetPasswordToken, role,
+				lieu_naissance, name_logo, url_logo, contratID, monPremiereConnexion);
+		// TODO Auto-generated constructor stub
+	}
+	
 }

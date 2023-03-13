@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 public class InscriptionDtoRequest {
 	private Long id;
 	private long anneeScolaireID;
-	
+	private String  etat;
 	
 }

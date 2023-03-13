@@ -32,7 +32,8 @@ public class UserDtoResponse implements Serializable {
 	private String name_logo;
     private String url_logo;
     private long contratID;
-	
+	protected boolean monPremiereConnexion;
+
 	public String getNationalite() {
 		return nationalite;
 	}
@@ -195,6 +196,14 @@ public class UserDtoResponse implements Serializable {
 
 	public void setContratID(long contratID) {
 		this.contratID = contratID;
+	}
+
+	public boolean isMonPremiereConnexion() {
+		return monPremiereConnexion;
+	}
+
+	public void setMonPremiereConnexion(boolean monPremiereConnexion) {
+		this.monPremiereConnexion = monPremiereConnexion;
 	} 
 
 }

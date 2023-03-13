@@ -1,4 +1,4 @@
-package com.gestion_ecole.ecole.entities;
+          package com.gestion_ecole.ecole.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +43,17 @@ public class Classe
     private Teacher teacher;
 	@ManyToOne
     private Filiere filiere;
-	
+	private Long structureID;
 	public Classe() {
 		super();
 	}
+
+
+	
+	
 	public Classe(Long id, String nom, boolean status, List<Module> modules, List<Student> students,
 			List<EmploiDuTemps> emploiDuTemps, List<Teacher> professeurs, List<Absence> abscences,
-			List<CahierDeTexte> cahierDeTextes, Teacher teacher, Filiere filiere) {
+			List<CahierDeTexte> cahierDeTextes, Teacher teacher, Filiere filiere, Long structureID) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -62,7 +66,12 @@ public class Classe
 		this.cahierDeTextes = cahierDeTextes;
 		this.teacher = teacher;
 		this.filiere = filiere;
+		this.structureID = structureID;
 	}
+
+
+
+
 	public boolean isStatus() {
 		return status;
 	}
@@ -128,6 +137,12 @@ public class Classe
 	}
 	public void setFiliere(Filiere filiere) {
 		this.filiere = filiere;
+	}
+	public Long getStructureID() {
+		return structureID;
+	}
+	public void setStructureID(Long structureID) {
+		this.structureID = structureID;
 	}
 	
 	

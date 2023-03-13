@@ -7,6 +7,8 @@ import java.util.Date;
 import org.modelmapper.ModelMapper;
 
 import com.gestion_ecole.ecole.dto.request.AbsenceDtoRequest;
+import com.gestion_ecole.ecole.dto.request.AnneeScolaireDtoRequest;
+import com.gestion_ecole.ecole.dto.request.Ass_prinscription_studentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.CahierDeTexteDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ContratDtoRequest;
@@ -14,6 +16,7 @@ import com.gestion_ecole.ecole.dto.request.DepartementDtoRequest;
 import com.gestion_ecole.ecole.dto.request.EmploiDuTempsDtoRequest;
 import com.gestion_ecole.ecole.dto.request.FiliereDtoRequest;
 import com.gestion_ecole.ecole.dto.request.InscriptionDtoRequest;
+import com.gestion_ecole.ecole.dto.request.LancerPreinscriptionDtoRequest;
 import com.gestion_ecole.ecole.dto.request.NiveauEtudeDtoRequest;
 import com.gestion_ecole.ecole.dto.request.ParentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
@@ -24,6 +27,8 @@ import com.gestion_ecole.ecole.dto.request.SupportPhysiqueDtoRequest;
 import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
 import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
 import com.gestion_ecole.ecole.dto.response.AbsenceDtoResponse;
+import com.gestion_ecole.ecole.dto.response.AnneeScolaireDtoResponse;
+import com.gestion_ecole.ecole.dto.response.Ass_prinscription_studentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.CahierDeTexteDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ContratDtoResponse;
@@ -31,6 +36,7 @@ import com.gestion_ecole.ecole.dto.response.DepartementDtoResponse;
 import com.gestion_ecole.ecole.dto.response.EmploiDuTempsDtoResponse;
 import com.gestion_ecole.ecole.dto.response.FiliereDtoResponse;
 import com.gestion_ecole.ecole.dto.response.InscriptionDtoResponse;
+import com.gestion_ecole.ecole.dto.response.LancerPreinscriptionDtoResponse;
 import com.gestion_ecole.ecole.dto.response.NiveauEtudeDtoResponse;
 import com.gestion_ecole.ecole.dto.response.ParentDtoResponse;
 import com.gestion_ecole.ecole.dto.response.PersonnalDtoResponse;
@@ -41,6 +47,8 @@ import com.gestion_ecole.ecole.dto.response.SupportPhysiqueDtoResponse;
 import com.gestion_ecole.ecole.dto.response.TeacherDtoResponse;
 import com.gestion_ecole.ecole.dto.response.UserDtoResponse;
 import com.gestion_ecole.ecole.entities.Absence;
+import com.gestion_ecole.ecole.entities.AnneeScolaire;
+import com.gestion_ecole.ecole.entities.Ass_prinscription_student;
 import com.gestion_ecole.ecole.entities.CahierDeTexte;
 import com.gestion_ecole.ecole.entities.Classe;
 import com.gestion_ecole.ecole.entities.Contrat;
@@ -48,6 +56,7 @@ import com.gestion_ecole.ecole.entities.Departement;
 import com.gestion_ecole.ecole.entities.EmploiDuTemps;
 import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Inscription;
+import com.gestion_ecole.ecole.entities.LancerPreinscription;
 import com.gestion_ecole.ecole.entities.Niveau_etude;
 import com.gestion_ecole.ecole.entities.Parent;
 import com.gestion_ecole.ecole.entities.Personnal;
@@ -60,7 +69,9 @@ import com.gestion_ecole.ecole.entities.User;
 
 import net.bytebuddy.utility.RandomString;
 
-public final class Utility {
+public final class Utility 
+{
+	
 	// CONSTANT POUR LA SECURITE
 	public static final long EXPIRATION_TIME =365 * 24 * 60 * 60 ;
 	public static final String TOKEN_PREFIX = "Bearer ";
@@ -69,11 +80,22 @@ public final class Utility {
 	public static final String NOTREEMAIL ="je.reserve@connecsen.com";
 	public static final String dev_phone_number ="221774602901";
 
+	public static final String SUBJECT = "Indentifiants";
+	public static final String LINK = "Indentifiants";
+	public static final String ATTACHEMENT = "Pluto inscription ";
+
+	
 	public static final String PERSONNAL = "PERSONNAL";
 	public static final String PARENT = "PARENT";
 	public static final String STUDENT = "STUDENT";
 	public static final String TEACHER = "TEACHER";
 	
+	public static final String FILE_PHOTO = "PHOTO";
+	public static final String FILE_PIECE = "PIECE";
+	public static final String FILE_TP = "TP"; 
+	public static final String FILE_TD = "TD";
+	public static final String FILE_EVALUATION = "EVALUATION";
+
 	
 	public static final String ADD_PERSONNAL = "/user/personnal";
 	public static final String ADD_PARENT = "/user/parent";
@@ -103,6 +125,18 @@ public final class Utility {
 	public static final String DELETE_DEPARTEMENT_BY_ID = "/departements/delete/{id}";
 	public static final String GET_ALL_DEPARTEMENTS = "/departements/structure/{id}";
 	
+	public static final String ADD_LANCEMENT_PREINSCRIPTION = "/lancerpreinscriptions/add";
+	public static final String GET_LANCEMENT_PREINSCRIPTION_BY_ID = "/lancerpreinscriptions/{id}";
+	public static final String DELETE_LANCEMENT_PREINSCRIPTION_BY_ID = "/lancerpreinscriptions/delete/{id}";
+	public static final String GET_ALL_LANCEMENT_PREINSCRIPTIONS = "/lancerpreinscriptions/structure/{id}";
+	
+	
+	public static final String ADD_ANNEE_SCOLAIRE = "/anneescolaires/add";
+	public static final String GET_ANNEE_SCOLAIRE_BY_ID = "/danneescolaires/{id}";
+	public static final String DELETE_ANNEE_SCOLAIRE_BY_ID = "/anneescolaires/delete/{id}";
+	public static final String GET_ALL_ANNEE_SCOLAIRES = "/anneescolaires/structure/{id}";
+
+	
 	public static final String ADD_NIVEAU_ETUDE = "/niveauetudes/add";
 	public static final String GET_NIVEAU_ETUDE_BY_ID = "/niveauetudes/{id}";
 	public static final String DELETE_NIVEAU_ETUDE_BY_ID = "/niveauetudes/delete/{id}";
@@ -121,11 +155,11 @@ public final class Utility {
 	public static final String GET_ALL_CONTRAT = "/contrats/structure/{id}";
 
 	
-	public static final String ADD_CLASSE = "/classe/add";
-	public static final String UPDATE_CLASSE = "/classe/update";
-	public static final String GET_CLASSE_BY_ID = "/acceuil/classe/classes/{id}";
+	public static final String ADD_CLASSE = "/classes/add";
+	public static final String UPDATE_CLASSE = "/classes/update";
+	public static final String GET_CLASSE_BY_ID = "/classe/classes/{id}";
 	public static final String DELETE_CLASSE_BY_ID = "/classe/classes/delete/{id}";
-	public static final String GET_ALL_CLASSE = "/acceuil/classe/classes";
+	public static final String GET_ALL_CLASSE = "/classes/structure/{id}";
 	
 	public static final String ADD_FILIERE = "/filieres/add";
 	public static final String GET_FILIERE_BY_ID = "/filieres/{id}";
@@ -212,6 +246,8 @@ public final class Utility {
 	public static String getTokenResetPassword() {
 		return RandomString.make(10);
 	}
+	
+		
 	static 	ModelMapper modelMapper = new ModelMapper();
 
 	//LES MAPPERS DTO A DAO USER
@@ -320,6 +356,94 @@ public final class Utility {
             }
 			
 		}
+      //LES MAPPERS ANNEE SCOLAIRE
+		
+	    public static  AnneeScolaireDtoRequest toDtoAnneeScolaireDtoRequest(AnneeScolaire departement) 
+	    {
+	    	AnneeScolaireDtoRequest departementDtoRequest = new AnneeScolaireDtoRequest() ;
+
+		    return(departement != null)? modelMapper.map(departement, AnneeScolaireDtoRequest.class) :departementDtoRequest ;
+	    }
+	    
+	    public static  AnneeScolaireDtoResponse toDtoAnneeScolaireDtoResponse(AnneeScolaire departement) 
+	    {
+	    	AnneeScolaireDtoResponse departementDtoResponse = new AnneeScolaireDtoResponse() ;
+
+		return (departement != null)? modelMapper.map(departement, AnneeScolaireDtoResponse.class):departementDtoResponse;
+	    }
+	    
+		public static  AnneeScolaire toEntityAnneeScolaireFromRequest(AnneeScolaireDtoRequest departementDtoRequest) 
+		{
+		  return (departementDtoRequest != null) ? modelMapper.map(departementDtoRequest, AnneeScolaire.class):new AnneeScolaire();
+			
+		}	
+		
+		public static  AnneeScolaire toEntityAnneeScolaireFromResponse(AnneeScolaireDtoResponse departementDtoResponse) 
+		{
+		 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, AnneeScolaire.class):new AnneeScolaire();
+			
+		}
+		
+		
+       //LES MAPPERS Ass_prinscription
+		
+	    public static  Ass_prinscription_studentDtoRequest toDtoAss_prinscription_studentDtoRequest(Ass_prinscription_student ass_prinscription_student) 
+	    {
+	    	Ass_prinscription_studentDtoRequest ass_prinscription_studentDtoRequest = new Ass_prinscription_studentDtoRequest() ;
+
+		    return(ass_prinscription_student != null)? modelMapper.map(ass_prinscription_student, Ass_prinscription_studentDtoRequest.class) :ass_prinscription_studentDtoRequest ;
+	    }
+	    
+	    public static  Ass_prinscription_studentDtoResponse toDtoAss_prinscription_studentDtoResponse(Ass_prinscription_student ass_prinscription_student) 
+	    {
+	    	Ass_prinscription_studentDtoResponse ass_prinscription_studentDtoResponse = new Ass_prinscription_studentDtoResponse() ;
+
+		return (ass_prinscription_student != null)? modelMapper.map(ass_prinscription_student, Ass_prinscription_studentDtoResponse.class):ass_prinscription_studentDtoResponse;
+	    }
+	    
+		public static  Ass_prinscription_student toEntityAss_prinscription_studentFromRequest(Ass_prinscription_studentDtoRequest ass_prinscription_studentDtoRequest) 
+		{
+		  return (ass_prinscription_studentDtoRequest != null) ? modelMapper.map(ass_prinscription_studentDtoRequest, Ass_prinscription_student.class):new Ass_prinscription_student();
+			
+		}	
+		
+		public static  Ass_prinscription_student toEntityAss_prinscription_studentFromResponse(Ass_prinscription_studentDtoResponse departementDtoResponse) 
+		{
+		 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, Ass_prinscription_student.class):new Ass_prinscription_student();
+			
+		}
+		
+		
+      //LES MAPPERS LANCERDEPARTEMEN
+		
+	    public static  LancerPreinscriptionDtoRequest toDtoLancerPreinscriptionDtoRequest(LancerPreinscription departement) 
+	    {
+	    	LancerPreinscriptionDtoRequest departementDtoRequest = new LancerPreinscriptionDtoRequest() ;
+
+		    return(departementDtoRequest != null)? modelMapper.map(departement, LancerPreinscriptionDtoRequest.class) :departementDtoRequest ;
+	    }
+	    
+	    public static  LancerPreinscriptionDtoResponse toDtoLancerPreinscriptionDtoResponse(LancerPreinscription departement) 
+	    {
+	    	LancerPreinscriptionDtoResponse departementDtoResponse = new LancerPreinscriptionDtoResponse() ;
+
+		return (departementDtoResponse != null)? modelMapper.map(departement, LancerPreinscriptionDtoResponse.class):departementDtoResponse;
+	    }
+	    
+		public static  LancerPreinscription toEntityLancerPreinscriptionFromRequest(LancerPreinscriptionDtoRequest departementDtoRequest) 
+		{
+			LancerPreinscription departement = new LancerPreinscription();
+		  return (departement != null) ? modelMapper.map(departementDtoRequest, LancerPreinscription.class):new LancerPreinscription();
+			
+		}	
+		
+		public static  LancerPreinscription toEntityLancerPreinscriptionFromResponse(LancerPreinscriptionDtoResponse departementDtoResponse) 
+		{
+		 return(departementDtoResponse != null) ? modelMapper.map(departementDtoResponse, LancerPreinscription.class):new LancerPreinscription();
+			
+		}
+		
+		
 		
 		//LES MAPPERS DEPARTEMENT
 		

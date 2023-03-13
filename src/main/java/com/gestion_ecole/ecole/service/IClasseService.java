@@ -9,7 +9,7 @@ public interface IClasseService {
 	  public Reponse createOrUpdateClasse(ClasseDtoRequest classe);
 	  public Reponse getClasseById(Long id);
 	  public Reponse bloquerClasse(Long id); 
-	  public Reponse ListeClasses(); 
+	  public Reponse ListeClasses(Long structureID); 
 
 	 
 	 }

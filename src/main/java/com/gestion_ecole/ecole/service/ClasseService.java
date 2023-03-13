@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 import com.gestion_ecole.ecole.dto.request.ClasseDtoRequest;
 import com.gestion_ecole.ecole.dto.response.ClasseDtoResponse;
 import com.gestion_ecole.ecole.entities.Classe;
+import com.gestion_ecole.ecole.entities.Filiere;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.repository.ClasseRepository;
+import com.gestion_ecole.ecole.repository.FiliereRepository;
 import com.gestion_ecole.ecole.utils.Utility;
 
 @Service
 public class ClasseService implements IClasseService{
 	@Autowired
 	private ClasseRepository classeRepository;
+	@Autowired
+	private FiliereRepository filiereRepository;
 	
 
 
@@ -28,10 +32,11 @@ public class ClasseService implements IClasseService{
 		try
 		{   
 			Optional<Classe> soft = this.classeRepository.findByNom(classe.getNom());
+
 			if(!soft.isPresent())
 			{
 				
-				if(classe.getId() != null)
+				if(classe.getId() != 0)
 				{
 					Optional<Classe> softGot = this.classeRepository.findById(classe.getId());
 
@@ -52,10 +57,28 @@ public class ClasseService implements IClasseService{
 				}
 				else
 				{
-					classeRepository.save(Utility.toClasse(classe));
-					reponse.setCode(200);
-			    	reponse.setMessage(" La classe a été créée avec succès !");
-			    	reponse.setResult(classe);
+					if(classe.getFiliere() != 0 )
+					{
+						this.filiereRepository.findById(classe.getFiliere()).isPresent();
+						Classe classeConvert =Utility.toClasse(classe);
+						Optional<Filiere> filiere = this.filiereRepository.findById(classe.getFiliere());
+						classeConvert.setFiliere(filiere.get());					
+						Classe classeSave =classeRepository.save(classeConvert);
+						filiere.get().getClasses().add(classeSave);
+						this.filiereRepository.save(filiere.get());						
+						reponse.setCode(200);
+				    	reponse.setMessage(" La classe a été créée avec succès !");
+				    	reponse.setResult(classe);
+
+					}
+					else
+					{
+						classeRepository.save(Utility.toClasse(classe));
+						reponse.setCode(200);
+				    	reponse.setMessage(" La classe a été créée avec succès !");
+				    	reponse.setResult(classe);	
+					}
+					
 				}
 			}
 			else
@@ -72,7 +95,7 @@ public class ClasseService implements IClasseService{
 			reponse.setCode(500);
 	    	reponse.setMessage(" Une erreur interne est survenue");
 			
-		}
+		} 
 		return reponse ;
 	}
 
@@ -132,12 +155,14 @@ public class ClasseService implements IClasseService{
 
 
 	@Override
-	public Reponse ListeClasses() {
+	public Reponse ListeClasses(Long structureID) {
 		Reponse reponse = new Reponse();	
 
 		try
-		{   List<ClasseDtoResponse> classes= classeRepository.findAll()
+		{  			
+			List<ClasseDtoResponse> classes= classeRepository.findAll()
 		                                                      .stream()
+		                                                      .filter( p->p.getStructureID() == structureID)
 		                                                      .map(Utility :: toClasseDtoResponse)
 		                                                      .collect(Collectors.toList());
 			reponse.setCode(200);

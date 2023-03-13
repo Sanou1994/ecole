@@ -12,15 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestion_ecole.ecole.dto.request.CodeDtoRequest;
+import com.gestion_ecole.ecole.dto.request.ParentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.PersonnalDtoRequest;
 import com.gestion_ecole.ecole.dto.request.StudentDtoRequest;
 import com.gestion_ecole.ecole.dto.request.TeacherDtoRequest;
-import com.gestion_ecole.ecole.dto.request.UserDtoRequest;
 import com.gestion_ecole.ecole.entities.Login;
 import com.gestion_ecole.ecole.entities.MailSend;
 import com.gestion_ecole.ecole.entities.Reponse;
 import com.gestion_ecole.ecole.service.IAccountService;
 import com.gestion_ecole.ecole.service.IEmailService;
+import com.gestion_ecole.ecole.service.IParentService;
 import com.gestion_ecole.ecole.service.IPersonnalService;
 import com.gestion_ecole.ecole.service.IStudentService;
 import com.gestion_ecole.ecole.service.ITeacherService;
@@ -39,32 +40,10 @@ public class AccountRestController {
 	@Autowired
 	private IStudentService studentService;
 	@Autowired
+	private IParentService parentService;
+	@Autowired
 	private IEmailService emailService;
-	@PostMapping(Utility.DO_REGISTER)
-	public Reponse register( @RequestBody UserDtoRequest user) {
-		Reponse userAdd =accountService.login_up(user);
 		
-		return userAdd;
-	}
-	@PostMapping(Utility.DO_REGISTER_BY_ADMIN)
-	public boolean registerByAmdin( @RequestBody UserDtoRequest user) {
-		boolean reponse =false;
-		String token = Utility.getTokenResetPassword();
-		user.setPassword(token);
-		Reponse userAdd =accountService.login_up(user);
-		if(userAdd !=null) {
-			reponse =true;
-			try {
-           // emailService.confirmedMessageAccountCreatedSuccess(new Login(user.getEmail(),token, user.getEmail()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				reponse =false;
-			}
-			
-		} 
-		return reponse;
-	}
-	
 	@PostMapping(Utility.DO_LOGIN)
 	public Reponse verifiedAccount( @RequestBody Login  login) {
 		Reponse user = accountService.se_connecter(login.getTelephone(), login.getPassword());		
@@ -107,7 +86,11 @@ public class AccountRestController {
 		Reponse reponse = studentService.createOrUpdateStudent(student);
 		return reponse;
     }
-
+	@PostMapping(Utility.ADD_PARENT)
+	public Reponse getAddOrUpdateParent( @RequestBody ParentDtoRequest parent){
+		Reponse reponse = parentService.createOrUpdateParent(parent);
+		return reponse;
+    }
 	
 	@GetMapping(Utility.GET_USER_BY_ID)
 	public Reponse getUserById(@PathVariable(value = "type") String  type,@PathVariable(value = "id") Long userId){		

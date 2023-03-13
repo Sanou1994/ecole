@@ -1,4 +1,4 @@
- package com.gestion_ecole.ecole.entities;
+package com.gestion_ecole.ecole.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +11,19 @@ import lombok.NoArgsConstructor;
 
 @Entity @AllArgsConstructor 
 @NoArgsConstructor @Data
-public class AnneeScolaire
+public class LancerPreinscription
 {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    private String libelle;
-    private boolean status=true;
-    private long structureID;
+	private long departementID;
+	private long anneeScolaireID;
+	private long filiereID;
+	private long classeID;
+	private long datePrologement;
+	private long dateDebut;
+	private long dateFin;
+	private boolean status=true;	
+	private long structureID;
 
+	
 }

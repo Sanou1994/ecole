@@ -21,70 +21,96 @@ import com.gestion_ecole.ecole.utils.Utility;
 public class PersonnalService implements IPersonnalService{
 		@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+		@Autowired
+		private IAccountService accountService;
 	@Autowired
 	private PersonnalRepository personnalRepository; 	
 	@Override
-	public Reponse createOrUpdatePersonnal(PersonnalDtoRequest personnal) {
+	public Reponse createOrUpdatePersonnal(PersonnalDtoRequest personnal) {		
 		Reponse reponse = new Reponse();
 		try
 		{
+			Optional<Personnal> userByEmail = personnalRepository.findByEmail(personnal.getEmail());		
+			Personnal userConverted = (Personnal) Utility.UserDtoRequestConvertToUser(personnal);
+			String pwdCryp = bCryptPasswordEncoder.encode(personnal.getPassword());
+			Reponse userExiste = accountService.CheckEmailOrPhone(personnal.getTelephone(),personnal.getEmail());			
 
-		Optional<Personnal> userByEmail = personnalRepository.findByEmail(personnal.getEmail());		
-		Personnal userConverted = (Personnal) Utility.UserDtoRequestConvertToUser(personnal);
-		String pwdCryp = bCryptPasswordEncoder.encode(personnal.getPassword());
-				
-		if(userByEmail.isPresent() )
-		{
-			if( personnal.getId() != 0 && personnal.getId() == userByEmail.get().getId() )
+			if(userExiste.getCode() == 200)
 			{
-				userByEmail.get().setAdresse(personnal.getAdresse());
-				userByEmail.get().setPrenom(personnal.getPrenom());
-				userByEmail.get().setNom(personnal.getNom());
-				userByEmail.get().setLieu_naissance(personnal.getLieu_naissance());
-				userByEmail.get().setNumeroMatriciule(personnal.getNumeroMatriciule());
-				userByEmail.get().setTypeDeRecrutement(personnal.getTypeDeRecrutement());
-				userByEmail.get().setContratID(personnal.getContratID());
-				userByEmail.get().setType(personnal.getType());
-				userByEmail.get().setNaissance(personnal.getNaissance());       			
-				userByEmail.get().setEmail(personnal.getEmail());
-				userByEmail.get().setTelephone(personnal.getTelephone());
-				userByEmail.get().setCompteBancaire(personnal.getCompteBancaire());
-				userByEmail.get().setRole(personnal.getRole());
-				userByEmail.get().setNationalite(personnal.getNationalite());
-				User userSave = personnalRepository.save(userByEmail.get());
-				reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				reponse.setMessage("Ce compte a été modifié avec succès");
-				reponse.setCode(200);
+				if( personnal.getId() != 0)
+				{
+					userByEmail.get().setAdresse(personnal.getAdresse());
+					userByEmail.get().setPrenom(personnal.getPrenom());
+					userByEmail.get().setNom(personnal.getNom());
+					userByEmail.get().setLieu_naissance(personnal.getLieu_naissance());
+					userByEmail.get().setNumeroMatriciule(personnal.getNumeroMatriciule());
+					userByEmail.get().setTypeDeRecrutement(personnal.getTypeDeRecrutement());
+					userByEmail.get().setContratID(personnal.getContratID());
+					userByEmail.get().setType(personnal.getType());
+					userByEmail.get().setNaissance(personnal.getNaissance());       			
+					userByEmail.get().setEmail(personnal.getEmail());
+					userByEmail.get().setTelephone(personnal.getTelephone());
+					userByEmail.get().setCompteBancaire(personnal.getCompteBancaire());
+					userByEmail.get().setRole(personnal.getRole());
+					userByEmail.get().setNationalite(personnal.getNationalite());
+					User userSave = personnalRepository.save(userByEmail.get());
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été modifié avec succès");
+					reponse.setCode(200);
+					
+				}				
+				else
+				{
+					userConverted.setPassword(pwdCryp);
+					Personnal userSave = personnalRepository.save(userConverted);
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été enregistré avec succès");
+					reponse.setCode(200);	
+					
+				}				
 				
 			}
-			else if( personnal.getId() == 0 && personnal.getId() != userByEmail.get().getId())
+			else if(userExiste.getCode() == 201)
 			{
-				reponse.setMessage("Cet email existe déjà !");
-				reponse.setCode(201);	
+				
+				
+				if( personnal.getId() != 0 && personnal.getId() == userByEmail.get().getId() )
+				{
+					userByEmail.get().setAdresse(personnal.getAdresse());
+					userByEmail.get().setPrenom(personnal.getPrenom());
+					userByEmail.get().setNom(personnal.getNom());
+					userByEmail.get().setLieu_naissance(personnal.getLieu_naissance());
+					userByEmail.get().setNumeroMatriciule(personnal.getNumeroMatriciule());
+					userByEmail.get().setTypeDeRecrutement(personnal.getTypeDeRecrutement());
+					userByEmail.get().setContratID(personnal.getContratID());
+					userByEmail.get().setType(personnal.getType());
+					userByEmail.get().setNaissance(personnal.getNaissance());       			
+					userByEmail.get().setEmail(personnal.getEmail());
+					userByEmail.get().setTelephone(personnal.getTelephone());
+					userByEmail.get().setCompteBancaire(personnal.getCompteBancaire());
+					userByEmail.get().setRole(personnal.getRole());
+					userByEmail.get().setNationalite(personnal.getNationalite());
+					User userSave = personnalRepository.save(userByEmail.get());
+					reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
+					reponse.setMessage("Ce compte a été modifié avec succès");
+					reponse.setCode(200);
+					
+				}				
+				else
+				{					
+					reponse.setMessage(userExiste.getMessage());
+					reponse.setCode(userExiste.getCode());	
+					
+				}				
 			}
 			else
 			{
-				userConverted.setPassword(pwdCryp);
-				Personnal userSave = personnalRepository.save(userConverted);
-				reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-				reponse.setMessage("Ce compte a été enregistré avec succès");
-				reponse.setCode(200);	
 				
+				reponse.setMessage(userExiste.getMessage());
+				reponse.setCode(userExiste.getCode());					
 			}
 			
-			
-
-		}
-		else
-		{
-			userConverted.setPassword(pwdCryp);
-			Personnal userSave = personnalRepository.save(userConverted);
-			reponse.setResult(Utility.UserConvertToUserDtoResponse(userSave));
-			reponse.setMessage("Ce compte a été enregistré avec succès");
-			reponse.setCode(200);	
-			
-
-		}
+		
 		
 	}
 	catch (Exception e)
@@ -95,6 +121,7 @@ public class PersonnalService implements IPersonnalService{
 
 	return reponse ;
 }
+
 
 }
 

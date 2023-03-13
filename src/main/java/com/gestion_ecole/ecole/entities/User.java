@@ -34,6 +34,7 @@ public abstract class User  {
 	protected String lieu_naissance;
 	protected long dateCreation;
 	protected boolean status =true;
+	protected boolean monPremiereConnexion =false;
 	protected String email;
 	protected String telephone;
 	protected String name_logo;
@@ -68,12 +69,13 @@ public abstract class User  {
 	}
 	
 	
+
 	public User(Long id, Long structureID, String prenom, String nom, String sexe, String adresse,
 			String numeroMatriciule, String typeDeRecrutement, Long type, String naissance, String nationalite,
-			String lieu_naissance, long dateCreation, boolean status, String email, String telephone, String name_logo,
-			String url_logo, Long contratID, String monToken, String password, String compteBancaire,
-			String resetPasswordToken, String role, List<Absence> absences, List<SupportPysique> supportPysiques,
-			List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
+			String lieu_naissance, long dateCreation, boolean status, boolean monPremiereConnexion, String email,
+			String telephone, String name_logo, String url_logo, Long contratID, String monToken, String password,
+			String compteBancaire, String resetPasswordToken, String role, List<Absence> absences,
+			List<SupportPysique> supportPysiques, List<Paiement> paiements, List<Seance> seances, List<Code> codes) {
 		super();
 		this.id = id;
 		this.structureID = structureID;
@@ -89,6 +91,7 @@ public abstract class User  {
 		this.lieu_naissance = lieu_naissance;
 		this.dateCreation = dateCreation;
 		this.status = status;
+		this.monPremiereConnexion = monPremiereConnexion;
 		this.email = email;
 		this.telephone = telephone;
 		this.name_logo = name_logo;
@@ -105,6 +108,7 @@ public abstract class User  {
 		this.seances = seances;
 		this.codes = codes;
 	}
+
 
 
 	public String getNationalite() {
@@ -313,6 +317,18 @@ public abstract class User  {
 
 	public void setContratID(long contratID) {
 		this.contratID = contratID;
+	}
+
+
+
+	public boolean isMonPremiereConnexion() {
+		return monPremiereConnexion;
+	}
+
+
+
+	public void setMonPremiereConnexion(boolean monPremiereConnexion) {
+		this.monPremiereConnexion = monPremiereConnexion;
 	}	
 
 	

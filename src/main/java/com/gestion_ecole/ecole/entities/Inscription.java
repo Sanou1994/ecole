@@ -25,6 +25,13 @@ import lombok.NoArgsConstructor;
 public class Inscription {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Long id; 
+	private String  etat;
+	
+	
+	
+	
+	
+	
 	@ManyToOne
     private Teacher teacher;
 	@ManyToOne

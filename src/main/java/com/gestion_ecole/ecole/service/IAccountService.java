@@ -10,13 +10,14 @@ public interface IAccountService {
 	         //GESTION User
 	  public void initAccount();
 	  public String getToken(String email , String password);
-	  public Reponse createOrUpdateUser(UserDtoRequest User);
 	  public Reponse getUserById(Long id,String type);
 	  public Reponse getAllUsersByType(String type);
 	  public Reponse getUserByTelephone(String telephone);
 	  public Reponse getUserByEmail(String Email);
 	  public Reponse bloquerUser(Long id); 
 	  public Reponse se_connecter(String Username,String password);
-	  public Reponse login_up(UserDtoRequest User);
 	  public Reponse activation(int code);
+	  public Reponse createOrUpdateUser(UserDtoRequest user);
+	  public Reponse CheckEmailOrPhone(String tel,String email) ;
+	  
 	 }

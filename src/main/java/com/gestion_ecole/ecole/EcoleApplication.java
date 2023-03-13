@@ -9,11 +9,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import com.gestion_ecole.ecole.service.IAccountService;
+import com.gestion_ecole.ecole.service.IFileService;
 
 @SpringBootApplication
 public class EcoleApplication implements CommandLineRunner{
    @Autowired
 	private IAccountService iAccountService;
+    @Autowired
+	private IFileService fileService;
 	public static void main(String[] args)   {
 		SpringApplication.run(EcoleApplication.class, args);
 	}
@@ -28,6 +31,7 @@ public class EcoleApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		iAccountService.initAccount();
-		
+		fileService.createAllDirectories();
+		 
 	}
 }

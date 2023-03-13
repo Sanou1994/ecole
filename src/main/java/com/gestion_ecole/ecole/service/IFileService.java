@@ -6,5 +6,5 @@ import com.gestion_ecole.ecole.entities.Reponse;
 
 public interface IFileService {
 	 public Reponse uploadFile(MultipartFile file,String type) ;
-
+	 public Reponse createAllDirectories();
 }

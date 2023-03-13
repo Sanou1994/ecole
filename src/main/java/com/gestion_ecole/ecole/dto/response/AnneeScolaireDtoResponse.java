@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @Data
 public class AnneeScolaireDtoResponse {
 	private Long id;
-	private long dateDebut;
-	private long dateFin;
-	private boolean status=false;
-	private long dateAbscenceCreate;
-	private long anneeScolaireID;
+	private String libelle;
+	private boolean status;
+	private long structureID;
 	
 }

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @Data
 public class InscriptionDtoResponse {
 	private long anneeScolaireID;
-	
+	private String  etat;
 
 }
