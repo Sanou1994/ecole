@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  ecole-backend:
+    image: 'ecole-backend:latest'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecole-backend
+    ports:
+      - "8085:8085"
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://158.69.120.240:5432/ecole_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=okiosk
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+
+
+
+
+
